@@ -1,0 +1,240 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "Juice",
+      "sku": "juice",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Juice_q1dlke.png"
+    },
+    {
+      "id": 1,
+      "name": "Coffee & Tea",
+      "sku": "coffe-tea",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351534/pickbazar/bakery/Coffee_j6vccc.png"
+    },
+    {
+      "id": 2,
+      "name": "Cookies",
+      "sku": "cookies",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351534/pickbazar/bakery/Cookies_ggshwp.png"
+    },
+    {
+      "id": 3,
+      "name": "Round Cake",
+      "sku": "round-cake",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351534/pickbazar/bakery/Round-Cake_rfsrkr.png"
+    },
+    {
+      "id": 4,
+      "name": "Pita Bread",
+      "sku": "pita-bread",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Pita-Bread_bvrwtn.png"
+    },
+    {
+      "id": 5,
+      "name": "Sliced Cake",
+      "sku": "sliced-cake",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351534/pickbazar/bakery/Chees-Cake_whi1yd.png"
+    },
+    {
+      "id": 6,
+      "name": "Muffin",
+      "sku": "muffin",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Muffin_yiuqcf.png"
+    },
+    {
+      "id": 7,
+      "name": "Danish",
+      "sku": "danish",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Danish_ybcbuq.png"
+    },
+    {
+      "id": 8,
+      "name": "test",
+      "sku": "danish",
+      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Danish_ybcbuq.png"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Ritai Organic Orange Juice 500 ml",
+      "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
+      "price": 1.8,
+      "category": "juice",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Wonderful Pomegranate Juice, 300 ml",
+      "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
+      "price": 2.5,
+      "category": "juice",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice5_bz8od4.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice5_bz8od4.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice5_bz8od4.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice5_bz8od4.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice5_bz8od4.jpg"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Kirkland Organic Lemonade, 150 ml",
+      "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
+      "price": 1.5,
+      "category": "juice",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice4_1_xt54si.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice4_1_xt54si.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice4_1_xt54si.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice4_1_xt54si.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice4_1_xt54si.jpg"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Sun Tropics Organic Mango Nectar,250ml",
+      "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
+      "price": 2.25,
+      "category": "juice",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice-1_lx8xnf.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice-1_lx8xnf.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice-1_lx8xnf.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice-1_lx8xnf.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice-1_lx8xnf.jpg"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Pressed Juicery Super Citrus Plus, 200ml",
+      "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
+      "price": 1.25,
+      "category": "juice",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice2_lnhqsp.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice2_lnhqsp.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice2_lnhqsp.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice2_lnhqsp.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice2_lnhqsp.jpg"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Peet Coffee Decaf Major Dickason Blend, 2 lb",
+      "des": "Coffee tea refers to herbal tea made from non-bean parts of the coffea (coffee plant), and may refer to: Coffee-leaf tea · Coffee cherry tea. Ground coffee, brewed",
+      "price": 2.5,
+      "category": "coffe-tea",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-7_nijstz.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-7_nijstz.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-7_nijstz.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-7_nijstz.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-7_nijstz.jpg"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Raspberry Crumble Cookies 300g",
+      "des": "A cookie is a baked or cooked food that is typically small, flat and sweet. It usually contains flour, sugar and some type of oil or fat. It may include other ingredients such as raisins, oats, chocolate chips, nuts,",
+      "price": 3.8,
+      "category": "cookies",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600694740/pickbazar/bakery/Cookies-4_vmbpqm.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600694740/pickbazar/bakery/Cookies-4_vmbpqm.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600694740/pickbazar/bakery/Cookies-4_vmbpqm.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600694740/pickbazar/bakery/Cookies-4_vmbpqm.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600694740/pickbazar/bakery/Cookies-4_vmbpqm.jpg"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Desserts Cake, Raspberry Dark Chocolate 2 lb",
+      "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
+      "price": 12,
+      "category": "round-cake",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Garlic Filled Pita Bread",
+      "des": "Pita or pitta, is a family of yeast-leavened round flatbreads baked from wheat flour, common in the Mediterranean, Middle East, and neighboring areas",
+      "price": 1.8,
+      "category": "pita-bread",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600686370/pickbazar/bakery/Pita_Bread-6_whabjs.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600686370/pickbazar/bakery/Pita_Bread-6_whabjs.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600686370/pickbazar/bakery/Pita_Bread-6_whabjs.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600686370/pickbazar/bakery/Pita_Bread-6_whabjs.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600686370/pickbazar/bakery/Pita_Bread-6_whabjs.jpg"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Signature Colossal Carrot Cake 10 oz",
+      "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
+      "price": 1.35,
+      "category": "sliced-cake",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-1_kodjod.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-1_kodjod.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-1_kodjod.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-1_kodjod.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-1_kodjod.jpg"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Thomas Cinnamon Raisin English Muffins 6 ct",
+      "des": "griddle and a cupcake-like quickbread that is chemically leavened and then baked in a mold.",
+      "price": 0.75,
+      "category": "muffin",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691379/pickbazar/bakery/Muffin-5_jbx3ok.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691379/pickbazar/bakery/Muffin-5_jbx3ok.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691379/pickbazar/bakery/Muffin-5_jbx3ok.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691379/pickbazar/bakery/Muffin-5_jbx3ok.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691379/pickbazar/bakery/Muffin-5_jbx3ok.jpg"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Nut & Butter Danish",
+      "des": "griddle and a cupcake-like quickbread that is chemically leavened and then baked in a mold.",
+      "price": 0.54,
+      "category": "danish",
+      "cartQuantity": 1,
+      "images": [
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-6_mklk6w.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-6_mklk6w.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-6_mklk6w.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-6_mklk6w.jpg",
+        "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-6_mklk6w.jpg"
+      ]
+    }
+  ]
+}

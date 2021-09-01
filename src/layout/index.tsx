@@ -1,6 +1,8 @@
-import * as React from "react";
-import { Link, Switch, Route } from "react-router-dom";
-import { appRoutes } from "../router/routers";
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { appRoutes } from "router/routes.routes";
+
+import { Header, Footer } from "components";
 
 export interface AppLayoutProps {}
 
@@ -15,5 +17,11 @@ export default function AppLayout(props: AppLayoutProps) {
       />
     ));
 
-  return <Switch>{renderRoutes(appRoutes)}</Switch>;
+  return (
+    <BrowserRouter>
+      <Header />
+      <Switch>{renderRoutes(appRoutes)}</Switch>
+      <Footer />
+    </BrowserRouter>
+  );
 }

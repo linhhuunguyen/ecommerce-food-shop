@@ -1,14 +1,7 @@
-import * as React from "react";
-import Sidebar from "./components/sidebar/Sidebar";
-import Topbar from "./components/topbar/Topbar";
+import React from "react";
 
 export interface AdminProps {}
 
 export default function Admin(props: AdminProps) {
-  return (
-    <div>
-      <Topbar />
-      <Sidebar />
-    </div>
-  );
+  return <h1>admin</h1>;
 }
