@@ -89,24 +89,18 @@ export default function Sidebar(props: SidebarProps) {
               <Typography className={classes.nameStyle}>Dashboard</Typography>
             </Link>
           </Box>
-        </div>
-        <div className={classes.drawerContainer}>
           <Box className={classes.items}>
             <Link to="/admin/products" className={classes.titleStyle}>
               <ShoppingBasketIcon />
               <Typography className={classes.nameStyle}>Products</Typography>
             </Link>
           </Box>
-        </div>
-        <div className={classes.drawerContainer}>
           <Box className={classes.items}>
             <Link to="/admin/category" className={classes.titleStyle}>
               <CategoryIcon />
               <Typography className={classes.nameStyle}> Category</Typography>
             </Link>
           </Box>
-        </div>
-        <div className={classes.drawerContainer}>
           <Box className={classes.items}>
             <Link to="/admin/orders" className={classes.titleStyle}>
               <ShopTwoIcon />

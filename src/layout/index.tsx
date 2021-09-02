@@ -18,10 +18,10 @@ export default function AppLayout(props: AppLayoutProps) {
     ));
 
   return (
-    <BrowserRouter>
+    <>
       <Header />
       <Switch>{renderRoutes(appRoutes)}</Switch>
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }

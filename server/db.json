@@ -7,10 +7,7 @@
       "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Juice_q1dlke.png"
     },
     {
-      "id": 1,
-      "name": "Coffee & Tea",
-      "sku": "coffe-tea",
-      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351534/pickbazar/bakery/Coffee_j6vccc.png"
+      "id": 1
     },
     {
       "id": 2,
@@ -49,10 +46,7 @@
       "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Danish_ybcbuq.png"
     },
     {
-      "id": 8,
-      "name": "test",
-      "sku": "danish",
-      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Danish_ybcbuq.png"
+      "id": "e2627f18-80e5-4235-95f2-4e7ba08d09fd"
     }
   ],
   "products": [

@@ -9,8 +9,8 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/" component={AppLayout} />
           <Route path="/admin" component={AdminLayout} />
+          <Route path="/" component={AppLayout} />
         </Switch>
       </Router>
     </div>
