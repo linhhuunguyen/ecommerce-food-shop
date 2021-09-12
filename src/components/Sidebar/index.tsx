@@ -1,27 +1,15 @@
 import React from "react";
-import {
-  createStyles,
-  Theme,
-  makeStyles,
-  Drawer,
-  AppBar,
-  CssBaseline,
-  Toolbar,
-  List,
-  Typography,
-  Divider,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Box
-} from "@material-ui/core";
-
+import { Link, useHistory } from "react-router-dom";
+import Toolbar from "@material-ui/core/Toolbar";
+import Box from "@material-ui/core/Box";
+import Drawer from "@material-ui/core/Drawer";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import CategoryIcon from "@material-ui/icons/Category";
 import ShopTwoIcon from "@material-ui/icons/ShopTwo";
-
-import { Link } from "react-router-dom";
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
 const drawerWidth = 200;
 
@@ -69,6 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export interface SidebarProps {}
 
 export default function Sidebar(props: SidebarProps) {
+  const history = useHistory();
   const classes = useStyles();
 
   return (
@@ -105,6 +94,12 @@ export default function Sidebar(props: SidebarProps) {
             <Link to="/admin/orders" className={classes.titleStyle}>
               <ShopTwoIcon />
               <Typography className={classes.nameStyle}>Orders</Typography>
+            </Link>
+          </Box>
+          <Box className={classes.items}>
+            <Link to="/admin/members" className={classes.titleStyle}>
+              <PeopleAltIcon />
+              <Typography className={classes.nameStyle}>Members</Typography>
             </Link>
           </Box>
         </div>

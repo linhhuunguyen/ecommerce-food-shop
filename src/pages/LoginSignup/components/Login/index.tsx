@@ -1,30 +1,56 @@
-import React from "react";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  Typography,
-  Link,
-  makeStyles
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+import { useAppDispatch } from "store/hook";
+import { loginBuyer } from "store/User/user.slice";
 
 const useStyle = makeStyles((theme) => ({
   paper: {
     padding: 20,
-    height: "70vh",
-    width: 280,
-    margin: "20px auto"
+    height: "60vh",
+    width: 458,
+    margin: "0 auto"
   },
   avatarStyle: {
     background: "#1bbd7e"
   },
   btnStyle: {
     margin: "8px 0"
+  },
+  logo: {
+    marginTop: "15px",
+    fontWeight: "bold"
+  },
+  box: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    margin: "20px 0"
+  },
+  textBox: {
+    margin: "10px 0"
+  },
+  btnSubmit: {
+    color: "#fff",
+    width: "100%",
+    padding: "10px",
+    background: "#019376",
+    border: "none",
+    marginTop: "10px",
+    "&:hover": {
+      backgroundColor: "#019376",
+      color: "#fff",
+      border: "none"
+    }
   }
 }));
 
@@ -32,55 +58,81 @@ export interface LoginProps {}
 
 export default function Login(props: LoginProps) {
   const classes = useStyle();
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
+  const [buyerLogin, setBuyerLogin] = useState({
+    email: "",
+    password: ""
+  });
+
+  const { email, password } = buyerLogin;
+
+  const handleInputChange = (e: any) => {
+    const { value } = e.target;
+    setBuyerLogin({ ...buyerLogin, [e.target.name]: value });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    await dispatch(loginBuyer(buyerLogin));
+    if (localStorage.getItem("buyerToken")) {
+      toast.success("Welcome To PinkBazar", {
+        theme: "colored",
+        position: "top-right"
+      });
+      history.replace("/");
+    } else {
+      toast.error("Notify! Wrong account or password !", {
+        icon: false
+      });
+    }
+  };
   return (
     <div>
       <Grid>
-        <Paper elevation={10} className={classes.paper}>
-          <Grid alignContent="center">
-            <Avatar className={classes.avatarStyle}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <h2>Sign in</h2>
-          </Grid>
-          <TextField
-            label="Username"
-            placeholder="Enter username"
-            fullWidth
-            required
-          />
-          <TextField
-            label="Password"
-            placeholder="Enter password"
-            type="password"
-            fullWidth
-            required
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                // checked={state.checkedB}
-                // onChange={handleChange}
-                name="checkedB"
-                color="primary"
-              />
-            }
-            label="Remenber me"
-          />
-          <Button
-            type="submit"
-            color="primary"
-            fullWidth
-            variant="contained"
-            className={classes.btnStyle}
-          >
-            Sign in
-          </Button>
-          <Typography>
-            <Link href="#">Forgot password ?</Link>
-          </Typography>
-          <Typography>
-            Do you have an account ?<Link href="/sign-up">Sign up ?</Link>
-          </Typography>
+        <Paper className={classes.paper}>
+          <Box className={classes.box}>
+            <Typography style={{ fontWeight: 500 }}>Welcome To</Typography>
+            <Typography variant="h4" noWrap className={classes.logo}>
+              <span style={{ color: "#161f6a" }}>Pick</span>
+              <span style={{ color: "#019376" }}>Bazar</span>
+            </Typography>
+          </Box>
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <TextField
+              className={classes.textBox}
+              label="Username"
+              type="text"
+              value={email}
+              name="email"
+              placeholder="Enter username"
+              fullWidth
+              required
+              variant="outlined"
+              onChange={handleInputChange}
+            />
+            <TextField
+              className={classes.textBox}
+              label="Password"
+              placeholder="Enter password"
+              type="password"
+              value={password}
+              name="password"
+              fullWidth
+              required
+              variant="outlined"
+              onChange={handleInputChange}
+            />
+            <Button
+              className={classes.btnSubmit}
+              type="submit"
+              fullWidth
+              onChange={handleInputChange}
+            >
+              Sign in
+            </Button>
+          </form>
         </Paper>
       </Grid>
     </div>

@@ -1,16 +1,21 @@
-import * as React from "react";
-import { ComponentType } from "react";
+import React, { ComponentType } from "react";
 
 import { Home, Admin, ProductDetail, ProductsGroup, Search, Cart } from "pages";
-import { AdminProducts, AdminCategory } from "pages/Admin/components";
+import {
+  AdminProducts,
+  AdminCategory,
+  AdminOrders,
+  Members
+} from "pages/Admin/components";
 import AddCate from "pages/Admin/components/Category/AddCate";
 import EditCate from "pages/Admin/components/Category/EditCate";
+import AddProduct from "pages/Admin/components/Products/AddProduct";
+import EditProduct from "pages/Admin/components/Products/EditProuduct";
+import OrderDetail from "pages/Admin/components/Orders/OrderDetail";
+import AddMember from "pages/Admin/components/Members/AddMembers";
 
-import { Login, Signup } from "pages/LoginSignup/components";
 import {
   PATH_HOME,
-  PATH_LOGIN,
-  PATH_SIGNUP,
   PATH_PRODUCT,
   PATH_PRODUCT_DETAIL,
   PATH_SEARCH,
@@ -21,7 +26,11 @@ import {
   PATH_ADMIN_PRODUCTS_UPDATE,
   PATH_ADMIN_CATEGORY,
   PATH_ADMIN_CATEGORY_ADD,
-  PATH_ADMIN_CATEGORY_UPDATE
+  PATH_ADMIN_CATEGORY_UPDATE,
+  PATH_ADMIN_ORDERS,
+  PATH_ADMIN_ORDERS_DETAIL,
+  PATH_ADMIN_MEMBERS,
+  PATH_ADMIN_MEMBERS_ADD
 } from "./routes.paths";
 
 interface RouteModel {
@@ -33,19 +42,8 @@ interface RouteModel {
 export const appRoutes: RouteModel[] = [
   {
     exact: true,
-    path: PATH_LOGIN,
-    component: Login
-  },
-  {
-    exact: true,
     path: PATH_HOME,
     component: Home
-  },
-
-  {
-    exact: true,
-    path: PATH_SIGNUP,
-    component: Signup
   },
   {
     exact: false,
@@ -94,5 +92,35 @@ export const adminRouter: RouteModel[] = [
     exact: true,
     path: PATH_ADMIN_CATEGORY_UPDATE,
     component: EditCate
+  },
+  {
+    exact: true,
+    path: PATH_ADMIN_PRODUCTS_ADD,
+    component: AddProduct
+  },
+  {
+    exact: true,
+    path: PATH_ADMIN_PRODUCTS_UPDATE,
+    component: EditProduct
+  },
+  {
+    exact: true,
+    path: PATH_ADMIN_ORDERS,
+    component: AdminOrders
+  },
+  {
+    exact: true,
+    path: PATH_ADMIN_ORDERS_DETAIL,
+    component: OrderDetail
+  },
+  {
+    exact: true,
+    path: PATH_ADMIN_MEMBERS,
+    component: Members
+  },
+  {
+    exact: true,
+    path: PATH_ADMIN_MEMBERS_ADD,
+    component: AddMember
   }
 ];

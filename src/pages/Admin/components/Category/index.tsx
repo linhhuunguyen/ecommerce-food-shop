@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -13,6 +13,9 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TablePagination from "@material-ui/core/TablePagination";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import { useAppSelector, useAppDispatch } from "store/hook";
 import {
@@ -23,6 +26,40 @@ import {
 const useStyles = makeStyles({
   table: {
     minWidth: 700
+  },
+  topBox: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: "20px 0",
+    padding: "30px 60px",
+    background: "#fff"
+  },
+  title: {
+    color: "#161f6a",
+    fontSize: "20px",
+    fontWeight: 700
+  },
+  btnAdd: {
+    color: "#fff",
+    padding: "14px 16px",
+    background: "#019376",
+    border: "none",
+    "&:hover": {
+      backgroundColor: "#019376",
+      color: "#fff",
+      border: "none"
+    }
+  },
+  btnEdit: {
+    background: "#fff",
+    color: "#019376",
+    margin: "0 3px"
+  },
+  btnDelete: {
+    background: "#fff",
+    color: "#fc5c63",
+    margin: "0 3px"
   }
 });
 const useButtonStyles = makeStyles((theme: Theme) =>
@@ -42,6 +79,9 @@ export default function AdminCategory() {
   const buttonStyles = useButtonStyles();
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const categories = useAppSelector((state) => state.categories.cateloryList);
+  console.log(categories);
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -56,25 +96,26 @@ export default function AdminCategory() {
 
   useEffect(() => {
     dispatch(getCategorys());
-  }, []);
+  }, [dispatch]);
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: any) => {
     dispatch(deleteCategory(id));
     dispatch(getCategorys());
   };
 
-  const categories = useAppSelector((state) => state.categories.cateloryList);
-  console.log(categories);
-
   return (
     <Container maxWidth="lg" style={{ marginTop: "100px" }}>
-      <Box>
+      <Box className={classes.topBox}>
+        <Box>
+          <Typography className={classes.title}>Category</Typography>
+        </Box>
         <Button
+          className={classes.btnAdd}
           variant="outlined"
           color="primary"
           onClick={() => history.push("category/add")}
         >
-          Add Product
+          Add Category
         </Button>
       </Box>
       <TableContainer component={Paper}>
@@ -97,33 +138,28 @@ export default function AdminCategory() {
                     {category.id}
                   </TableCell>
                   <TableCell align="center">
-                    <img src={category.image} alt="" style={{ width: "20%" }} />
+                    <img src={category.image} alt="" />
                   </TableCell>
                   <TableCell align="left">{category.name}</TableCell>
                   <TableCell align="left">{category.sku}</TableCell>
                   <TableCell align="left">
                     <div className={buttonStyles.root}>
-                      <ButtonGroup
-                        variant="contained"
-                        color="primary"
-                        aria-label="contained primary button group"
-                      >
+                      <Box style={{ display: "flex" }}>
                         <Button
-                          style={{ marginRight: "5px" }}
-                          color="primary"
+                          className={classes.btnEdit}
                           onClick={() =>
                             history.push(`category/update/${category.id}`)
                           }
                         >
-                          Edit
+                          <EditIcon />
                         </Button>
                         <Button
-                          color="secondary"
+                          className={classes.btnDelete}
                           onClick={() => handleDelete(category.id)}
                         >
-                          Delete
+                          <DeleteIcon />
                         </Button>
-                      </ButtonGroup>
+                      </Box>
                     </div>
                   </TableCell>
                 </TableRow>

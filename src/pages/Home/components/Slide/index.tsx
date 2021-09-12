@@ -1,12 +1,13 @@
 import React from "react";
 import Slider from "react-slick";
-import { Box, Container, Typography, makeStyles } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Home1 from "assets/home-img-1.png";
 import Home2 from "assets/home-img-2.png";
 import Home3 from "assets/home-img-3.png";
-
-export interface SlideProps {}
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -34,9 +35,8 @@ const useStyle = makeStyles((theme) => ({
   }
 }));
 
-export default function Slide(props: SlideProps) {
+export default function Slide() {
   const classes = useStyle();
-
   const settings = {
     dots: true,
     infinite: true,

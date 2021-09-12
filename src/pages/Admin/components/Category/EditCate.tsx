@@ -3,30 +3,49 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import { Typography } from "@material-ui/core";
 import { useHistory, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { useAppDispatch, useAppSelector } from "store/hook";
 import {
   getSingleCategory,
-  updateCategory
+  updateCategory,
+  getCategorys
 } from "store/Categories/categories.slice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
       "& > *": {
         margin: theme.spacing(1),
         width: "45ch"
       }
+    },
+    btnAdd: {
+      color: "#fff",
+      width: "130px",
+      padding: "14px 16px",
+      background: "#019376",
+      border: "none",
+      "&:hover": {
+        backgroundColor: "#019376",
+        color: "#fff",
+        border: "none"
+      }
     }
   })
 );
-export interface EditCateProps {}
 
-export default function EditCate(props: EditCateProps) {
+export default function EditCate() {
   const classes = useStyles();
   const dispatch = useAppDispatch();
+  const { singleCategory } = useAppSelector((state) => state.categories);
   const history = useHistory();
   const [category, setCategory] = useState({
     id: uuidv4(),
@@ -36,9 +55,6 @@ export default function EditCate(props: EditCateProps) {
   });
 
   const { id } = useParams<{ id: any }>();
-  console.log(id);
-
-  const { singleCategory } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
     dispatch(getSingleCategory(id));
@@ -75,14 +91,19 @@ export default function EditCate(props: EditCateProps) {
     if (!name || !sku || !image) {
       console.log("errr");
     } else {
-      dispatch(updateCategory(id, category);
-      dispatch(getSingleCategory(id));
+      dispatch(updateCategory({ id, category }));
+      dispatch(getCategorys());
       history.push("/admin/category");
     }
   };
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "100px" }}>
+      <Box padding="20px">
+        <Typography style={{ color: "#161f6a", fontWeight: 700 }}>
+          UPDATE CATEGORY
+        </Typography>
+      </Box>
       <form
         className={classes.root}
         noValidate
@@ -94,6 +115,8 @@ export default function EditCate(props: EditCateProps) {
           label="Name"
           value={name || ""}
           type="text"
+          variant="outlined"
+          required
           onChange={handleNameChange}
         />
         <TextField
@@ -102,6 +125,8 @@ export default function EditCate(props: EditCateProps) {
           value={sku || ""}
           name="Sku"
           type="text"
+          variant="outlined"
+          required
           onChange={handleSkuChange}
         />
         <TextField
@@ -110,16 +135,36 @@ export default function EditCate(props: EditCateProps) {
           value={image || ""}
           name="image"
           type="text"
+          variant="outlined"
+          required
           onChange={handleImageChange}
         />
-        <Button
-          variant="outlined"
-          color="primary"
-          type="submit"
-          onChange={handleInputChange}
-        >
-          Update Category
-        </Button>
+        <Box>
+          <Button
+            className={classes.btnAdd}
+            variant="outlined"
+            color="primary"
+            type="submit"
+            onClick={() => history.push("/admin/category")}
+            style={{
+              marginRight: "20px",
+              color: "#fc5c63",
+              background: "#fff",
+              boxShadow: "0 2px 5px 1px rgb(64 60 67 / 16%)"
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            className={classes.btnAdd}
+            variant="outlined"
+            color="primary"
+            type="submit"
+            onChange={handleInputChange}
+          >
+            Save
+          </Button>
+        </Box>
       </form>
     </Container>
   );

@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Box, Grid } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
 
-export interface SmallBannerProps {}
-
-export default function SmallBanner(props: SmallBannerProps) {
+export default function SmallBanner() {
   return (
     <Container maxWidth="lg" style={{ padding: "90px 0" }}>
       <Grid container spacing={2}>

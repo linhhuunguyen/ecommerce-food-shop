@@ -1,46 +1,78 @@
-import React, { useEffect, useState } from "react";
-import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableFooter from "@material-ui/core/TableFooter";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Container from "@material-ui/core/Container";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import {
+  makeStyles,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+  Button,
+  Container,
+  Box,
+  Typography
+} from "@material-ui/core";
+
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import { useAppSelector, useAppDispatch } from "store/hook";
-import { getProducts } from "store/Products/products.slide";
+import { getProducts, deleteProduct } from "store/Products/products.slide";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 700
+  },
+  topBox: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: "20px 0",
+    padding: "30px 60px",
+    background: "#fff"
+  },
+  title: {
+    color: "#161f6a",
+    fontSize: "20px",
+    fontWeight: 700
+  },
+  btnAdd: {
+    color: "#fff",
+    padding: "14px 16px",
+    background: "#019376",
+    border: "none",
+    "&:hover": {
+      backgroundColor: "#019376",
+      color: "#fff",
+      border: "none"
+    }
+  },
+  btnEdit: {
+    background: "#fff",
+    color: "#019376",
+    margin: "0 3px"
+  },
+  btnDelete: {
+    background: "#fff",
+    color: "#fc5c63",
+    margin: "0 3px"
   }
 });
-const useButtonStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      "& > *": {
-        margin: theme.spacing(1)
-      }
-    }
-  })
-);
 
 export default function AdminProducts() {
   const classes = useStyles();
-  const buttonStyles = useButtonStyles();
-  const [image, setImage] = useState(0);
+  const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const data = useAppSelector((state) => state.products.productsList);
+
+  const products = [...data].reverse();
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -51,16 +83,30 @@ export default function AdminProducts() {
     setPage(0);
   };
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
+  }, []);
 
-  const products = useAppSelector((state) => state.products.productsList);
+  const handleDelete = (id: any) => {
+    dispatch(deleteProduct(id));
+    dispatch(getProducts());
+  };
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "100px" }}>
+      <Box className={classes.topBox}>
+        <Box>
+          <Typography className={classes.title}>Products</Typography>
+        </Box>
+        <Button
+          className={classes.btnAdd}
+          variant="outlined"
+          color="primary"
+          onClick={() => history.push("products/add")}
+        >
+          Add Product
+        </Button>
+      </Box>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -69,6 +115,7 @@ export default function AdminProducts() {
               <TableCell align="center">IMAGE</TableCell>
               <TableCell align="left">NAME</TableCell>
               <TableCell align="center">PRICE</TableCell>
+              <TableCell align="center">QUANTITY</TableCell>
               <TableCell align="center">CATEGORY</TableCell>
               <TableCell align="center">ACTION</TableCell>
             </TableRow>
@@ -76,34 +123,39 @@ export default function AdminProducts() {
           <TableBody>
             {products
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((product, index) => (
+              ?.map((product, index) => (
                 <TableRow key={product.id}>
                   <TableCell component="th" scope="row">
                     {product.id}
                   </TableCell>
                   <TableCell align="center">
                     <img
-                      src={product.images[image]}
+                      src={product.images[0].image}
                       alt=""
                       style={{ width: "50%" }}
                     />
                   </TableCell>
                   <TableCell align="left">{product.name}</TableCell>
                   <TableCell align="center">{product.price}</TableCell>
+                  <TableCell align="center">{product.quantity}</TableCell>
                   <TableCell align="center">{product.category}</TableCell>
                   <TableCell align="left">
-                    <div className={buttonStyles.root}>
-                      <ButtonGroup
-                        variant="contained"
-                        color="primary"
-                        aria-label="contained primary button group"
+                    <Box style={{ display: "flex" }}>
+                      <Button
+                        className={classes.btnEdit}
+                        onClick={() =>
+                          history.push(`products/update/${product.id}`)
+                        }
                       >
-                        <Button style={{ marginRight: "5px" }} color="primary">
-                          Edit
-                        </Button>
-                        <Button color="secondary">Delete</Button>
-                      </ButtonGroup>
-                    </div>
+                        <EditIcon />
+                      </Button>
+                      <Button
+                        className={classes.btnDelete}
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        <DeleteIcon />
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,7 +1,9 @@
 import React from "react";
-import { Container, Grid, Box, Link, makeStyles } from "@material-ui/core";
-
-export interface FooterProps {}
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   titles: {
@@ -11,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Footer(props: FooterProps) {
+export default function Footer() {
   const classes = useStyles();
   return (
     <footer style={{ marginTop: "30px" }}>

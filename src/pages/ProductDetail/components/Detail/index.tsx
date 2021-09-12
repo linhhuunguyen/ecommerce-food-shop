@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Grid, Box, Container, Typography, Button } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 import { useAppDispatch, useAppSelector } from "store/hook";
 import { getProduct } from "store/Products/products.slide";
@@ -8,12 +12,12 @@ import { addToCart } from "store/Cart/cart.slice";
 import ImageGrid from "./ImageGrid";
 import styles from "./Styles.module.css";
 
-export interface DetialProps {}
-
-export default function Detail(props: DetialProps) {
+export default function Detail() {
   const { id } = useParams<{ id: any }>();
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useAppDispatch();
-  const { productDetail } = useAppSelector((state) => state.products);
+  const detail = useAppSelector((state) => state.products.productDetail);
 
   useEffect(() => {
     dispatch(getProduct(id));
@@ -22,9 +26,6 @@ export default function Detail(props: DetialProps) {
   const handleAddToCart = (product: any) => {
     dispatch(addToCart(product));
   };
-
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [quantity, setQuantity] = useState(1);
 
   function decrement() {
     if (quantity <= 1) {
@@ -39,26 +40,24 @@ export default function Detail(props: DetialProps) {
       <Grid container spacing={1}>
         <Grid item sm={1}>
           <ImageGrid
-            images={productDetail.images}
+            images={detail.images}
             onSelect={setSelectedImage}
             selectedImage={selectedImage}
           />
         </Grid>
         <Grid item sm={5}>
-          <img src={productDetail.images[selectedImage]} alt="" width="100%" />
+          <img src={detail.images[selectedImage].image} alt="" width="100%" />
         </Grid>
         <Grid item sm={6}>
           <Box padding="20px 0 0 10px">
             <Box>
               <Typography className={styles.nameStyle}>
-                {productDetail.name}
+                {detail.name}
               </Typography>
               <Typography className={styles.priceStyle}>
-                ${productDetail.price}
+                ${detail.price}
               </Typography>
-              <Typography className={styles.des}>
-                {productDetail.des}
-              </Typography>
+              <Typography className={styles.des}>{detail.des}</Typography>
             </Box>
             <Box marginTop="60px">
               <Button onClick={decrement} className={styles.quantityBtn}>
@@ -75,7 +74,7 @@ export default function Detail(props: DetialProps) {
             <Box marginTop="65px">
               <Button
                 className={styles.addtocartBtn}
-                onClick={() => handleAddToCart(productDetail)}
+                onClick={() => handleAddToCart(detail)}
               >
                 Add to cart
               </Button>

@@ -2,7 +2,7 @@ import { Button, Grid } from "@material-ui/core";
 import React from "react";
 
 export interface ImageGridProps {
-  images: [];
+  images: any;
   onSelect: any;
   selectedImage: any;
 }
@@ -14,10 +14,10 @@ export default function ImageGrid({
 }: ImageGridProps) {
   return (
     <Grid container direction="column" justifyContent="space-between">
-      {images.map((image, index) => (
-        <Button key={image[index]} onClick={() => onSelect(index)}>
+      {images.map((imagelist: any, index: any) => (
+        <Button key={imagelist[index]} onClick={() => onSelect(index)}>
           <img
-            src={image}
+            src={imagelist.image}
             alt=""
             width="100%"
             style={{

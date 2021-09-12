@@ -3,7 +3,10 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import {
   getPrductsList,
   getProductDetail,
-  getPrductsGroup
+  getPrductsGroup,
+  deleteProducts,
+  addProducts,
+  updateProducts
 } from "api/products";
 import { Product } from "types/Product";
 
@@ -31,6 +34,37 @@ export const getProduct = createAsyncThunk(
   }
 );
 
+// add Product
+
+export const addProduct = createAsyncThunk(
+  "product/addProduct",
+  async (product: Product) => {
+    const response = await addProducts(product);
+    return response.data;
+  }
+);
+
+// delete Product
+
+export const deleteProduct = createAsyncThunk(
+  "category/deleteCategory",
+  async (id: any) => {
+    const response = await deleteProducts(id);
+    return response.data;
+  }
+);
+
+// update Products
+
+export const updateProduct = createAsyncThunk(
+  "category/deleteCategory",
+  async (data: any) => {
+    const { id, product } = data;
+    const response = await updateProducts(id, product);
+    return response.data;
+  }
+);
+
 interface initialStateType {
   productsList: Product[];
   getPrductsGroup: Product[];
@@ -47,8 +81,8 @@ const initialState: initialStateType = {
     des: "",
     price: 0,
     category: "",
-    cartQuantity: 1,
-    images: []
+    quantity: 0,
+    images: [{ id: "", image: "" }]
   },
   loading: false
 };
@@ -100,6 +134,56 @@ const productSlide = createSlice({
       state.loading = false;
     },
     [getProduct.rejected.toString()]: (state) => {
+      state.loading = true;
+    },
+
+    // delete Products
+    [deleteProduct.pending.toString()]: (state) => {
+      state.loading = true;
+    },
+    [deleteProduct.fulfilled.toString()]: (
+      state,
+      action: PayloadAction<Product>
+    ) => {
+      if (!action.payload) return;
+      state.productsList = state.productsList.filter(
+        (item: any) => item.id !== action.payload.id
+      );
+      state.loading = false;
+    },
+    [deleteProduct.rejected.toString()]: (state) => {
+      state.loading = true;
+    },
+
+    // add Product
+    [addProduct.pending.toString()]: (state) => {
+      state.loading = true;
+    },
+    [addProduct.fulfilled.toString()]: (
+      state,
+      action: PayloadAction<Product>
+    ) => {
+      if (!action.payload) return;
+      state.productsList.push(action.payload);
+      state.loading = false;
+    },
+    [addProduct.rejected.toString()]: (state) => {
+      state.loading = true;
+    },
+
+    // upadate Product
+    [updateProduct.pending.toString()]: (state) => {
+      state.loading = true;
+    },
+    [updateProduct.fulfilled.toString()]: (
+      state,
+      action: PayloadAction<Product>
+    ) => {
+      if (!action.payload) return;
+      state.productDetail = { ...action.payload };
+      state.loading = false;
+    },
+    [updateProduct.rejected.toString()]: (state) => {
       state.loading = true;
     }
   }

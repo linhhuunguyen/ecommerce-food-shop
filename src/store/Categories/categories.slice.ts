@@ -7,7 +7,10 @@ import {
   getCategory,
   updateCategories
 } from "api/categories";
+
 import { Category } from "types/Category";
+
+// get All Categories
 
 export const getCategorys = createAsyncThunk(
   "categorys/getCategorys",
@@ -17,21 +20,7 @@ export const getCategorys = createAsyncThunk(
   }
 );
 
-export const deleteCategory = createAsyncThunk(
-  "category/deleteCategory",
-  async (id: any) => {
-    const response = await deleteCategories(id);
-    return response.data;
-  }
-);
-
-export const addCategory = createAsyncThunk(
-  "category/addcategory",
-  async (cate: any) => {
-    const response = await addCategories(cate);
-    return response.data;
-  }
-);
+// getSingle Category
 
 export const getSingleCategory = createAsyncThunk(
   "category/getSingleCategory",
@@ -41,10 +30,33 @@ export const getSingleCategory = createAsyncThunk(
   }
 );
 
+// delete Category
+
+export const deleteCategory = createAsyncThunk(
+  "category/deleteCategory",
+  async (id: any) => {
+    const response = await deleteCategories(id);
+    return response.data;
+  }
+);
+
+// add Category
+
+export const addCategory = createAsyncThunk(
+  "category/addcategory",
+  async (category: Category) => {
+    const response = await addCategories(category);
+    return response.data;
+  }
+);
+
+// upDate Category
+
 export const updateCategory = createAsyncThunk(
   "category/updateCategory",
-  async (id: any, cate: any) => {
-    const response = await updateCategories(id, cate);
+  async (data: any) => {
+    const { id, category } = data;
+    const response = await updateCategories(id, category);
     return response.data;
   }
 );
@@ -98,7 +110,6 @@ const categorySlice = createSlice({
       state.cateloryList = state.cateloryList.filter(
         (item: any) => item.id !== action.payload
       );
-
       state.loading = false;
     },
     [deleteCategory.rejected.toString()]: (state) => {
@@ -111,8 +122,7 @@ const categorySlice = createSlice({
     },
     [addCategory.fulfilled.toString()](state, action: PayloadAction<Category>) {
       if (!action.payload) return;
-      state.cateloryList.push(action.payload);
-
+      state.cateloryList.unshift(action.payload);
       state.loading = false;
     },
     [addCategory.rejected.toString()]: (state) => {
@@ -130,8 +140,6 @@ const categorySlice = createSlice({
       if (!action.payload) return;
       state.singleCategory = { ...action.payload };
       state.loading = false;
-
-      state.loading = false;
     },
     [getSingleCategory.rejected.toString()]: (state) => {
       state.loading = false;
@@ -147,8 +155,6 @@ const categorySlice = createSlice({
     ) {
       if (!action.payload) return;
       state.singleCategory = { ...action.payload };
-      state.loading = false;
-
       state.loading = false;
     },
     [updateCategory.rejected.toString()]: (state) => {

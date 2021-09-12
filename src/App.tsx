@@ -1,15 +1,35 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import "./App.css";
-import AdminLayout from "layout/AdminLayout";
-import AppLayout from "./layout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AdminLogin } from "pages/Admin/components";
+import { AppLayout, AdminLayout } from "layout";
 
 function App() {
   return (
     <div className="App">
       <Router>
+        <ToastContainer />
         <Switch>
-          <Route path="/admin" component={AdminLayout} />
+          <Route exact path="/admin/login" component={AdminLogin} />
+          <Route
+            path="/admin"
+            render={() =>
+              localStorage.getItem("accessToken") &&
+              localStorage.getItem("admin") ? (
+                <AdminLayout />
+              ) : (
+                <Redirect to="/admin/login" />
+              )
+            }
+          />
+
           <Route path="/" component={AppLayout} />
         </Switch>
       </Router>

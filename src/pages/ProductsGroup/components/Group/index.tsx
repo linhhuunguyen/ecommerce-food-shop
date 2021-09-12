@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "store/hook";
 import {
@@ -8,7 +8,8 @@ import {
   makeStyles,
   createStyles,
   Theme,
-  Grid
+  Grid,
+  Button
 } from "@material-ui/core";
 
 import { getGroup } from "store/Products/products.slide";
@@ -36,12 +37,25 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#0d1136",
       fontSize: "16px",
       fontWeight: 600
+    },
+    btnLoadMore: {
+      color: "#fff",
+      background: "#019376",
+      borderColor: "#019376",
+      marginTop: "15px",
+      fontSize: "13px",
+      "&:hover": {
+        backgroundColor: "#019376",
+        color: "#fff",
+        border: "none"
+      }
     }
   })
 );
 
 export default function Group(props: GroupProps) {
   const classes = useStyles();
+  const [visible, setVisible] = useState(30);
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const cate: any = searchParams.get("category");
@@ -51,19 +65,23 @@ export default function Group(props: GroupProps) {
     dispatch(getGroup(cate));
   }, [dispatch, cate]);
 
+  const loadMore = () => {
+    setVisible(visible + 10);
+  };
+
   const products = useAppSelector((state) => state.products.productsList);
 
   return (
     <Container maxWidth="lg">
       <Grid container spacing={2}>
-        {products.map((product: any) => (
+        {products.slice(0, visible).map((product: any) => (
           <Grid item xs={12} sm={3} spacing={2} key={product.id}>
             <Link to={`/products/${product.id}`}>
               <Box className={classes.root}>
                 <Box>
                   <Box>
                     <img
-                      src={product.images[0]}
+                      src={product.images[0].image}
                       alt=""
                       style={{ height: "100%", width: "100%" }}
                     />
@@ -82,6 +100,13 @@ export default function Group(props: GroupProps) {
           </Grid>
         ))}
       </Grid>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        {visible < products.length && (
+          <Button onClick={loadMore} className={classes.btnLoadMore}>
+            Load More
+          </Button>
+        )}
+      </Box>
     </Container>
   );
 }

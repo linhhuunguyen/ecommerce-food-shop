@@ -65,38 +65,62 @@ export default function Search(props: SearchProps) {
 
   const filterProducts = products.filter((value) => value.name.includes(q));
 
-  console.log(typeof filterProducts);
+  console.log(filterProducts);
 
   return (
     <Container maxWidth="lg" className={classes.root}>
       <h1 className={classes.h1Style}>Search results for`{q}`</h1>
-      <Grid container spacing={2}>
-        {filterProducts.map((product: any) => (
-          <Grid item xs={12} sm={2} spacing={2} key={product.id}>
-            <Link to={`/products/${product.id}`}>
-              <Box className={classes.products}>
-                <Box>
+      {filterProducts.length === 0 ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+        >
+          <Typography
+            style={{
+              fontSize: "20px",
+              fontWeight: 500,
+              marginBottom: "30px"
+            }}
+          >
+            We can't find any products
+          </Typography>
+          <img
+            src="https://chozoi.vn/assets/images/searchnotresult.png"
+            style={{ width: "35%" }}
+            alt=""
+          />
+        </Box>
+      ) : (
+        <Grid container spacing={2}>
+          {filterProducts.map((product: any) => (
+            <Grid item xs={12} sm={2} spacing={2} key={product.id}>
+              <Link to={`/products/${product.id}`}>
+                <Box className={classes.products}>
                   <Box>
-                    <img
-                      src={product.images[0]}
-                      alt=""
-                      style={{ height: "100%", width: "100%" }}
-                    />
+                    <Box>
+                      <img
+                        src={product.images[0].image}
+                        alt=""
+                        style={{ height: "100%", width: "100%" }}
+                      />
+                    </Box>
+                  </Box>
+                  <Box className={classes.contentStyle}>
+                    <Typography className={classes.priceStyle}>
+                      ${product.price}
+                    </Typography>
+                    <Typography className={classes.titleStyle}>
+                      {product.name}
+                    </Typography>
                   </Box>
                 </Box>
-                <Box className={classes.contentStyle}>
-                  <Typography className={classes.priceStyle}>
-                    ${product.price}
-                  </Typography>
-                  <Typography className={classes.titleStyle}>
-                    {product.name}
-                  </Typography>
-                </Box>
-              </Box>
-            </Link>
-          </Grid>
-        ))}
-      </Grid>
+              </Link>
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </Container>
   );
 }

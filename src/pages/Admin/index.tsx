@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Dashboard } from "./components";
 
-export interface AdminProps {}
-
-export default function Admin(props: AdminProps) {
-  return <h1>admin</h1>;
+export default function Admin() {
+  return <Dashboard />;
 }

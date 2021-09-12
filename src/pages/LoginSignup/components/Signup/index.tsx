@@ -1,25 +1,28 @@
-import React from "react";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  Typography,
-  TextField,
-  Button,
-  makeStyles,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-  Checkbox
-} from "@material-ui/core";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormLabel from "@material-ui/core/FormLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+
+import { addMembers } from "store/User/user.slice";
+import { useAppDispatch } from "store/hook";
 
 const useStyle = makeStyles((theme) => ({
   paperStyle: {
-    padding: 30,
-    width: 300,
+    padding: 22,
+    width: 455,
     margin: "0 auto"
   },
   avatarStyle: {
@@ -30,6 +33,36 @@ const useStyle = makeStyles((theme) => ({
   },
   marginTop: {
     marginTop: 5
+  },
+  logo: {
+    marginTop: "15px",
+    fontWeight: "bold"
+  },
+  box: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    margin: "15px 0"
+  },
+  textBox: {
+    margin: "8px 0"
+  },
+  genderBox: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  btnSubmit: {
+    color: "#fff",
+    width: "100%",
+    padding: "10px",
+    background: "#019376",
+    border: "none",
+    "&:hover": {
+      backgroundColor: "#019376",
+      color: "#fff",
+      border: "none"
+    }
   }
 }));
 
@@ -37,28 +70,104 @@ export interface SignupProps {}
 
 export default function Signup(props: SignupProps) {
   const classes = useStyle();
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+  const [check, setCheck] = useState({ confirmPassword: "" });
+  const [buyer, setBuyer] = useState({
+    fullname: "",
+    contact: "",
+    address: "",
+    gender: "",
+    email: "",
+    password: "",
+    avatar: "",
+    role: "buyer"
+  });
+  const { fullname, contact, address, gender, email, password, role, avatar } =
+    buyer;
+
+  const handleConfirmPassword = (e: any) => {
+    setCheck({ ...check, confirmPassword: e.target.value });
+  };
+  const handleInputChange = (e: any) => {
+    const { value } = e.target;
+    setBuyer({ ...buyer, [e.target.name]: value });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (buyer.password === check.confirmPassword) {
+      await dispatch(addMembers(buyer));
+      alert("thanh công");
+    } else {
+      alert("sai mat khau");
+    }
+  };
   return (
     <div>
       <Grid>
         <Paper className={classes.paperStyle}>
-          <Grid>
-            <Avatar className={classes.avatarStyle}>
-              <AddCircleOutlineOutlinedIcon />
-            </Avatar>
-            <h2 className={classes.hederStyle}>Sign Up</h2>
-            <Typography variant="caption" gutterBottom>
-              Please fill this form to create an account !
+          <Box className={classes.box}>
+            <Typography style={{ fontWeight: 500 }}>Welcome To</Typography>
+            <Typography variant="h4" noWrap className={classes.logo}>
+              <span style={{ color: "#161f6a" }}>Pick</span>
+              <span style={{ color: "#019376" }}>Bazar</span>
             </Typography>
-          </Grid>
-          <form>
-            <TextField fullWidth label="Name" placeholder="Enter your name" />
-            <TextField fullWidth label="Email" placeholder="Enter your email" />
-            <FormControl component="fieldset" className={classes.marginTop}>
+          </Box>
+          <form autoComplete="off" onSubmit={handleSubmit}>
+            <Grid container spacing={1}>
+              <Grid item sm={7}>
+                <TextField
+                  className={classes.textBox}
+                  value={fullname}
+                  name="fullname"
+                  type="text"
+                  fullWidth
+                  size="small"
+                  required
+                  variant="outlined"
+                  label="Full Name"
+                  placeholder="Enter your name"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item sm={5}>
+                <TextField
+                  className={classes.textBox}
+                  fullWidth
+                  size="small"
+                  label="Phone Number"
+                  placeholder="Enter your phone number"
+                  value={contact}
+                  name="contact"
+                  type="number"
+                  required
+                  variant="outlined"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+            </Grid>
+            <TextField
+              className={classes.textBox}
+              value={address}
+              name="address"
+              type="text"
+              fullWidth
+              size="small"
+              required
+              variant="outlined"
+              label="Address"
+              placeholder="Enter your name"
+              onChange={handleInputChange}
+            />
+            <FormControl component="fieldset">
               <FormLabel component="legend">Gender</FormLabel>
               <RadioGroup
+                className={classes.genderBox}
                 aria-label="gender"
                 name="gender"
-                style={{ display: "initial" }}
+                value={gender}
+                onChange={handleInputChange}
               >
                 <FormControlLabel
                   value="female"
@@ -70,28 +179,59 @@ export default function Signup(props: SignupProps) {
                   control={<Radio />}
                   label="Male"
                 />
+                <FormControlLabel
+                  value="other"
+                  control={<Radio />}
+                  label="Other"
+                />
               </RadioGroup>
             </FormControl>
             <TextField
+              className={classes.textBox}
               fullWidth
-              label="Phone Number"
-              placeholder="Enter your phone number"
+              size="small"
+              label="Email"
+              placeholder="Enter your email"
+              value={email}
+              name="email"
+              type="text"
+              required
+              variant="outlined"
+              onChange={handleInputChange}
             />
-            <TextField
-              fullWidth
-              label="Password"
-              placeholder="Enter your password"
-            />
-            <TextField
-              fullWidth
-              label="Confirm Password"
-              placeholder="Confirm your password"
-            />
-            <FormControlLabel
-              control={<Checkbox name="checkedA" />}
-              label="I accept the terms and conditions."
-            />
-            <Button type="submit" variant="contained" color="primary">
+            <Grid container spacing={1}>
+              <Grid item sm={6}>
+                <TextField
+                  className={classes.textBox}
+                  fullWidth
+                  size="small"
+                  label="Password"
+                  placeholder="Enter your password"
+                  value={password}
+                  name="password"
+                  type="password"
+                  required
+                  variant="outlined"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item sm={6}>
+                <TextField
+                  className={classes.textBox}
+                  fullWidth
+                  size="small"
+                  label="Confirm Password"
+                  placeholder="Confirm your password"
+                  value={check.confirmPassword}
+                  name="confirmPassword"
+                  type="password"
+                  required
+                  variant="outlined"
+                  onChange={handleConfirmPassword}
+                />
+              </Grid>
+            </Grid>
+            <Button type="submit" className={classes.btnSubmit}>
               Sign up
             </Button>
           </form>

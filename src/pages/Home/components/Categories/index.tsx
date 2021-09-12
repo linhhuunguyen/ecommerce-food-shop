@@ -1,18 +1,14 @@
 import React, { useEffect } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  Container,
-  Typography,
-  makeStyles,
-  Button
-} from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { useAppSelector, useAppDispatch } from "store/hook";
-
 import { getCategorys } from "store/Categories/categories.slice";
-
-export interface CategoriesProps {}
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -61,7 +57,7 @@ function SampleArrow(props: any) {
   );
 }
 
-export default function Categories(props: CategoriesProps) {
+export default function Categories() {
   const classes = useStyle();
   const settings = {
     dots: false,
