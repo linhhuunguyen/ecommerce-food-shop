@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import {
   getCategoryList,
@@ -6,14 +6,14 @@ import {
   addCategories,
   getCategory,
   updateCategories
-} from "api/categories";
+} from 'api/categories';
 
-import { Category } from "types/Category";
+import { Category } from 'types/Category';
 
 // get All Categories
 
 export const getCategorys = createAsyncThunk(
-  "categorys/getCategorys",
+  'categorys/getCategorys',
   async () => {
     const response = await getCategoryList();
     return response.data;
@@ -23,7 +23,7 @@ export const getCategorys = createAsyncThunk(
 // getSingle Category
 
 export const getSingleCategory = createAsyncThunk(
-  "category/getSingleCategory",
+  'category/getSingleCategory',
   async (id: any) => {
     const response = await getCategory(id);
     return response.data;
@@ -33,7 +33,7 @@ export const getSingleCategory = createAsyncThunk(
 // delete Category
 
 export const deleteCategory = createAsyncThunk(
-  "category/deleteCategory",
+  'category/deleteCategory',
   async (id: any) => {
     const response = await deleteCategories(id);
     return response.data;
@@ -43,7 +43,7 @@ export const deleteCategory = createAsyncThunk(
 // add Category
 
 export const addCategory = createAsyncThunk(
-  "category/addcategory",
+  'category/addcategory',
   async (category: Category) => {
     const response = await addCategories(category);
     return response.data;
@@ -53,7 +53,7 @@ export const addCategory = createAsyncThunk(
 // upDate Category
 
 export const updateCategory = createAsyncThunk(
-  "category/updateCategory",
+  'category/updateCategory',
   async (data: any) => {
     const { id, category } = data;
     const response = await updateCategories(id, category);
@@ -70,16 +70,16 @@ interface InitialStateType {
 const initialState: InitialStateType = {
   cateloryList: [],
   singleCategory: {
-    id: "",
-    name: "",
-    sku: "",
-    image: ""
+    id: '',
+    name: '',
+    sku: '',
+    image: ''
   },
   loading: false
 };
 
 const categorySlice = createSlice({
-  name: "categories",
+  name: 'categories',
   initialState,
   reducers: {},
   extraReducers: {

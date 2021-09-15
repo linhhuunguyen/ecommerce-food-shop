@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -8,70 +8,70 @@ import {
   createStyles,
   Theme,
   Grid
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import BubbleChartOutlinedIcon from "@material-ui/icons/BubbleChartOutlined";
-import PinDropOutlinedIcon from "@material-ui/icons/PinDropOutlined";
-import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import BubbleChartOutlinedIcon from '@material-ui/icons/BubbleChartOutlined';
+import PinDropOutlinedIcon from '@material-ui/icons/PinDropOutlined';
+import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 
-import { useAppSelector, useAppDispatch } from "store/hook";
-import { getOrder } from "store/Orders/orders.slice";
+import { useAppSelector, useAppDispatch } from 'store/hook';
+import { getOrder } from 'store/Orders/orders.slice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "30px",
-      justifyContent: "flex-end"
+      marginTop: '30px',
+      justifyContent: 'flex-end'
     },
     cartTitle: {
-      background: "#fff",
-      padding: "10px",
-      marginBottom: "20px"
+      background: '#fff',
+      padding: '10px',
+      marginBottom: '20px'
     },
     cartItem: {
-      background: "#fff",
-      marginBottom: "15px",
-      boxShadow: "#64646f33 0px 7px 29px 0px"
+      background: '#fff',
+      marginBottom: '15px',
+      boxShadow: '#64646f33 0px 7px 29px 0px'
     },
     priceProduct: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     priceContent: {
-      color: "#fe3834",
-      fontSize: "25px",
+      color: '#fe3834',
+      fontSize: '25px',
       fontWeight: 400,
-      marginLeft: "20px"
+      marginLeft: '20px'
     },
     main: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     valueQuantity: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minWidth: "38px"
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minWidth: '38px'
     },
     totalItem: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      background: "#fff",
-      padding: "20px",
-      boxShadow: "#64646f33 0px 7px 29px 0px"
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      background: '#fff',
+      padding: '20px',
+      boxShadow: '#64646f33 0px 7px 29px 0px'
     },
     total: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     boxInfo: {
-      background: "#fff",
-      padding: "15px",
-      boxShadow: "#64646f33 0px 7px 29px 0px"
+      background: '#fff',
+      padding: '15px',
+      boxShadow: '#64646f33 0px 7px 29px 0px'
     }
   })
 );
@@ -89,45 +89,45 @@ export default function OrderDetail() {
   return (
     <Container
       maxWidth="lg"
-      style={{ marginTop: "100px", marginBottom: "20px" }}
+      style={{ marginTop: '100px', marginBottom: '20px' }}
     >
       <Box className={classes.boxInfo}>
         <Box my={2}>
           <Box display="flex" alignItems="center" mb={1.5}>
-            <BubbleChartOutlinedIcon style={{ color: "#019376" }} />
-            <Typography style={{ fontWeight: 500, marginLeft: "10px" }}>
+            <BubbleChartOutlinedIcon style={{ color: '#019376' }} />
+            <Typography style={{ fontWeight: 500, marginLeft: '10px' }}>
               Order ID
             </Typography>
           </Box>
-          <Typography style={{ color: "#666", marginLeft: "35px" }}>
-            {orderDetail.id}
+          <Typography style={{ color: '#666', marginLeft: '35px' }}>
+            #{orderDetail.id.toUpperCase()}
           </Typography>
         </Box>
         <Box my={2}>
           <Box display="flex" alignItems="center" mb={1.5}>
-            <PersonOutlineOutlinedIcon style={{ color: "#019376" }} />
-            <Typography style={{ fontWeight: 500, marginLeft: "10px" }}>
+            <PersonOutlineOutlinedIcon style={{ color: '#019376' }} />
+            <Typography style={{ fontWeight: 500, marginLeft: '10px' }}>
               Customer information
             </Typography>
           </Box>
-          <Typography style={{ color: "#666", marginLeft: "35px" }}>
+          <Typography style={{ color: '#666', marginLeft: '35px' }}>
             Name: {orderDetail.info.name}
           </Typography>
-          <Typography style={{ color: "#666", marginLeft: "35px" }}>
+          <Typography style={{ color: '#666', marginLeft: '35px' }}>
             Phone: {orderDetail.info.phone}
           </Typography>
-          <Typography style={{ color: "#666", marginLeft: "35px" }}>
+          <Typography style={{ color: '#666', marginLeft: '35px' }}>
             Email: {orderDetail.info.email}
           </Typography>
         </Box>
         <Box my={2}>
           <Box display="flex" alignItems="center" mb={1.5}>
-            <PinDropOutlinedIcon style={{ color: "#019376" }} />
-            <Typography style={{ fontWeight: 500, marginLeft: "10px" }}>
+            <PinDropOutlinedIcon style={{ color: '#019376' }} />
+            <Typography style={{ fontWeight: 500, marginLeft: '10px' }}>
               Delivery address
             </Typography>
           </Box>
-          <Typography style={{ color: "#666", marginLeft: "35px" }}>
+          <Typography style={{ color: '#666', marginLeft: '35px' }}>
             Address: {orderDetail.info.address}
           </Typography>
         </Box>
@@ -173,7 +173,7 @@ export default function OrderDetail() {
                 </Box>
               </Grid>
               <Grid item sm={1} className={classes.total}>
-                <Typography style={{ fontSize: "18px", fontWeight: 500 }}>
+                <Typography style={{ fontSize: '18px', fontWeight: 500 }}>
                   $
                   {parseFloat(
                     (cartItem.price * cartItem.cartQuantity).toFixed(2)

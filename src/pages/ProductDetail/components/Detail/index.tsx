@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
-import { useAppDispatch, useAppSelector } from "store/hook";
-import { getProduct } from "store/Products/products.slide";
-import { addToCart } from "store/Cart/cart.slice";
-import ImageGrid from "./ImageGrid";
-import styles from "./Styles.module.css";
+import { useAppDispatch, useAppSelector } from 'store/hook';
+import { getProduct } from 'store/Products/products.slide';
+import { addToCart } from 'store/Cart/cart.slice';
+import ImageGrid from './ImageGrid';
+import styles from './Styles.module.css';
 
 export default function Detail() {
   const { id } = useParams<{ id: any }>();
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const dispatch = useAppDispatch();
   const detail = useAppSelector((state) => state.products.productDetail);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getProduct(id));
@@ -27,16 +26,8 @@ export default function Detail() {
     dispatch(addToCart(product));
   };
 
-  function decrement() {
-    if (quantity <= 1) {
-      setQuantity(1);
-    } else {
-      setQuantity(quantity - 1);
-    }
-  }
-
   return (
-    <Container maxWidth="lg" style={{ paddingTop: "100px" }}>
+    <Container maxWidth="lg" style={{ paddingTop: '100px' }}>
       <Grid container spacing={1}>
         <Grid item sm={1}>
           <ImageGrid
@@ -58,18 +49,6 @@ export default function Detail() {
                 ${detail.price}
               </Typography>
               <Typography className={styles.des}>{detail.des}</Typography>
-            </Box>
-            <Box marginTop="60px">
-              <Button onClick={decrement} className={styles.quantityBtn}>
-                -
-              </Button>
-              <input value={quantity} className={styles.quantityInput} />
-              <Button
-                onClick={() => setQuantity(quantity + 1)}
-                className={styles.quantityBtn}
-              >
-                +
-              </Button>
             </Box>
             <Box marginTop="65px">
               <Button

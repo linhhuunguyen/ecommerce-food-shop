@@ -1,45 +1,38 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import { Typography } from "@material-ui/core";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import { Typography } from '@material-ui/core';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
-import { addMembers, getMembers } from "store/User/user.slice";
-import { useAppDispatch } from "store/hook";
+import { ButtonWrap, ButtonCanelWrap } from 'components/FormsUI';
+import { addMembers, getMembers } from 'store/User/user.slice';
+import { useAppDispatch } from 'store/hook';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      "& > *": {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      '& > *': {
         margin: theme.spacing(1),
-        width: "45ch"
+        width: '45ch'
       }
     },
-    btnAdd: {
-      color: "#fff",
-      width: "130px",
-      padding: "14px 16px",
-      background: "#019376",
-      border: "none",
-      "&:hover": {
-        backgroundColor: "#019376",
-        color: "#fff",
-        border: "none"
-      }
+    genderBox: {
+      display: 'flex',
+      flexDirection: 'row'
     }
   })
 );
@@ -49,15 +42,15 @@ export default function AddMember() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [member, setMember] = useState({
-    fullname: "",
-    contact: "",
-    address: "",
-    gender: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    avatar: "",
-    role: ""
+    fullname: '',
+    contact: '',
+    address: '',
+    gender: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    avatar: '',
+    role: ''
   });
 
   const handleInputChange = (e: any) => {
@@ -77,7 +70,7 @@ export default function AddMember() {
     avatar
   } = member;
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (member.password === member.confirmPassword) {
       dispatch(
@@ -92,17 +85,23 @@ export default function AddMember() {
           role
         })
       );
-      dispatch(getMembers());
-      history.push("/admin/members");
+      await dispatch(getMembers());
+      toast.success('Add Member Success', {
+        theme: 'colored',
+        position: 'top-right'
+      });
+      history.push('/admin/members');
     } else {
-      alert("sai mat khau");
+      toast.error('Notify! Wrong account or password !', {
+        icon: false
+      });
     }
   };
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: "100px" }}>
+    <Container maxWidth="lg" style={{ marginTop: '100px' }}>
       <Box padding="20px">
-        <Typography style={{ color: "#161f6a", fontWeight: 700 }}>
+        <Typography style={{ color: '#161f6a', fontWeight: 700 }}>
           ADD Members
         </Typography>
       </Box>
@@ -126,7 +125,7 @@ export default function AddMember() {
             type="number"
             variant="outlined"
             size="small"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: '10px' }}
             required
             onChange={handleInputChange}
           />
@@ -141,8 +140,8 @@ export default function AddMember() {
             <MenuItem value="" disabled>
               Role
             </MenuItem>
-            <MenuItem value={"admin"}>Admin</MenuItem>
-            <MenuItem value={"buyer"}>Buyer</MenuItem>
+            <MenuItem value={'admin'}>Admin</MenuItem>
+            <MenuItem value={'buyer'}>Buyer</MenuItem>
           </Select>
         </Box>
         <TextField
@@ -159,6 +158,7 @@ export default function AddMember() {
         <FormControl component="fieldset">
           <FormLabel component="legend">Gender</FormLabel>
           <RadioGroup
+            className={classes.genderBox}
             aria-label="gender"
             name="gender"
             value={gender}
@@ -218,30 +218,12 @@ export default function AddMember() {
           onChange={handleInputChange}
         />
         <Box>
-          <Button
-            className={classes.btnAdd}
-            variant="outlined"
-            color="primary"
-            type="submit"
-            onClick={() => history.push("/admin/members")}
-            style={{
-              marginRight: "20px",
-              color: "#fc5c63",
-              background: "#fff",
-              boxShadow: "0 2px 5px 1px rgb(64 60 67 / 16%)"
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            className={classes.btnAdd}
-            variant="outlined"
-            color="primary"
-            type="submit"
-            onChange={handleInputChange}
-          >
-            Save
-          </Button>
+          <ButtonCanelWrap
+            name="Cancel"
+            width="130px"
+            handle={() => history.push('/admin/members')}
+          />
+          <ButtonWrap name="Save" width="130px" />
         </Box>
       </form>
     </Container>

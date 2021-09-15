@@ -1,9 +1,9 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 
-import { adminRouter } from "router/routes.routes";
-import { Topbar, Siderbar } from "components";
+import { adminRouter } from 'router/routes.routes';
+import { Topbar, Siderbar } from 'components';
 
 export default function AdminLayout() {
   const renderRoutes = (routes: typeof adminRouter) =>

@@ -1,12 +1,12 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
-import { Login, Signup } from "./components";
+import { Login, Signup } from './components';
 
 export interface LoginSignupProps {
   num: number;
@@ -22,10 +22,10 @@ const useStyles = makeStyles((theme) => ({
   paperStyle: {
     width: 500,
     padding: 0,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-between"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 }));
 
@@ -64,7 +64,7 @@ export default function LoginSignup({ num }: LoginSignupProps) {
         onChange={handleChange}
         aria-label="disabled tabs example"
       >
-        <Tab label="SIGN IN" />
+        <Tab label="LOGIN IN" />
         <Tab label="SIGN UP" />
       </Tabs>
       <TabPanel value={value} index={0}>

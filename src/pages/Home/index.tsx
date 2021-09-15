@@ -1,5 +1,5 @@
-import React from "react";
-import { Categories, Slide, Products, SmallBanner } from "./components";
+import React from 'react';
+import { Categories, Slide, Products, SmallBanner } from './components';
 
 export interface HomeProps {}
 

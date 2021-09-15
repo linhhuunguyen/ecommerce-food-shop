@@ -1,27 +1,30 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { getOrdersList, addOrder, getOrderDetail } from "api/order";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { getOrdersList, addOrder, getOrderDetail } from 'api/order';
 
-import { Order } from "types/Order";
+import { Order } from 'types/Order';
 
 // get all orders
 
-export const getOrders = createAsyncThunk("orders/getOrders", async () => {
+export const getOrders = createAsyncThunk('orders/getOrders', async () => {
   const response = await getOrdersList();
   return response.data;
 });
 
 // get order Detail
 
-export const getOrder = createAsyncThunk("orders/getOrder", async (id: any) => {
-  const response = await getOrderDetail(id);
-  return response.data;
-});
+export const getOrder = createAsyncThunk(
+  'orders/getOrder',
+  async (id: string) => {
+    const response = await getOrderDetail(id);
+    return response.data;
+  }
+);
 
 // add orders
 
 export const addOrders = createAsyncThunk(
-  "orders/addOrder",
-  async (order: any) => {
+  'orders/addOrder',
+  async (order: Order) => {
     const response = await addOrder(order);
     return response.data;
   }
@@ -36,15 +39,34 @@ interface InitialStateType {
 const initialState: InitialStateType = {
   orderList: [],
   singleOrder: {
-    id: "",
-    info: {},
-    orderItem: {}
+    id: '',
+    info: {
+      name: '',
+      phone: '',
+      email: '',
+      address: ''
+    },
+    orderItem: {
+      cartItems: [
+        {
+          id: '',
+          name: '',
+          des: '',
+          price: 0,
+          category: '',
+          quantity: 0,
+          images: [{ idI: '', image: '' }],
+          cartQuantity: 0
+        }
+      ],
+      cartTotalAmount: 0
+    }
   },
   loading: false
 };
 
 const orderSlice = createSlice({
-  name: "orders",
+  name: 'orders',
   initialState,
   reducers: {},
   extraReducers: {

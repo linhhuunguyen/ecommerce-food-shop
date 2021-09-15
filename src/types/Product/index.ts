@@ -5,5 +5,10 @@ export interface Product {
   price: number;
   category: string;
   quantity: number;
-  images: any;
+  images: Images[];
+}
+
+interface Images {
+  idI: any;
+  image: string;
 }

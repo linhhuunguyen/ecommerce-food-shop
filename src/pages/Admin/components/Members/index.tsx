@@ -1,61 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router";
-import { useAppDispatch, useAppSelector } from "store/hook";
-import { getMembers, deleteMembers } from "store/User/user.slice";
-import {
-  makeStyles,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TablePagination,
-  Button,
-  Container,
-  Box,
-  Typography
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router';
+import { useAppDispatch, useAppSelector } from 'store/hook';
+import { getMembers, deleteMembers } from 'store/User/user.slice';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import TablePagination from '@material-ui/core/TablePagination';
+import Container from '@material-ui/core/Container';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import { TopBox } from 'components/FormsUI';
+import { Popup } from 'components';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 700
-  },
-  topBox: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    margin: "20px 0",
-    padding: "30px 60px",
-    background: "#fff"
-  },
-  title: {
-    color: "#161f6a",
-    fontSize: "20px",
-    fontWeight: 700
-  },
-  btnAdd: {
-    color: "#fff",
-    padding: "14px 16px",
-    background: "#019376",
-    border: "none",
-    "&:hover": {
-      backgroundColor: "#019376",
-      color: "#fff",
-      border: "none"
-    }
-  },
-  btnEdit: {
-    background: "#fff",
-    color: "#019376",
-    margin: "0 3px"
-  },
-  btnDelete: {
-    background: "#fff",
-    color: "#fc5c63",
-    margin: "0 3px"
   }
 });
 
@@ -82,25 +47,17 @@ export default function Members() {
     dispath(getMembers());
   }, [getMembers]);
 
-  const handleDelete = (id: number) => {
-    dispath(deleteMembers(id));
+  const handleDelete = async (id: number) => {
+    await dispath(deleteMembers(id));
     dispath(getMembers());
   };
   return (
-    <Container maxWidth="lg" style={{ marginTop: "100px" }}>
-      <Box className={classes.topBox}>
-        <Box>
-          <Typography className={classes.title}>Staff Members</Typography>
-        </Box>
-        <Button
-          className={classes.btnAdd}
-          variant="outlined"
-          color="primary"
-          onClick={() => history.push("members/add")}
-        >
-          Add Members
-        </Button>
-      </Box>
+    <Container maxWidth="lg" style={{ marginTop: '100px' }}>
+      <TopBox
+        title="Staff Members"
+        nameButton="Add Members"
+        handle={() => history.push('members/add')}
+      />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -119,19 +76,20 @@ export default function Members() {
               ?.map((member, index) => (
                 <TableRow key={member.id}>
                   <TableCell component="th" scope="row">
-                    {member.id}
+                    {index + 1}
                   </TableCell>
                   <TableCell align="left">{member.fullname}</TableCell>
                   <TableCell align="left">{member.email}</TableCell>
                   <TableCell align="left">{member.contact}</TableCell>
                   <TableCell align="center">{member.role}</TableCell>
                   <TableCell align="right">
-                    <Button
-                      className={classes.btnDelete}
-                      onClick={() => handleDelete(member.id)}
-                    >
-                      <DeleteIcon />
-                    </Button>
+                    <Popup
+                      name={<DeleteIcon />}
+                      title="Are you sure to delete this record? "
+                      btnConfirm="Confirm"
+                      btnCanel="Canel"
+                      handleConfirm={() => handleDelete(member.id)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,62 +1,46 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import {
-  TextField,
-  Button,
-  makeStyles,
-  Box,
-  Typography
-} from "@material-ui/core";
-import { useAppDispatch, useAppSelector } from "store/hook";
-import { loginMembers } from "store/User/user.slice";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { Logo } from 'components/Header/components';
+
+import { useAppDispatch } from 'store/hook';
+import { loginMembers } from 'store/User/user.slice';
+import { LoginUer } from 'types/User';
+import { ButtonWrap } from 'components/FormsUI';
 
 const useStyle = makeStyles((theme) => ({
   root: {
-    height: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
+    height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   main: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    background: "#fff",
-    padding: "50px"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    background: '#fff',
+    padding: '50px'
   },
   box: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    margin: "20px 0"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    margin: '20px 0'
   },
   formStyle: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column"
-  },
-  logo: {
-    marginBottom: "20px",
-    fontWeight: "bold"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
   inputStyle: {
-    margin: "10px 0"
-  },
-  btnSubmit: {
-    color: "#fff",
-    width: "100%",
-    padding: "10px",
-    background: "#019376",
-    border: "none",
-    marginTop: "10px",
-    "&:hover": {
-      backgroundColor: "#019376",
-      color: "#fff",
-      border: "none"
-    }
+    margin: '10px 0'
   }
 }));
 
@@ -67,11 +51,9 @@ export default function AdminLogin(props: LoginProps) {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const members = useAppSelector((state) => state.users.userData);
-
-  const [userLogin, setUserLogin] = useState({
-    email: "",
-    password: ""
+  const [userLogin, setUserLogin] = useState<LoginUer>({
+    email: '',
+    password: ''
   });
 
   const { email, password } = userLogin;
@@ -84,17 +66,14 @@ export default function AdminLogin(props: LoginProps) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     await dispatch(loginMembers(userLogin));
-    history.replace("/admin");
+    history.replace('/admin');
   };
 
   return (
     <Box className={classes.root}>
       <Box className={classes.main}>
         <Box className={classes.box}>
-          <Typography variant="h4" noWrap className={classes.logo}>
-            <span style={{ color: "#161f6a" }}>Pick</span>
-            <span style={{ color: "#019376" }}>Bazar</span>
-          </Typography>
+          <Logo link="/admin" />
           <Typography>Login in to admin</Typography>
         </Box>
         <Box className={classes.box}>
@@ -128,15 +107,7 @@ export default function AdminLogin(props: LoginProps) {
               required
               onChange={handleInputChange}
             />
-            <Button
-              className={classes.btnSubmit}
-              variant="outlined"
-              color="primary"
-              type="submit"
-              onChange={handleInputChange}
-            >
-              Submit
-            </Button>
+            <ButtonWrap name="SUBMIT" width="100%" />
           </form>
         </Box>
       </Box>

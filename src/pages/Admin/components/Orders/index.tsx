@@ -1,35 +1,28 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import TablePagination from '@material-ui/core/TablePagination';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 
-import {
-  Button,
-  Container,
-  Box,
-  Typography,
-  makeStyles,
-  createStyles,
-  Theme,
-  Grid,
-  TextField,
-  TableContainer,
-  Table,
-  TableRow,
-  TableHead,
-  TableCell,
-  TableBody,
-  TablePagination,
-  Paper
-} from "@material-ui/core";
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
-import VisibilityIcon from "@material-ui/icons/Visibility";
-
-import { useAppSelector, useAppDispatch } from "store/hook";
-import { getOrders } from "store/Orders/orders.slice";
+import { useAppSelector, useAppDispatch } from 'store/hook';
+import { getOrders } from 'store/Orders/orders.slice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "30px"
+      marginTop: '30px'
     },
     table: {
       minWidth: 700
@@ -62,7 +55,7 @@ export default function AdminOrders() {
   }, [dispatch]);
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: "100px" }}>
+    <Container maxWidth="lg" style={{ marginTop: '100px' }}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -79,7 +72,7 @@ export default function AdminOrders() {
                 <TableRow key={items.id}>
                   <TableCell component="th" scope="row">
                     <Typography style={{ fontWeight: 500 }}>
-                      Order ID: {items.id}
+                      Order ID: #{items.id.toUpperCase()}
                     </Typography>
                     {items.orderItem.cartItems.map((product: any) => (
                       <Grid container key={product.id} alignItems="center">
@@ -87,7 +80,7 @@ export default function AdminOrders() {
                           <Box>
                             <img
                               src={product.images[0].image}
-                              style={{ width: "100%", height: "100%" }}
+                              style={{ width: '100%', height: '100%' }}
                               alt=""
                             />
                           </Box>

@@ -24,3 +24,8 @@ export interface User {
     role: string;
   };
 }
+
+export interface LoginUer {
+  email: string;
+  password: string;
+}

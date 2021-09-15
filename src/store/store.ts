@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import categoriesReducer from "./Categories/categories.slice";
-import productsReducer from "./Products/products.slide";
-import ordersReducer from "./Orders/orders.slice";
-import userReducer from "./User/user.slice";
+import { configureStore } from '@reduxjs/toolkit';
+import categoriesReducer from './Categories/categories.slice';
+import productsReducer from './Products/products.slide';
+import ordersReducer from './Orders/orders.slice';
+import userReducer from './User/user.slice';
 
-import cartReducer from "./Cart/cart.slice";
+import cartReducer from './Cart/cart.slice';
 
 const store = configureStore({
   reducer: {

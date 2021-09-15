@@ -1,5 +1,14 @@
+import { Cart } from "types/Cart";
+
 export interface Order {
-  id: string;
-  info: any;
-  orderItem: any;
+  id: any;
+  info: Info;
+  orderItem: Cart;
+}
+
+export interface Info {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
 }

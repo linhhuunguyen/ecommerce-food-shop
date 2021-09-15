@@ -1,5 +1,5 @@
-import { Button, Grid } from "@material-ui/core";
-import React from "react";
+import { Button, Grid } from '@material-ui/core';
+import React from 'react';
 
 export interface ImageGridProps {
   images: any;
@@ -23,9 +23,9 @@ export default function ImageGrid({
             style={{
               border:
                 index === selectedImage
-                  ? "solid 2px #009e7f"
-                  : "solid 1px #eee",
-              borderRadius: "5px"
+                  ? 'solid 2px #009e7f'
+                  : 'solid 1px #eee',
+              borderRadius: '5px'
             }}
           />
         </Button>

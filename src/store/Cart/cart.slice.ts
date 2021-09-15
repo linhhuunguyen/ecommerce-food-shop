@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
-import { Cart } from "types/Cart";
+import { Cart } from 'types/Cart';
 
 const initialState: Cart = {
   cartItems: [],
@@ -9,7 +9,7 @@ const initialState: Cart = {
 };
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     addToCart(state, action) {
@@ -24,17 +24,17 @@ const cartSlice = createSlice({
         toast.info(
           `Increased ${state.cartItems[existingIndex].name}  quantity`,
           {
-            position: "bottom-left"
+            position: 'bottom-left'
           }
         );
       } else {
         const tempProductItem = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProductItem);
         toast.success(`${action.payload.name} added to cart`, {
-          position: "bottom-left"
+          position: 'bottom-left'
         });
       }
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     removeFromCart(state, action) {
       state.cartItems.map((cartItem: any) => {
@@ -44,17 +44,17 @@ const cartSlice = createSlice({
           );
 
           state.cartItems = nextCartItems;
-          toast.error("Product removed from cart", {
-            position: "bottom-left"
+          toast.error('Product removed from cart', {
+            position: 'bottom-left'
           });
         }
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         return state;
       });
     },
     clearCart(state, action) {
       state.cartItems = [];
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
     decreaseCart(state, action) {
       state.cartItems.map((cartItem: any) => {
@@ -70,20 +70,20 @@ const cartSlice = createSlice({
             );
 
             state.cartItems[existingIndex] = cartItem;
-            toast.info("Decreased product quantity", {
-              position: "bottom-left"
+            toast.info('Decreased product quantity', {
+              position: 'bottom-left'
             });
           } else if (cartItem.cartQuantity === 1) {
             const nextCartItems = state.cartItems.filter(
               (item: any) => item.id !== cartItem.id
             );
             state.cartItems = nextCartItems;
-            toast.error("Product removed from cart", {
-              position: "bottom-left"
+            toast.error('Product removed from cart', {
+              position: 'bottom-left'
             });
           }
         }
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
         return state;
       });
     },

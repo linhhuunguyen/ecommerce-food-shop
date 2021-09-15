@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import {
   getPrductsList,
@@ -7,11 +7,11 @@ import {
   deleteProducts,
   addProducts,
   updateProducts
-} from "api/products";
-import { Product } from "types/Product";
+} from 'api/products';
+import { Product } from 'types/Product';
 
 export const getProducts = createAsyncThunk(
-  "products/getProducts",
+  'products/getProducts',
   async () => {
     const response = await getPrductsList();
     return response.data;
@@ -19,16 +19,16 @@ export const getProducts = createAsyncThunk(
 );
 
 export const getGroup = createAsyncThunk(
-  "productsGroup/getPrductsGroup",
-  async (cate: string = "juice") => {
+  'productsGroup/getPrductsGroup',
+  async (cate: string = 'juice') => {
     const response = await getPrductsGroup(cate);
     return response.data;
   }
 );
 
 export const getProduct = createAsyncThunk(
-  "product/getProduct",
-  async (id: number) => {
+  'product/getProduct',
+  async (id: string) => {
     const response = await getProductDetail(id);
     return response.data;
   }
@@ -37,7 +37,7 @@ export const getProduct = createAsyncThunk(
 // add Product
 
 export const addProduct = createAsyncThunk(
-  "product/addProduct",
+  'product/addProduct',
   async (product: Product) => {
     const response = await addProducts(product);
     return response.data;
@@ -47,8 +47,8 @@ export const addProduct = createAsyncThunk(
 // delete Product
 
 export const deleteProduct = createAsyncThunk(
-  "category/deleteCategory",
-  async (id: any) => {
+  'category/deleteCategory',
+  async (id: string) => {
     const response = await deleteProducts(id);
     return response.data;
   }
@@ -56,9 +56,14 @@ export const deleteProduct = createAsyncThunk(
 
 // update Products
 
+interface UpdateProduct {
+  id: string;
+  product: Product;
+}
+
 export const updateProduct = createAsyncThunk(
-  "category/deleteCategory",
-  async (data: any) => {
+  'category/deleteCategory',
+  async (data: UpdateProduct) => {
     const { id, product } = data;
     const response = await updateProducts(id, product);
     return response.data;
@@ -76,19 +81,19 @@ const initialState: initialStateType = {
   productsList: [],
   getPrductsGroup: [],
   productDetail: {
-    id: 0,
-    name: "",
-    des: "",
+    id: '',
+    name: '',
+    des: '',
     price: 0,
-    category: "",
+    category: '',
     quantity: 0,
-    images: [{ id: "", image: "" }]
+    images: [{ idI: '', image: '' }]
   },
   loading: false
 };
 
 const productSlide = createSlice({
-  name: "products",
+  name: 'products',
   initialState,
   reducers: {},
   extraReducers: {

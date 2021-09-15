@@ -1,52 +1,53 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import { useAppDispatch, useAppSelector } from "store/hook";
-import { getProducts } from "store/Products/products.slide";
+import { useAppDispatch, useAppSelector } from 'store/hook';
+import { getProducts } from 'store/Products/products.slide';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      background: "#fff",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between"
+      background: '#fff',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height: '100%'
     },
     contentStyle: {
-      boxSizing: "border-box",
-      padding: "20px"
+      boxSizing: 'border-box',
+      padding: '20px'
     },
     titleStyle: {
-      color: "#77798c",
-      fontSize: "13px",
+      color: '#77798c',
+      fontSize: '13px',
       fontWeight: 400
     },
     priceStyle: {
-      color: "#0d1136",
-      fontSize: "16px",
+      color: '#0d1136',
+      fontSize: '16px',
       fontWeight: 600
     },
     h1Style: {
-      color: "#192a56",
-      textAlign: "center",
-      margin: "50px 0"
+      color: '#192a56',
+      textAlign: 'center',
+      margin: '50px 0'
     },
     btnLoadMore: {
-      color: "#fff",
-      background: "#019376",
-      borderColor: "#019376",
-      marginTop: "15px",
-      fontSize: "13px",
-      "&:hover": {
-        backgroundColor: "#019376",
-        color: "#fff",
-        border: "none"
+      color: '#fff',
+      background: '#019376',
+      borderColor: '#019376',
+      marginTop: '15px',
+      fontSize: '13px',
+      '&:hover': {
+        backgroundColor: '#019376',
+        color: '#fff',
+        border: 'none'
       }
     }
   })
@@ -80,7 +81,7 @@ export default function Products() {
                     <img
                       src={product.images[0].image}
                       alt=""
-                      style={{ height: "100%", width: "100%" }}
+                      style={{ height: '100%', width: '100%' }}
                     />
                   </Box>
                 </Box>

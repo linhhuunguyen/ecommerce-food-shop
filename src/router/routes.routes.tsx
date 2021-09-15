@@ -1,18 +1,27 @@
-import React, { ComponentType } from "react";
+import React, { ComponentType } from 'react';
 
-import { Home, Admin, ProductDetail, ProductsGroup, Search, Cart } from "pages";
+import {
+  Home,
+  Admin,
+  ProductDetail,
+  ProductsGroup,
+  Search,
+  Cart,
+  NotFound,
+  OrderSuccess
+} from 'pages';
 import {
   AdminProducts,
   AdminCategory,
   AdminOrders,
   Members
-} from "pages/Admin/components";
-import AddCate from "pages/Admin/components/Category/AddCate";
-import EditCate from "pages/Admin/components/Category/EditCate";
-import AddProduct from "pages/Admin/components/Products/AddProduct";
-import EditProduct from "pages/Admin/components/Products/EditProuduct";
-import OrderDetail from "pages/Admin/components/Orders/OrderDetail";
-import AddMember from "pages/Admin/components/Members/AddMembers";
+} from 'pages/Admin/components';
+import AddCate from 'pages/Admin/components/Category/AddCate';
+import EditCate from 'pages/Admin/components/Category/EditCate';
+import AddProduct from 'pages/Admin/components/Products/AddProduct';
+import EditProduct from 'pages/Admin/components/Products/EditProuduct';
+import OrderDetail from 'pages/Admin/components/Orders/OrderDetail';
+import AddMember from 'pages/Admin/components/Members/AddMembers';
 
 import {
   PATH_HOME,
@@ -30,8 +39,9 @@ import {
   PATH_ADMIN_ORDERS,
   PATH_ADMIN_ORDERS_DETAIL,
   PATH_ADMIN_MEMBERS,
-  PATH_ADMIN_MEMBERS_ADD
-} from "./routes.paths";
+  PATH_ADMIN_MEMBERS_ADD,
+  PATH_ORDER_SUCCESS
+} from './routes.paths';
 
 interface RouteModel {
   exact: boolean;
@@ -64,6 +74,16 @@ export const appRoutes: RouteModel[] = [
     exact: true,
     path: PATH_CART,
     component: Cart
+  },
+  {
+    exact: true,
+    path: PATH_ORDER_SUCCESS,
+    component: OrderSuccess
+  },
+  {
+    exact: true,
+    path: '',
+    component: NotFound
   }
 ];
 

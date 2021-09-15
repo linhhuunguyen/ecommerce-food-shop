@@ -1,56 +1,44 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
-import { useAppDispatch } from "store/hook";
-import { loginBuyer } from "store/User/user.slice";
+import { useAppDispatch } from 'store/hook';
+import { loginBuyer } from 'store/User/user.slice';
+import { LoginUer } from 'types/User';
+import { ButtonWrap } from 'components/FormsUI';
 
 const useStyle = makeStyles((theme) => ({
   paper: {
     padding: 20,
-    height: "60vh",
+    height: '60vh',
     width: 458,
-    margin: "0 auto"
+    margin: '0 auto'
   },
   avatarStyle: {
-    background: "#1bbd7e"
+    background: '#1bbd7e'
   },
   btnStyle: {
-    margin: "8px 0"
+    margin: '8px 0'
   },
   logo: {
-    marginTop: "15px",
-    fontWeight: "bold"
+    marginTop: '15px',
+    fontWeight: 'bold'
   },
   box: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    margin: "20px 0"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    margin: '20px 0'
   },
   textBox: {
-    margin: "10px 0"
-  },
-  btnSubmit: {
-    color: "#fff",
-    width: "100%",
-    padding: "10px",
-    background: "#019376",
-    border: "none",
-    marginTop: "10px",
-    "&:hover": {
-      backgroundColor: "#019376",
-      color: "#fff",
-      border: "none"
-    }
+    margin: '10px 0'
   }
 }));
 
@@ -61,9 +49,9 @@ export default function Login(props: LoginProps) {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const [buyerLogin, setBuyerLogin] = useState({
-    email: "",
-    password: ""
+  const [buyerLogin, setBuyerLogin] = useState<LoginUer>({
+    email: '',
+    password: ''
   });
 
   const { email, password } = buyerLogin;
@@ -76,14 +64,14 @@ export default function Login(props: LoginProps) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     await dispatch(loginBuyer(buyerLogin));
-    if (localStorage.getItem("buyerToken")) {
-      toast.success("Welcome To PinkBazar", {
-        theme: "colored",
-        position: "top-right"
+    if (localStorage.getItem('buyerToken')) {
+      toast.success('Welcome To PinkBazar', {
+        theme: 'colored',
+        position: 'top-right'
       });
-      history.replace("/");
+      history.replace('/');
     } else {
-      toast.error("Notify! Wrong account or password !", {
+      toast.error('Notify! Wrong account or password !', {
         icon: false
       });
     }
@@ -95,8 +83,8 @@ export default function Login(props: LoginProps) {
           <Box className={classes.box}>
             <Typography style={{ fontWeight: 500 }}>Welcome To</Typography>
             <Typography variant="h4" noWrap className={classes.logo}>
-              <span style={{ color: "#161f6a" }}>Pick</span>
-              <span style={{ color: "#019376" }}>Bazar</span>
+              <span style={{ color: '#161f6a' }}>Pick</span>
+              <span style={{ color: '#019376' }}>Bazar</span>
             </Typography>
           </Box>
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -124,14 +112,7 @@ export default function Login(props: LoginProps) {
               variant="outlined"
               onChange={handleInputChange}
             />
-            <Button
-              className={classes.btnSubmit}
-              type="submit"
-              fullWidth
-              onChange={handleInputChange}
-            >
-              Sign in
-            </Button>
+            <ButtonWrap name="Login" width="100%" />
           </form>
         </Paper>
       </Grid>

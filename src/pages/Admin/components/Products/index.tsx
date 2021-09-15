@@ -1,64 +1,33 @@
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import {
-  makeStyles,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TablePagination,
-  Button,
-  Container,
-  Box,
-  Typography
-} from "@material-ui/core";
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import TablePagination from '@material-ui/core/TablePagination';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-
-import { useAppSelector, useAppDispatch } from "store/hook";
-import { getProducts, deleteProduct } from "store/Products/products.slide";
+import { TopBox } from 'components/FormsUI';
+import { useAppSelector, useAppDispatch } from 'store/hook';
+import { getProducts, deleteProduct } from 'store/Products/products.slide';
+import { Popup } from 'components';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 700
   },
-  topBox: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    margin: "20px 0",
-    padding: "30px 60px",
-    background: "#fff"
-  },
-  title: {
-    color: "#161f6a",
-    fontSize: "20px",
-    fontWeight: 700
-  },
-  btnAdd: {
-    color: "#fff",
-    padding: "14px 16px",
-    background: "#019376",
-    border: "none",
-    "&:hover": {
-      backgroundColor: "#019376",
-      color: "#fff",
-      border: "none"
-    }
-  },
   btnEdit: {
-    background: "#fff",
-    color: "#019376",
-    margin: "0 3px"
-  },
-  btnDelete: {
-    background: "#fff",
-    color: "#fc5c63",
-    margin: "0 3px"
+    background: '#fff',
+    color: '#019376',
+    margin: '0 3px'
   }
 });
 
@@ -87,26 +56,18 @@ export default function AdminProducts() {
     dispatch(getProducts());
   }, []);
 
-  const handleDelete = (id: any) => {
-    dispatch(deleteProduct(id));
+  const handleDelete = async (id: any) => {
+    await dispatch(deleteProduct(id));
     dispatch(getProducts());
   };
 
   return (
-    <Container maxWidth="lg" style={{ marginTop: "100px" }}>
-      <Box className={classes.topBox}>
-        <Box>
-          <Typography className={classes.title}>Products</Typography>
-        </Box>
-        <Button
-          className={classes.btnAdd}
-          variant="outlined"
-          color="primary"
-          onClick={() => history.push("products/add")}
-        >
-          Add Product
-        </Button>
-      </Box>
+    <Container maxWidth="lg" style={{ marginTop: '100px' }}>
+      <TopBox
+        title="Products"
+        nameButton="Add Product"
+        handle={() => history.push('products/add')}
+      />
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
@@ -132,7 +93,7 @@ export default function AdminProducts() {
                     <img
                       src={product.images[0].image}
                       alt=""
-                      style={{ width: "50%" }}
+                      style={{ width: '50%' }}
                     />
                   </TableCell>
                   <TableCell align="left">{product.name}</TableCell>
@@ -140,7 +101,7 @@ export default function AdminProducts() {
                   <TableCell align="center">{product.quantity}</TableCell>
                   <TableCell align="center">{product.category}</TableCell>
                   <TableCell align="left">
-                    <Box style={{ display: "flex" }}>
+                    <Box style={{ display: 'flex' }}>
                       <Button
                         className={classes.btnEdit}
                         onClick={() =>
@@ -149,12 +110,13 @@ export default function AdminProducts() {
                       >
                         <EditIcon />
                       </Button>
-                      <Button
-                        className={classes.btnDelete}
-                        onClick={() => handleDelete(product.id)}
-                      >
-                        <DeleteIcon />
-                      </Button>
+                      <Popup
+                        name={<DeleteIcon />}
+                        title="Are you sure to delete this record? "
+                        btnConfirm="Confirm"
+                        btnCanel="Canel"
+                        handleConfirm={() => handleDelete(product.id)}
+                      />
                     </Box>
                   </TableCell>
                 </TableRow>

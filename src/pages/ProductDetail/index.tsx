@@ -1,5 +1,5 @@
-import React from "react";
-import { Detail } from "./components";
+import React from 'react';
+import { Detail } from './components';
 
 export interface PrductDetailProps {}
 

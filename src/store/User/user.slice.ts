@@ -1,12 +1,12 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { getUsersList, registerUser, loginUser, deleteUser } from "api/users";
+import { getUsersList, registerUser, loginUser, deleteUser } from 'api/users';
 
-import { User, Users } from "types/User";
+import { User, Users, LoginUer } from 'types/User';
 
 // get all user
 
-export const getMembers = createAsyncThunk("users/getUsers", async () => {
+export const getMembers = createAsyncThunk('users/getUsers', async () => {
   const response = await getUsersList();
   return response.data;
 });
@@ -14,17 +14,17 @@ export const getMembers = createAsyncThunk("users/getUsers", async () => {
 // add Members
 
 export const addMembers = createAsyncThunk(
-  "user/addUser",
+  'user/addUser',
   async (info: any) => {
     const response = await registerUser(info);
     return response.data;
   }
 );
 
-// delet Members
+// delete Members
 
 export const deleteMembers = createAsyncThunk(
-  "user/deleteUser",
+  'user/deleteUser',
   async (id: any) => {
     const response = await deleteUser(id);
     return response.data;
@@ -34,16 +34,16 @@ export const deleteMembers = createAsyncThunk(
 // login
 
 export const loginMembers = createAsyncThunk(
-  "user/loginUser",
-  async (info: any) => {
+  'user/loginUser',
+  async (info: LoginUer) => {
     const response = await loginUser(info);
     return response.data;
   }
 );
 
 export const loginBuyer = createAsyncThunk(
-  "buyer/loginBuyer",
-  async (info: any) => {
+  'buyer/loginBuyer',
+  async (info: LoginUer) => {
     const response = await loginUser(info);
     return response.data;
   }
@@ -60,34 +60,34 @@ const initialState: InitialStateType = {
   usersList: [],
   user: {
     id: 0,
-    fullname: "",
-    contact: "",
-    address: "",
-    gender: "",
-    email: "",
-    password: "",
-    avatar: "",
-    role: ""
+    fullname: '',
+    contact: '',
+    address: '',
+    gender: '',
+    email: '',
+    password: '',
+    avatar: '',
+    role: ''
   },
   userData: {
-    accessToken: "",
+    accessToken: '',
     user: {
       id: 0,
-      fullname: "",
-      contact: "",
-      address: "",
-      gender: "",
-      email: "",
-      password: "",
-      avatar: "",
-      role: ""
+      fullname: '',
+      contact: '',
+      address: '',
+      gender: '',
+      email: '',
+      password: '',
+      avatar: '',
+      role: ''
     }
   },
   loading: false
 };
 
 const userSlice = createSlice({
-  name: "member",
+  name: 'member',
   initialState,
   reducers: {},
   extraReducers: {
@@ -139,8 +139,8 @@ const userSlice = createSlice({
     [loginMembers.fulfilled.toString()](state, action: PayloadAction<User>) {
       if (!action.payload) return;
       state.userData = { ...action.payload };
-      localStorage.setItem("accessToken", state.userData.accessToken);
-      localStorage.setItem("members", JSON.stringify(state.userData.user));
+      localStorage.setItem('accessToken', state.userData.accessToken);
+      localStorage.setItem('members', JSON.stringify(state.userData.user));
       localStorage.setItem(state.userData.user.role, state.userData.user.role);
       state.loading = false;
     },
@@ -155,8 +155,8 @@ const userSlice = createSlice({
     [loginBuyer.fulfilled.toString()](state, action: PayloadAction<User>) {
       if (!action.payload) return;
       state.userData = { ...action.payload };
-      localStorage.setItem("buyerToken", state.userData.accessToken);
-      localStorage.setItem("buyer", JSON.stringify(state.userData.user));
+      localStorage.setItem('buyerToken', state.userData.accessToken);
+      localStorage.setItem('buyer', JSON.stringify(state.userData.user));
       state.loading = false;
     },
     [loginBuyer.rejected.toString()]: (state) => {
