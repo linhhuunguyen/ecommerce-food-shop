@@ -1,6 +1,6 @@
 export interface Category {
-  id: any;
+  _id?: string;
   name: string;
-  sku: string;
-  image: string;
+  description: string;
+  status: boolean;
 }

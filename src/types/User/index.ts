@@ -1,31 +1,33 @@
 export interface Users {
-  id: number;
-  fullname: string;
-  contact: string;
-  address: string;
-  gender: string;
+  _id: string;
+  name: string;
   email: string;
   password: string;
-  avatar: string;
+  avatar: Avatar;
   role: string;
+  createdAt: string;
+}
+
+interface Avatar {
+  public_id: string;
+  url: string;
 }
 
 export interface User {
-  accessToken: string;
+  success: boolean;
+  token: string;
   user: {
-    id: number;
-    fullname: string;
-    contact: string;
-    address: string;
-    gender: string;
+    id: string;
+    name: string;
     email: string;
     password: string;
-    avatar: string;
+    avatar: Avatar;
     role: string;
+    createdAt: string;
   };
 }
 
-export interface LoginUer {
+export interface Login {
   email: string;
   password: string;
 }

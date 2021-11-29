@@ -1,12 +1,28 @@
-import axios from 'axios';
-import { SERVICE_API } from 'api/service';
+import axiosClient from 'api/service';
+
 import { Order } from 'types/Order';
 
-export const getOrdersList = (): Promise<any> =>
-  axios.get(`${SERVICE_API}/orders`);
+const orderAPI = {
+  getOrderList: () => {
+    const url = '/orders';
+    return axiosClient.get(url);
+  },
+  getOrder: (id: string | number) => {
+    const url: string = `/orders/${id}`;
+    return axiosClient.get(url);
+  },
+  deleteOrder: (id: string | number) => {
+    const url: string = `/orders/${id}`;
+    return axiosClient.delete(url);
+  },
+  addOrder: (order: Order) => {
+    const url: string = `/orders`;
+    return axiosClient.post(url, order);
+  },
+  updateOrder: (id: string | number, order: Order) => {
+    const url: string = `/orders/${id}`;
+    return axiosClient.put(url, order);
+  }
+};
 
-export const getOrderDetail = (id: string): Promise<any> =>
-  axios.get(`${SERVICE_API}/orders/${id}`);
-
-export const addOrder = (order: Order): Promise<any> =>
-  axios.post(`${SERVICE_API}/orders`, order);
+export default orderAPI;

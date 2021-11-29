@@ -1,33 +1,35 @@
-import React, { useState, useEffect } from 'react';
-
+import { useState, MouseEvent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import Box from '@material-ui/core/Box';
-import MenuItem from '@material-ui/core/MenuItem';
-import Avatar from '@material-ui/core/Avatar';
-import ArrowDropDownRoundedIcon from '@material-ui/icons/ArrowDropDownRounded';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { makeStyles, createStyles } from '@mui/styles';
+import { Theme } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import Avatar from '@mui/material/Avatar';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import axios from 'axios';
+import { detailUserAdmin } from 'store/User/user.slice';
 
+import { useAppDispatch, useAppSelector } from 'store/hook';
 import { Logo } from 'components/Header/components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'flex'
-    },
     toolbar: {
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
       color: '#333'
     },
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
+      justifyContent: 'center',
+      width: 'calc(100% - 15rem)',
+      height: '5rem',
+      paddingRight: '1rem',
+      paddingLeft: '1rem',
       background: '#fff',
       color: '#333'
     },
@@ -50,19 +52,25 @@ const ITEM_HEIGHT = 48;
 export default function Topbar() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
-  const data = localStorage.getItem('members');
-  const member = JSON.parse(`${data}`);
+  const { token } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.users);
 
-  const handleLogout = () => {
-    localStorage.removeItem('members');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('admin');
-    history.replace('/admin/login');
+  useEffect(() => {
+    if (token) {
+      dispatch(detailUserAdmin(token));
+    }
+  }, [token, dispatch]);
+
+  const handleLogout = async () => {
+    await axios.get('/api/v1/logout');
+    localStorage.removeItem('token');
+    history.replace('/admin');
   };
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -70,15 +78,23 @@ export default function Topbar() {
   };
 
   return (
-    <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar className={classes.toolbar}>
+    <AppBar position="fixed" className={classes.appBar} color="default">
+      <Grid
+        container
+        justifyContent="space-between"
+        alignItems="center"
+        className={classes.toolbar}
+      >
         <Logo link="/admin" />
         <Box display="flex" alignItems="center">
           <Box mr={2}>
-            <Avatar alt="Remy Sharp" src={member.avatar} />
+            <Avatar
+              alt="Remy Sharp"
+              src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+            />
           </Box>
           <Box display="flex" alignItems="center">
-            <Typography>{member.fullname}</Typography>
+            <Typography>{user.name}</Typography>
             <IconButton
               aria-label="more"
               aria-controls="long-menu"
@@ -112,7 +128,7 @@ export default function Topbar() {
             </Menu>
           </Box>
         </Box>
-      </Toolbar>
+      </Grid>
     </AppBar>
   );
 }

@@ -3,6 +3,11 @@ export const PATH_PRODUCT = '/products';
 export const PATH_PRODUCT_DETAIL = '/products/:id';
 export const PATH_SEARCH = '/search';
 export const PATH_CART = '/cart';
+export const PATH_CART_SHIPPING = '/cart/shipping';
+export const PATH_CART_ORDER_CONFIRM = '/order/confirm';
+export const PATH_USER_ACCOUNT_PROFILE = '/user/account/profile';
+export const PATH_USER_PURCHASE = '/user/purchase';
+
 export const PATH_ADMIN = '/admin';
 export const PATH_ADMIN_PRODUCTS = '/admin/products';
 export const PATH_ADMIN_PRODUCTS_ADD = '/admin/products/add';

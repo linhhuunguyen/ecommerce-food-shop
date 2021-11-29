@@ -1,0 +1,20 @@
+.inputStyle {
+  appearance: none;
+  display: block;
+  width: 80%;
+  --tw-bg-opacity: 1;
+  background-color: #eeeeee;
+  color: rgba(55, 65, 81, var(--tw-text-opacity));
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+  line-height: 1.25;
+  padding: 0.5rem 1rem;
+}
+
+.inputStyle:focus {
+  outline: none;
+  background-color: white;
+  --tw-border-opacity: 1;
+  border-color: #eeeeee;
+}

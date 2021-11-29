@@ -1,46 +1,56 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  getPrductsList,
-  getProductDetail,
-  getPrductsGroup,
-  deleteProducts,
-  addProducts,
-  updateProducts
-} from 'api/products';
+import productAPI from 'api/products';
 import { Product } from 'types/Product';
 
+// get all product -- user
 export const getProducts = createAsyncThunk(
   'products/getProducts',
   async () => {
-    const response = await getPrductsList();
-    return response.data;
+    const response = await productAPI.getProductsAPI();
+    return response;
+  }
+);
+
+// get all product -- admin
+export const getAdminProducts = createAsyncThunk(
+  'products/getAdminProduct',
+  async (token?: any) => {
+    const { data } = await productAPI.getAdminProductsAPI(token);
+    return data;
   }
 );
 
 export const getGroup = createAsyncThunk(
   'productsGroup/getPrductsGroup',
   async (cate: string = 'juice') => {
-    const response = await getPrductsGroup(cate);
-    return response.data;
+    const response = await productAPI.getPrductGroup(cate);
+    return response;
   }
 );
 
 export const getProduct = createAsyncThunk(
   'product/getProduct',
   async (id: string) => {
-    const response = await getProductDetail(id);
-    return response.data;
+    const response = await productAPI.getProduct(id);
+    return response;
   }
 );
 
 // add Product
 
+interface addProductType {
+  values: Product;
+  token: string;
+}
+
 export const addProduct = createAsyncThunk(
   'product/addProduct',
-  async (product: Product) => {
-    const response = await addProducts(product);
-    return response.data;
+  async (dataP: addProductType) => {
+    const { values, token } = dataP;
+
+    const { data } = await productAPI.addProduct(values, token);
+    return data;
   }
 );
 
@@ -49,8 +59,8 @@ export const addProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   'category/deleteCategory',
   async (id: string) => {
-    const response = await deleteProducts(id);
-    return response.data;
+    const response = await productAPI.deleteProduct(id);
+    return response;
   }
 );
 
@@ -65,29 +75,40 @@ export const updateProduct = createAsyncThunk(
   'category/deleteCategory',
   async (data: UpdateProduct) => {
     const { id, product } = data;
-    const response = await updateProducts(id, product);
-    return response.data;
+    const response = await productAPI.updateProduct(id, product);
+    return response;
   }
 );
 
+interface ProductData {
+  success: boolean;
+  products: Product[];
+  productCount: number;
+}
+
 interface initialStateType {
-  productsList: Product[];
+  products: Product[];
+  productsUser: Product[];
   getPrductsGroup: Product[];
   productDetail: Product;
   loading: boolean;
 }
 
 const initialState: initialStateType = {
-  productsList: [],
+  products: [],
+  productsUser: [],
   getPrductsGroup: [],
   productDetail: {
-    id: '',
+    _id: '',
     name: '',
-    des: '',
+    description: '',
     price: 0,
+    ratings: 0,
+    images: [{ public_id: '', url: '' }],
     category: '',
-    quantity: 0,
-    images: [{ idI: '', image: '' }]
+    stock: 0,
+    numOfReviews: 0,
+    createAt: ''
   },
   loading: false
 };
@@ -97,7 +118,7 @@ const productSlide = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    // productsList
+    // productsList -- user
     [getProducts.pending.toString()](state) {
       state.loading = true;
     },
@@ -106,10 +127,25 @@ const productSlide = createSlice({
       action: PayloadAction<Product[]>
     ) {
       if (!action.payload) return;
-      state.productsList = [...action.payload];
+      state.productsUser = [...action.payload];
       state.loading = false;
     },
     [getProducts.rejected.toString()]: (state) => {
+      state.loading = false;
+    },
+    // productsList -- admin
+    [getAdminProducts.pending.toString()](state) {
+      state.loading = true;
+    },
+    [getAdminProducts.fulfilled.toString()](
+      state,
+      action: PayloadAction<Product[]>
+    ) {
+      if (!action.payload) return;
+      state.products = [...action.payload];
+      state.loading = false;
+    },
+    [getAdminProducts.rejected.toString()]: (state) => {
       state.loading = false;
     },
 
@@ -119,7 +155,7 @@ const productSlide = createSlice({
     },
     [getGroup.fulfilled.toString()](state, action: PayloadAction<Product[]>) {
       if (!action.payload) return;
-      state.productsList = [...action.payload];
+      state.products = [...action.payload];
       state.loading = false;
     },
     [getGroup.rejected.toString()]: (state) => {
@@ -151,8 +187,8 @@ const productSlide = createSlice({
       action: PayloadAction<Product>
     ) => {
       if (!action.payload) return;
-      state.productsList = state.productsList.filter(
-        (item: any) => item.id !== action.payload.id
+      state.products = state.products.filter(
+        (item: any) => item.id !== action.payload._id
       );
       state.loading = false;
     },
@@ -169,7 +205,7 @@ const productSlide = createSlice({
       action: PayloadAction<Product>
     ) => {
       if (!action.payload) return;
-      state.productsList.push(action.payload);
+      state.products.push(action.payload);
       state.loading = false;
     },
     [addProduct.rejected.toString()]: (state) => {

@@ -37,58 +37,25 @@
       "id": "lZFpc8P"
     },
     {
-      "name": "Danish",
-      "sku": "danish",
-      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Danish_ybcbuq.png",
-      "id": "26nZKeg"
-    },
-    {
-      "name": "Round Cake",
-      "sku": "round-cake",
-      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351534/pickbazar/bakery/Round-Cake_rfsrkr.png",
-      "id": "kpxoi3h"
-    },
-    {
-      "name": "Coffee & Tea",
-      "sku": "coffee-tea",
-      "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351534/pickbazar/bakery/Coffee_j6vccc.png",
-      "id": "Pgf9ZAB"
-    },
-    {
       "name": "Juice",
       "sku": "juice",
       "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600351535/pickbazar/bakery/Juice_q1dlke.png",
-      "id": "k1Okcgl"
+      "id": "JdUihIW"
+    },
+    {
+      "name": "dsaasdsa",
+      "sku": "đáadsadsa",
+      "image": "ádsadsaa",
+      "id": "orT4rHe"
     }
   ],
   "products": [
-    {
-      "name": "Ritai Organic Orange Juice 500 ml",
-      "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
-      "price": 1.8,
-      "category": "juice",
-      "quantity": 30,
-      "images": [
-        {
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg"
-        },
-        {
-          "idI": "0306d81a-1e5a-4488-a434-81482c2fd2b7",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg"
-        },
-        {
-          "idI": "3b064bb1-00e7-4190-8d2a-93fd4af1920c",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600352407/pickbazar/bakery/Juice-5_eqrtuu.jpg"
-        }
-      ],
-      "id": "tZKqYpL"
-    },
     {
       "name": "Al Shams Pita Bread, 10 pcs",
       "des": "Pita or pitta, is a family of yeast-leavened round flatbreads baked from wheat flour, common in the Mediterranean, Middle East, and neighboring areas",
       "price": 1.95,
       "category": "pita-bread",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600686370/pickbazar/bakery/Pita_Bread-8_asbled.jpg"
@@ -109,7 +76,7 @@
       "des": "Pita or pitta, is a family of yeast-leavened round flatbreads baked from wheat flour, common in the Mediterranean, Middle East, and neighboring areas",
       "price": 1.8,
       "category": "pita-bread",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600686370/pickbazar/bakery/Pita_Bread-6_whabjs.jpg"
@@ -130,7 +97,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 1.35,
       "category": "sliced-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-1_kodjod.jpg"
@@ -151,7 +118,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 2.1,
       "category": "sliced-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600683069/pickbazar/bakery/Pice_Cake-4_ptz2r5.jpg"
@@ -172,7 +139,7 @@
       "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
       "price": 2.4,
       "category": "juice",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice5_bz8od4.jpg"
@@ -185,7 +152,7 @@
       "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
       "price": 2.25,
       "category": "juice",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice-1_lx8xnf.jpg"
@@ -206,7 +173,7 @@
       "des": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history it has been a prominent food in large parts of the world.",
       "price": 1.8,
       "category": "toast-loafs",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600681662/pickbazar/bakery/Toast-8_polcv3.jpg"
@@ -219,7 +186,7 @@
       "des": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history it has been a prominent food in large parts of the world.\n\n\n",
       "price": 1.2,
       "category": "toast-loafs",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600681657/pickbazar/bakery/Toast-7_hnc75p.jpg"
@@ -240,7 +207,7 @@
       "des": "griddle and a cupcake-like quickbread that is chemically leavened and then baked in a mold.",
       "price": 1.2,
       "category": "muffin",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600691379/pickbazar/bakery/Muffin-4_dv5jg6.jpg"
@@ -261,7 +228,7 @@
       "des": "griddle and a cupcake-like quickbread that is chemically leavened and then baked in a mold.",
       "price": 1.25,
       "category": "muffin",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600691379/pickbazar/bakery/Muffin-3_xkmcoz.jpg"
@@ -282,7 +249,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 12,
       "category": "round-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg"
@@ -303,7 +270,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 11.75,
       "category": "round-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-8_rjbmjc.jpg"
@@ -324,7 +291,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 7.2,
       "category": "round-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-2_cczqay.jpg"
@@ -345,7 +312,7 @@
       "des": "Coffee tea refers to herbal tea made from non-bean parts of the coffea (coffee plant), and may refer to: Coffee-leaf tea · Coffee cherry tea. Ground coffee, brewed",
       "price": 1.35,
       "category": "coffee-tea",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-5_ktc2il.jpg"
@@ -366,7 +333,7 @@
       "des": "Coffee tea refers to herbal tea made from non-bean parts of the coffea (coffee plant), and may refer to: Coffee-leaf tea · Coffee cherry tea. Ground coffee, brewed",
       "price": 1.5,
       "category": "coffee-tea",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-3_zlgz6x.jpg"
@@ -387,7 +354,7 @@
       "des": "Coffee tea refers to herbal tea made from non-bean parts of the coffea (coffee plant), and may refer to: Coffee-leaf tea · Coffee cherry tea. Ground coffee, brewed",
       "price": 0.8,
       "category": "coffee-tea",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600697301/pickbazar/bakery/Coffee_Tea-6_wlaqgp.jpg"
@@ -408,7 +375,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 2.2,
       "category": "sliced-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600683068/pickbazar/bakery/Pice_Cake-5_dcbcn7.jpg"
@@ -429,7 +396,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 1.8,
       "category": "sliced-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-3_gudslo.jpg"
@@ -450,7 +417,7 @@
       "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
       "price": 1.8,
       "category": "sliced-cake",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600683067/pickbazar/bakery/Pice_Cake-2_uhialp.jpg"
@@ -471,7 +438,7 @@
       "des": "griddle and a cupcake-like quickbread that is chemically leavened and then baked in a mold.",
       "price": 0.54,
       "category": "danish",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-6_mklk6w.jpg"
@@ -488,7 +455,7 @@
       "des": "griddle and a cupcake-like quickbread that is chemically leavened and then baked in a mold.",
       "price": 0.7,
       "category": "danish",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-4_scewdb.jpg"
@@ -509,7 +476,7 @@
       "des": "griddle and a cupcake-like quickbread that is chemically leavened and then baked in a mold.",
       "price": 0.95,
       "category": "danish",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600691981/pickbazar/bakery/Danish-5_sobypp.jpg"
@@ -530,7 +497,7 @@
       "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
       "price": 1.5,
       "category": "juice",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600699913/pickbazar/bakery/Juice4_1_xt54si.jpg"
@@ -547,7 +514,7 @@
       "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
       "price": 1.25,
       "category": "juice",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600699912/pickbazar/bakery/Juice2_lnhqsp.jpg"
@@ -568,7 +535,7 @@
       "des": "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice",
       "price": 1.7,
       "category": "juice",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600699915/pickbazar/bakery/Juice1_nc4tbk.jpg"
@@ -589,7 +556,7 @@
       "des": "A croissant is a buttery, flaky, viennoiserie pastry of Austrian origin, named for its historical crescent shape. Croissants and other viennoiserie are made of a layered yeast-leavened dough.",
       "price": 0.8,
       "category": "croissants",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600692580/pickbazar/bakery/Croissant-4_m87lsz.jpg"
@@ -610,7 +577,7 @@
       "des": "A croissant is a buttery, flaky, viennoiserie pastry of Austrian origin, named for its historical crescent shape. Croissants and other viennoiserie are made of a layered yeast-leavened dough.",
       "price": 1.6,
       "category": "croissants",
-      "quantity": 30,
+      "stock": 30,
       "images": [
         {
           "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600692580/pickbazar/bakery/Croissant-1_lrhnuh.jpg"
@@ -627,84 +594,22 @@
       "id": "RE3sxKB"
     },
     {
-      "name": "Chocolate Croissants",
-      "des": "A croissant is a buttery, flaky, viennoiserie pastry of Austrian origin, named for its historical crescent shape. Croissants and other viennoiserie are made of a layered yeast-leavened dough.",
-      "price": 1.75,
-      "category": "croissants",
-      "quantity": 30,
+      "id": "97bec414-0e96-4ace-8ca8-6bb53a4d3a99",
+      "name": "linh",
+      "des": "adsfasfasfafdafafdaf",
+      "price": 23,
+      "category": "sliced-cake",
+      "stock": 23,
       "images": [
         {
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600692580/pickbazar/bakery/Croissant-2_p3q9it.jpg"
+          "idI": "f745f88a-c35d-47f5-8ea0-6f13057897a7",
+          "image": "adsfadsadsfdasfdasfasf"
         },
         {
-          "idI": "af299649-4611-41aa-92b2-55cbb2e22f21",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600692580/pickbazar/bakery/Croissant-2_p3q9it.jpg"
-        },
-        {
-          "idI": "160194df-5f56-4685-8dbd-6e461969a335",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600692580/pickbazar/bakery/Croissant-2_p3q9it.jpg"
+          "idI": "027a898c-709a-4397-8a8d-d931eb31792e",
+          "image": "link"
         }
-      ],
-      "id": "cSklqdp"
-    },
-    {
-      "name": "Arnold Country Bun 200g",
-      "des": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history it has been a prominent food in large parts of the world",
-      "price": 0.9,
-      "category": "soft-bread",
-      "quantity": 30,
-      "images": [
-        {
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698601/pickbazar/bakery/Bread-1_jbikbk.jpg"
-        },
-        {
-          "idI": "756a5817-a926-4e9a-9952-355872e91dbf",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698601/pickbazar/bakery/Bread-1_jbikbk.jpg"
-        },
-        {
-          "idI": "a4614980-5282-43a0-96e7-244869c7f0a7",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698601/pickbazar/bakery/Bread-1_jbikbk.jpg"
-        }
-      ],
-      "id": "MOdhfiT"
-    },
-    {
-      "name": "Farmhouse Hearty White Bread, 600g",
-      "des": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history it has been a prominent food in large parts of the world.",
-      "price": 0.9,
-      "category": "soft-bread",
-      "quantity": 30,
-      "images": [
-        {
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698600/pickbazar/bakery/Bread-6_xizpaj.jpg"
-        },
-        {
-          "idI": "d5586d7d-b611-477b-a1d7-e71f3787e87e",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698600/pickbazar/bakery/Bread-6_xizpaj.jpg"
-        },
-        {
-          "idI": "632128d3-f470-4786-980e-4990365ba35f",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698600/pickbazar/bakery/Bread-6_xizpaj.jpg"
-        }
-      ],
-      "id": "IRlMb9G"
-    },
-    {
-      "name": "Northern Bakehouse Brown Bread, 700g",
-      "des": "Bread is a staple food prepared from a dough of flour and water, usually by baking. Throughout recorded history it has been a prominent food in large parts of the world.",
-      "price": 1.2,
-      "category": "soft-bread",
-      "quantity": 30,
-      "images": [
-        {
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698601/pickbazar/bakery/Bread-2_sfhewb.jpg"
-        },
-        {
-          "idI": "3d9d5282-3cf1-43ca-860d-56544dc41a06",
-          "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600698601/pickbazar/bakery/Bread-2_sfhewb.jpg"
-        }
-      ],
-      "id": "mH1pAdi"
+      ]
     }
   ],
   "users": [
@@ -725,66 +630,145 @@
       "avatar": "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80",
       "role": "buyer",
       "id": 4
+    },
+    {
+      "email": "admin3@gmail.com",
+      "password": "$2a$10$lKcwgr8UyHOxgmH3jLzOLOth7JqWvCkE0GnOzwUBYYL2uAjzQhf8.",
+      "fullname": "Nguyễn Văn linh",
+      "contact": "0984088623",
+      "address": "hà nội",
+      "gender": "male",
+      "avatar": "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
+      "role": "admin",
+      "id": 7
+    },
+    {
+      "email": "admin30@gmail.com",
+      "password": "$2a$10$PrZnr/lPdLEjGztkaATcy.suKIW5eMjl3UxvbSuHgSPoy2rH663e6",
+      "fullname": "linh",
+      "contact": "09840888",
+      "address": "sdfasdfasdf",
+      "gender": "male",
+      "avatar": "http://res.cloudinary.com/lhy/image/upload/v1633105580/z2fmxenjrdsolhhut3qi.jpg",
+      "role": "admin",
+      "id": 13
+    },
+    {
+      "email": "admin71@gmail.com",
+      "password": "$2a$10$OmdELEtOTt7ct9TcHtyRje9zteTQVJqMHl0qGYwgAi/ukzjH1Jzl6",
+      "fullname": "liii",
+      "contact": "0984088659",
+      "address": "ha noi",
+      "gender": "female",
+      "avatar": "http://res.cloudinary.com/lhy/image/upload/v1633138635/y1so5vz5aclrdikkv3st.png",
+      "role": "admin",
+      "id": 14
     }
   ],
   "orders": [
     {
-      "info": {
-        "name": "lii@gmail.com",
-        "phone": "09840889629",
-        "email": "lii@gmail.com",
-        "address": "ha noi"
+      "shippingInfo": {
+        "id": 7,
+        "name": "Nguyễn Văn linh",
+        "address": "hà nội",
+        "city": "ha noi",
+        "country": "viet name",
+        "phone": "0984088623"
       },
-      "orderItem": {
-        "cartItems": [
-          {
-            "name": "Desserts Cake, Raspberry Dark Chocolate 2 lb",
-            "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
-            "price": 12,
-            "category": "round-cake",
-            "quantity": 30,
-            "images": [
-              {
-                "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg"
-              },
-              {
-                "idI": "5e7549a2-0e60-4427-850c-620233e0ffce",
-                "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg"
-              },
-              {
-                "idI": "31ceebc8-6514-4a76-a0eb-6f9579acab87",
-                "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-7_ygffyu.jpg"
-              }
-            ],
-            "id": "evDnWXf",
-            "cartQuantity": 1
-          },
-          {
-            "name": "Signature Chocolate Cake Iced Fudge 7 oz",
-            "des": "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. In their oldest forms, cakes were modifications of bread, but cakes now cover a wide range of preparations",
-            "price": 11.75,
-            "category": "round-cake",
-            "quantity": 30,
-            "images": [
-              {
-                "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-8_rjbmjc.jpg"
-              },
-              {
-                "idI": "7a7947f3-13f9-4aba-a9de-9c258e16d3b8",
-                "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-8_rjbmjc.jpg"
-              },
-              {
-                "idI": "4ce8660a-e5c6-412a-8f1f-525c209ec9dc",
-                "image": "https://res.cloudinary.com/redq-inc/image/upload/v1600682323/pickbazar/bakery/Round_Cake-8_rjbmjc.jpg"
-              }
-            ],
-            "id": "MHw8-JO",
-            "cartQuantity": 1
-          }
-        ],
-        "cartTotalAmount": 23.75
+      "orderItem": [
+        {
+          "id": "uKesdFi",
+          "name": "Miss Jones Cake Mix, Chocolate 15.87 oz",
+          "price": 2.1,
+          "images": "https://res.cloudinary.com/redq-inc/image/upload/v1600683069/pickbazar/bakery/Pice_Cake-4_ptz2r5.jpg",
+          "quantity": 1,
+          "stock": 30
+        }
+      ],
+      "itemsPrice": 2.1,
+      "taxPrice": 0.378,
+      "shippingPrice": 200,
+      "totalPrice": 202.478,
+      "orderStatus": "pending",
+      "id": "Ou2GXWK"
+    },
+    {
+      "shippingInfo": {
+        "id": 7,
+        "name": "Nguyễn Văn linh",
+        "address": "hà nội",
+        "city": "ha noi",
+        "country": "viet name",
+        "phone": "0984088623"
       },
-      "id": "xA5QSRA"
+      "orderItem": [
+        {
+          "id": "uKesdFi",
+          "name": "Miss Jones Cake Mix, Chocolate 15.87 oz",
+          "price": 2.1,
+          "images": "https://res.cloudinary.com/redq-inc/image/upload/v1600683069/pickbazar/bakery/Pice_Cake-4_ptz2r5.jpg",
+          "quantity": 1,
+          "stock": 30
+        }
+      ],
+      "itemsPrice": 2.1,
+      "taxPrice": 0.378,
+      "shippingPrice": 200,
+      "totalPrice": 202.478,
+      "orderStatus": "pending",
+      "id": "8y_Hj6u"
+    },
+    {
+      "shippingInfo": {
+        "id": 7,
+        "name": "Nguyễn Văn linh",
+        "address": "hà nội",
+        "city": "ha noi",
+        "country": "viet name",
+        "phone": "0984088623"
+      },
+      "orderItem": [
+        {
+          "id": "uKesdFi",
+          "name": "Miss Jones Cake Mix, Chocolate 15.87 oz",
+          "price": 2.1,
+          "images": "https://res.cloudinary.com/redq-inc/image/upload/v1600683069/pickbazar/bakery/Pice_Cake-4_ptz2r5.jpg",
+          "quantity": 1,
+          "stock": 30
+        }
+      ],
+      "itemsPrice": 2.1,
+      "taxPrice": 0.378,
+      "shippingPrice": 200,
+      "totalPrice": 202.478,
+      "orderStatus": "pending",
+      "id": "fCHnGOS"
+    },
+    {
+      "shippingInfo": {
+        "id": 7,
+        "name": "Nguyễn Văn linh",
+        "address": "hà nội",
+        "city": "ha noi",
+        "country": "viet name",
+        "phone": "0984088623"
+      },
+      "orderItem": [
+        {
+          "id": "uKesdFi",
+          "name": "Miss Jones Cake Mix, Chocolate 15.87 oz",
+          "price": 2.1,
+          "images": "https://res.cloudinary.com/redq-inc/image/upload/v1600683069/pickbazar/bakery/Pice_Cake-4_ptz2r5.jpg",
+          "quantity": 1,
+          "stock": 30
+        }
+      ],
+      "itemsPrice": 2.1,
+      "taxPrice": 0.378,
+      "shippingPrice": 200,
+      "totalPrice": 202.478,
+      "orderStatus": "pending",
+      "id": "vzzI9J4"
     }
   ]
 }

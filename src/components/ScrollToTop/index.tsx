@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
-export interface IScollToTopProps {}
-
-export default function ScollToTop(props: IScollToTopProps) {
+export default function ScollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Box from '@material-ui/core/Box';
 import DialogContent from '@material-ui/core/DialogContent';
-import LoginSignup from 'pages/LoginSignup';
+import LoginSignup from 'pages/users/loginSignup';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 export interface AccountProps {}

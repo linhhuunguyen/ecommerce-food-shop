@@ -1,23 +1,26 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-import { getUsersList, registerUser, loginUser, deleteUser } from 'api/users';
+import userAPI from 'api/users';
 
-import { User, Users, LoginUer } from 'types/User';
+import { User, Users, Login } from 'types/User';
 
-// get all user
+// get all user -- admin
 
-export const getMembers = createAsyncThunk('users/getUsers', async () => {
-  const response = await getUsersList();
-  return response.data;
-});
+export const getMembers = createAsyncThunk(
+  'users/getUsers',
+  async (token: any) => {
+    const { data } = await userAPI.getAllUser(token);
+    return data;
+  }
+);
 
 // add Members
 
 export const addMembers = createAsyncThunk(
   'user/addUser',
   async (info: any) => {
-    const response = await registerUser(info);
-    return response.data;
+    const response = await userAPI.addUser(info);
+    return response;
   }
 );
 
@@ -26,63 +29,61 @@ export const addMembers = createAsyncThunk(
 export const deleteMembers = createAsyncThunk(
   'user/deleteUser',
   async (id: any) => {
-    const response = await deleteUser(id);
-    return response.data;
+    const response = await userAPI.deleteUser(id);
+    return response;
   }
 );
 
 // login
 
-export const loginMembers = createAsyncThunk(
+export const loginAdmin = createAsyncThunk(
   'user/loginUser',
-  async (info: LoginUer) => {
-    const response = await loginUser(info);
-    return response.data;
+  async (info: Login) => {
+    const { data } = await userAPI.loginUser(info);
+    return data;
   }
 );
 
 export const loginBuyer = createAsyncThunk(
   'buyer/loginBuyer',
-  async (info: LoginUer) => {
-    const response = await loginUser(info);
-    return response.data;
+  async (info: Login) => {
+    const response = await userAPI.loginUser(info);
+    return response;
+  }
+);
+
+export const detailUserAdmin = createAsyncThunk(
+  'admin/deatilAdmin',
+  async (token: any) => {
+    const { data } = await userAPI.detailUser(token);
+    return data;
   }
 );
 
 interface InitialStateType {
   usersList: Users[];
   user: Users;
-  userData: User;
+  isLogged: boolean;
+  isAdmin: boolean;
   loading: boolean;
 }
 
 const initialState: InitialStateType = {
   usersList: [],
   user: {
-    id: 0,
-    fullname: '',
-    contact: '',
-    address: '',
-    gender: '',
+    _id: '',
+    name: '',
     email: '',
     password: '',
-    avatar: '',
-    role: ''
+    avatar: {
+      public_id: '',
+      url: ''
+    },
+    role: '',
+    createdAt: ''
   },
-  userData: {
-    accessToken: '',
-    user: {
-      id: 0,
-      fullname: '',
-      contact: '',
-      address: '',
-      gender: '',
-      email: '',
-      password: '',
-      avatar: '',
-      role: ''
-    }
-  },
+  isLogged: false,
+  isAdmin: false,
   loading: false
 };
 
@@ -91,6 +92,72 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // loginUser
+    [loginAdmin.pending.toString()](state) {
+      state.isLogged = false;
+      state.isAdmin = false;
+      state.loading = true;
+    },
+    [loginAdmin.fulfilled.toString()](state, action: PayloadAction<Users>) {
+      if (!action.payload) return;
+      localStorage.setItem('token', 'true');
+      // localStorage.setItem('members', JSON.stringify(state.userData.user));
+      // localStorage.setItem(state.userData.user.role, state.userData.user.role);
+      state.isLogged = true;
+      state.isAdmin = true;
+      state.loading = false;
+    },
+    [loginAdmin.rejected.toString()]: (state) => {
+      state.isLogged = false;
+      state.isAdmin = false;
+      state.loading = false;
+    },
+
+    // login Buyer
+    [loginBuyer.pending.toString()](state) {
+      state.isLogged = false;
+      state.isAdmin = false;
+      state.loading = true;
+    },
+    [loginBuyer.fulfilled.toString()](state, action: PayloadAction<Users>) {
+      if (!action.payload) return;
+      state.user = { ...action.payload };
+      localStorage.setItem('buyerToken', 'buyer');
+      // localStorage.setItem('buyer', JSON.stringify(state.userData.user));
+      state.isLogged = true;
+      state.isAdmin = false;
+      state.loading = false;
+    },
+    [loginBuyer.rejected.toString()]: (state) => {
+      state.isLogged = false;
+      state.isAdmin = false;
+      state.loading = false;
+    },
+
+    // detailAdmin
+    [detailUserAdmin.pending.toString()](state) {
+      state.isLogged = false;
+      state.isAdmin = false;
+      state.loading = true;
+    },
+    [detailUserAdmin.fulfilled.toString()](
+      state,
+      action: PayloadAction<Users>
+    ) {
+      if (!action.payload) return;
+      state.user = { ...action.payload };
+      state.isLogged = true;
+      state.isAdmin = true;
+      state.loading = false;
+    },
+    [detailUserAdmin.rejected.toString()](state) {
+      state.isLogged = false;
+      state.isAdmin = false;
+      state.loading = false;
+    },
+
+    // getMembers -- admin
+
     [getMembers.pending.toString()](state) {
       state.loading = true;
     },
@@ -124,42 +191,11 @@ const userSlice = createSlice({
     [deleteMembers.fulfilled.toString()](state, action: PayloadAction<Users>) {
       if (!action.payload) return;
       state.usersList = state.usersList.filter(
-        (item: any) => item.id !== action.payload.id
+        (item: any) => item.id !== action.payload._id
       );
       state.loading = false;
     },
     [deleteMembers.rejected.toString()]: (state) => {
-      state.loading = false;
-    },
-
-    // loginUser
-    [loginMembers.pending.toString()](state) {
-      state.loading = true;
-    },
-    [loginMembers.fulfilled.toString()](state, action: PayloadAction<User>) {
-      if (!action.payload) return;
-      state.userData = { ...action.payload };
-      localStorage.setItem('accessToken', state.userData.accessToken);
-      localStorage.setItem('members', JSON.stringify(state.userData.user));
-      localStorage.setItem(state.userData.user.role, state.userData.user.role);
-      state.loading = false;
-    },
-    [loginMembers.rejected.toString()]: (state) => {
-      state.loading = false;
-    },
-
-    // login Buyer
-    [loginBuyer.pending.toString()](state) {
-      state.loading = true;
-    },
-    [loginBuyer.fulfilled.toString()](state, action: PayloadAction<User>) {
-      if (!action.payload) return;
-      state.userData = { ...action.payload };
-      localStorage.setItem('buyerToken', state.userData.accessToken);
-      localStorage.setItem('buyer', JSON.stringify(state.userData.user));
-      state.loading = false;
-    },
-    [loginBuyer.rejected.toString()]: (state) => {
       state.loading = false;
     }
   }

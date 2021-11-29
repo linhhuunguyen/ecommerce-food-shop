@@ -1,38 +1,50 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AdminLogin } from 'pages/Admin/components';
-import { AppLayout, AdminLayout } from 'layout';
-import { ScrollToTop } from 'components';
+import AdminLogin from 'pages/admin/login';
+import ProtectedRoute from 'router/protected.route';
+import './styles/index.css';
+import { UsersLayout, AdminLayout } from 'layout';
+import axios from 'axios';
+import { useAppDispatch, useAppSelector } from 'store/hook';
+import { addToken } from 'store/auth';
+import apiConfig from 'api/apiConfig';
 
 function App() {
+  const dispatch = useAppDispatch();
+  const { isLogged } = useAppSelector((state) => state.users);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const getToken = async () => {
+        const res = await axios.post('/api/v1/user/refresh_token');
+        console.log('refresh_token', res.data.access_token);
+        dispatch(addToken(res.data.access_token));
+      };
+      getToken();
+    }
+  }, [isLogged, dispatch]);
   return (
     <div className="App">
       <Router>
-        <ScrollToTop />
         <ToastContainer autoClose={1500} />
         <Switch>
           <Route exact path="/admin/login" component={AdminLogin} />
-          <Route
+          <ProtectedRoute
+            exact={false}
             path="/admin"
-            render={() =>
-              localStorage.getItem('accessToken') &&
-              localStorage.getItem('admin') ? (
-                <AdminLayout />
-              ) : (
-                <Redirect to="/admin/login" />
-              )
-            }
+            isAdmin={true}
+            component={AdminLayout}
           />
-
-          <Route path="/" component={AppLayout} />
+          <Route path="/user">
+            <UsersLayout mode="information" />
+          </Route>
+          <Route path="/">
+            <UsersLayout />
+          </Route>
         </Switch>
       </Router>
     </div>

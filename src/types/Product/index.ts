@@ -1,14 +1,25 @@
 export interface Product {
-  id: any;
+  _id?: string;
   name: string;
-  des: string;
+  description: string;
   price: number;
-  category: string;
-  quantity: number;
+  ratings: number;
   images: Images[];
+  category: string;
+  stock: number;
+  numOfReviews: number;
+  reviews?: Reviews[];
+  createAt?: string;
 }
 
-interface Images {
-  idI: any;
-  image: string;
+export interface Images {
+  public_id: string;
+  url: string;
+}
+
+interface Reviews {
+  user: string;
+  name: string;
+  rating: number;
+  comment: string;
 }

@@ -1,27 +1,31 @@
-import React, { ComponentType } from 'react';
+import { ComponentType } from 'react';
 
-import {
-  Home,
-  Admin,
-  ProductDetail,
-  ProductsGroup,
-  Search,
-  Cart,
-  NotFound,
-  OrderSuccess
-} from 'pages';
-import {
-  AdminProducts,
-  AdminCategory,
-  AdminOrders,
-  Members
-} from 'pages/Admin/components';
-import AddCate from 'pages/Admin/components/Category/AddCate';
-import EditCate from 'pages/Admin/components/Category/EditCate';
-import AddProduct from 'pages/Admin/components/Products/AddProduct';
-import EditProduct from 'pages/Admin/components/Products/EditProuduct';
-import OrderDetail from 'pages/Admin/components/Orders/OrderDetail';
-import AddMember from 'pages/Admin/components/Members/AddMembers';
+import Home from 'pages/users/home';
+import ProductDetail from 'pages/users/productDetail';
+import ProductsGroup from 'pages/users/productsGroup';
+import Search from 'pages/users/search';
+import Cart from 'pages/users/cart';
+import Shipping from 'pages/users/cart/shipping';
+import NotFound from 'pages/users/notFound';
+import OrderSuccess from 'pages/users/orderSuccess';
+import Profile from 'pages/users/profile';
+import Purchase from 'pages/users/purchase';
+import ConfirmOrder from 'pages/users/cart/orderConfirm';
+
+import Dashboard from 'pages/admin/dashboard';
+import AdminCategory from 'pages/admin/category/list';
+import AdminProducts from 'pages/admin/product/list';
+import AdminOrders from 'pages/admin/orders';
+import Members from 'pages/admin/members';
+
+import CategoryCreate from 'pages/admin/category/create';
+
+import CategoryEdit from 'pages/admin/category/edit';
+
+import ProductCreate from 'pages/admin/product/create';
+import ProductEdit from 'pages/admin/product/edit';
+import OrderDetail from 'pages/admin/orders/OrderDetail';
+import AddMember from 'pages/admin/members/AddMembers';
 
 import {
   PATH_HOME,
@@ -29,6 +33,9 @@ import {
   PATH_PRODUCT_DETAIL,
   PATH_SEARCH,
   PATH_CART,
+  PATH_CART_SHIPPING,
+  PATH_USER_ACCOUNT_PROFILE,
+  PATH_USER_PURCHASE,
   PATH_ADMIN,
   PATH_ADMIN_PRODUCTS,
   PATH_ADMIN_PRODUCTS_ADD,
@@ -40,7 +47,8 @@ import {
   PATH_ADMIN_ORDERS_DETAIL,
   PATH_ADMIN_MEMBERS,
   PATH_ADMIN_MEMBERS_ADD,
-  PATH_ORDER_SUCCESS
+  PATH_ORDER_SUCCESS,
+  PATH_CART_ORDER_CONFIRM
 } from './routes.paths';
 
 interface RouteModel {
@@ -77,6 +85,16 @@ export const appRoutes: RouteModel[] = [
   },
   {
     exact: true,
+    path: PATH_CART_SHIPPING,
+    component: Shipping
+  },
+  {
+    exact: true,
+    path: PATH_CART_ORDER_CONFIRM,
+    component: ConfirmOrder
+  },
+  {
+    exact: true,
     path: PATH_ORDER_SUCCESS,
     component: OrderSuccess
   },
@@ -87,11 +105,24 @@ export const appRoutes: RouteModel[] = [
   }
 ];
 
+export const userInfomationRouter: RouteModel[] = [
+  {
+    exact: true,
+    path: PATH_USER_PURCHASE,
+    component: Purchase
+  },
+  {
+    exact: true,
+    path: PATH_USER_ACCOUNT_PROFILE,
+    component: Profile
+  }
+];
+
 export const adminRouter: RouteModel[] = [
   {
     exact: true,
     path: PATH_ADMIN,
-    component: Admin
+    component: Dashboard
   },
   {
     exact: true,
@@ -106,22 +137,22 @@ export const adminRouter: RouteModel[] = [
   {
     exact: true,
     path: PATH_ADMIN_CATEGORY_ADD,
-    component: AddCate
+    component: CategoryCreate
   },
   {
     exact: true,
     path: PATH_ADMIN_CATEGORY_UPDATE,
-    component: EditCate
+    component: CategoryEdit
   },
   {
     exact: true,
     path: PATH_ADMIN_PRODUCTS_ADD,
-    component: AddProduct
+    component: ProductCreate
   },
   {
     exact: true,
     path: PATH_ADMIN_PRODUCTS_UPDATE,
-    component: EditProduct
+    component: ProductEdit
   },
   {
     exact: true,

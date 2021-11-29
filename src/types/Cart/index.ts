@@ -1,20 +1,22 @@
 export interface Cart {
   cartItems: CartItem[];
-  cartTotalAmount: number;
+  shippingInfo: ShippingInfo;
 }
 
-interface CartItem {
+export interface CartItem {
   id: any;
   name: string;
-  des: string;
   price: number;
-  category: string;
+  images: string;
   quantity: number;
-  images: Images[];
-  cartQuantity: number;
+  stock: number;
 }
 
-interface Images {
-  idI: string;
-  image: string;
+export interface ShippingInfo {
+  id?: any;
+  name: string;
+  address: string;
+  city: string;
+  country: string;
+  phone: string;
 }

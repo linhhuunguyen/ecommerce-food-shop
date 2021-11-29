@@ -1,9 +1,8 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Container from '@material-ui/core/Container';
-import Toolbar from '@material-ui/core/Toolbar';
-import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@mui/material/AppBar';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+import { makeStyles } from '@mui/styles';
 
 import { BuyerLogin, Account, Logo, CartIcon, SearchBar } from './components';
 
@@ -23,7 +22,7 @@ export default function Header() {
   const classes = useStyles();
 
   return (
-    <AppBar position="fixed" className={classes.root}>
+    <AppBar position="fixed" className={classes.root} color="default">
       <Container maxWidth="lg">
         <Toolbar className={classes.toolbar}>
           <Logo link="/" />

@@ -3,17 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@hookform/resolvers": "^2.8.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "@mui/icons-material": "^5.0.3",
+    "@mui/material": "^5.0.3",
+    "@mui/styles": "^5.0.1",
     "@mui/x-data-grid": "^4.0.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
-    "@types/json-server": "^0.14.4",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.0",
@@ -25,12 +29,14 @@
     "@types/uuid": "^8.3.1",
     "@types/yup": "^0.29.13",
     "axios": "^0.21.1",
-    "json-server": "^0.16.3",
+    "clsx": "^1.1.1",
+    "formik": "^2.2.9",
     "material-table": "^1.69.3",
+    "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.15.2",
     "react-icons": "^4.2.0",
+    "react-phone-input-2": "^2.14.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -48,8 +54,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "json-server server/db.json -m ./node_modules/json-server-auth --port 8080 "
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -80,7 +85,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-hooks": "1.7.0",
-    "json-server-auth": "^2.1.0",
     "prettier": "2.3.2"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

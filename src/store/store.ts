@@ -3,6 +3,7 @@ import categoriesReducer from './Categories/categories.slice';
 import productsReducer from './Products/products.slide';
 import ordersReducer from './Orders/orders.slice';
 import userReducer from './User/user.slice';
+import authReducer from './auth';
 
 import cartReducer from './Cart/cart.slice';
 
@@ -12,7 +13,8 @@ const store = configureStore({
     products: productsReducer,
     cart: cartReducer,
     order: ordersReducer,
-    users: userReducer
+    users: userReducer,
+    auth: authReducer
   }
 });
 export type RootState = ReturnType<typeof store.getState>;
