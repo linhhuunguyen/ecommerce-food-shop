@@ -43,7 +43,9 @@ function ProductDetail() {
       id: productDetail._id,
       name: productDetail.name,
       price: productDetail.price,
-      images: productDetail.images[0].url,
+      // images: {productDetail.images ? productDetail.images[0].url : null } ,
+      images:
+        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
       quantity: quantityOrder,
       stock: productDetail.stock
     };
@@ -60,11 +62,13 @@ function ProductDetail() {
           />
         </Grid>
         <Grid item sm={5}>
-          <img
-            src={productDetail.images[selectedImage].url}
-            alt=""
-            width="100%"
-          />
+          {productDetail.images ? (
+            <img
+              src={productDetail.images[selectedImage].url}
+              alt=""
+              width="100%"
+            />
+          ) : null}
         </Grid>
         <Grid item sm={6}>
           <Box padding="20px 0 0 10px">

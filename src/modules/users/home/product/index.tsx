@@ -79,11 +79,13 @@ export default function ProductList() {
               <Box className={classes.root}>
                 <Box>
                   <Box>
-                    <img
-                      src={product.images[0]?.url}
-                      alt=""
-                      style={{ height: '100%', width: '100%' }}
-                    />
+                    {product.images ? (
+                      <img
+                        src={product.images[0].url}
+                        alt=""
+                        style={{ height: '100%', width: '100%' }}
+                      />
+                    ) : null}
                   </Box>
                 </Box>
                 <Box className={classes.contentStyle}>

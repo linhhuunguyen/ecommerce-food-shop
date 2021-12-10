@@ -19,9 +19,10 @@ const productAPI = {
     const res = axios.get(url, config);
     return res;
   },
-  getProduct: (id: string | number) => {
-    const url: string = `/products/${id}`;
-    return axiosClient.get(url);
+  getProduct: (id: string) => {
+    const url: string = `/api/v1/product/${id}`;
+    const res = axios.get(url);
+    return res;
   },
   getPrductGroup: (cate: string) => {
     const url: string = `ddd/products?category=${cate}`;
@@ -35,16 +36,21 @@ const productAPI = {
     const url: string = '/api/v1/admin/product/new';
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: token
       }
     };
     const res = axios.post(url, product, config);
     return res;
   },
-  updateProduct: (id: string | number, product: Product) => {
-    const url: string = `/products/${id}`;
-    return axiosClient.put(url, product);
+  updateProduct: (id: string, product: Product, token: any) => {
+    const url: string = `/api/v1/admin/product/${id}`;
+    const config = {
+      headers: {
+        Authorization: token
+      }
+    };
+    const res = axios.put(url, product, config);
+    return res;
   }
 };
 

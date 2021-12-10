@@ -4,7 +4,7 @@ export interface Product {
   description: string;
   price: number;
   ratings: number;
-  images: Images[];
+  images?: Images[];
   category: string;
   stock: number;
   numOfReviews: number;
@@ -12,10 +12,10 @@ export interface Product {
   createAt?: string;
 }
 
-export interface Images {
+export type Images = {
   public_id: string;
   url: string;
-}
+};
 
 interface Reviews {
   user: string;

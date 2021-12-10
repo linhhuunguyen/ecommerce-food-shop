@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 import productAPI from 'api/products';
-import { Product } from 'types/Product';
+import { Product, Images } from 'types/Product';
 
 // get all product -- user
 export const getProducts = createAsyncThunk(
@@ -32,24 +32,24 @@ export const getGroup = createAsyncThunk(
 export const getProduct = createAsyncThunk(
   'product/getProduct',
   async (id: string) => {
-    const response = await productAPI.getProduct(id);
-    return response;
+    const { data } = await productAPI.getProduct(id);
+    return data;
   }
 );
 
 // add Product
 
 interface addProductType {
-  values: Product;
+  product: Product;
   token: string;
 }
 
 export const addProduct = createAsyncThunk(
   'product/addProduct',
   async (dataP: addProductType) => {
-    const { values, token } = dataP;
+    const { product, token } = dataP;
 
-    const { data } = await productAPI.addProduct(values, token);
+    const { data } = await productAPI.addProduct(product, token);
     return data;
   }
 );
@@ -69,13 +69,14 @@ export const deleteProduct = createAsyncThunk(
 interface UpdateProduct {
   id: string;
   product: Product;
+  token: string;
 }
 
 export const updateProduct = createAsyncThunk(
   'category/deleteCategory',
   async (data: UpdateProduct) => {
-    const { id, product } = data;
-    const response = await productAPI.updateProduct(id, product);
+    const { id, product, token } = data;
+    const response = await productAPI.updateProduct(id, product, token);
     return response;
   }
 );

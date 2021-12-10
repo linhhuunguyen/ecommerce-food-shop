@@ -1,16 +1,14 @@
 import { useMemo, useEffect, useState } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
-import shortUUID from 'short-uuid';
-import { v4 as uuidv4 } from 'uuid';
-import { useFormik, FieldArray, FormikProvider, getIn } from 'formik';
+import { useHistory, useParams } from 'react-router-dom';
+import { useFormik, FormikProvider } from 'formik';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/system/Box';
 import TextField from '@mui/material/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import { MdCloudUpload } from 'react-icons/md';
-import { FaTimes } from 'react-icons/fa';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import Paper from 'components/paper';
@@ -31,12 +29,42 @@ interface ProductFormProps {
 const ProductForm = ({ mode }: ProductFormProps) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-
-  const { productDetail, loading } = useAppSelector((state) => state.products);
   const { cateloryList } = useAppSelector((state) => state.categories);
+  const { productDetail, loading } = useAppSelector((state) => state.products);
   const { token } = useAppSelector((state) => state.auth);
-
   const { id } = useParams<{ id: string }>();
+  // const [imagesPreview, setImagesPreview] = useState<any>([]);
+  const [images, setImages] = useState<any>([]);
+  const [imagesPreview, setImagesPreview] = useState<any>([]);
+
+  useEffect(() => {
+    if (mode === 'edit') {
+      if (productDetail && productDetail._id !== id) {
+        dispatch(getProduct(id));
+      } else {
+        setImagesPreview(productDetail.images);
+      }
+    }
+    dispatch(getCategories());
+  }, [id, dispatch, token, productDetail]);
+
+  const ProductImagesChange = (e: any) => {
+    const files = Array.from(e.target.files);
+    files.forEach((file: any) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((old: any) => [
+            ...old,
+            { public_id: '', url: reader.result }
+          ]);
+          setImages([...images, reader.result]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const initialValues = useMemo(() => {
     if (mode === 'edit') {
       return {
@@ -59,10 +87,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       description: '',
       price: 0,
       ratings: 0,
-      images: [
-        { public_id: uuidv4(), url: '' },
-        { public_id: uuidv4(), url: '' }
-      ],
       category: '',
       stock: 0,
       numOfReviews: 0,
@@ -70,26 +94,25 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     };
   }, [productDetail, mode]);
 
-  useEffect(() => {
-    if (id) {
-      dispatch(getProduct(id));
-    }
-    dispatch(getCategories());
-  }, [id, dispatch, token]);
-
   function handleSubmit(values: Product) {
     if (mode === 'edit') {
-      const product = { ...values };
-      dispatch(updateProduct({ id, product }));
+      const product: Product = { ...values };
+      const data = { product, token, id };
+      dispatch(updateProduct(data));
       history.push('/admin/products');
     }
     if (mode === 'create') {
-      const data = { values, token };
+      const product: Product = { ...values, images };
+      const data = { product, token };
       dispatch(addProduct(data));
-      console.log('dataaaaaaaaaaaaaaaaaaaaaaaaa', data);
-      // history.push('/admin/products');
+      history.push('/admin/products');
     }
   }
+
+  const handleDestroy = (item: string) => {
+    setImages(images.filter((image: any) => image !== item));
+    setImagesPreview(imagesPreview.filter((image: any) => image !== item));
+  };
 
   const formik = useFormik({
     initialValues,
@@ -181,86 +204,166 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                 </Select>
               </Grid>
             </Grid>
+            <div className="flex flex-col my-6">
+              <div
+                id="createProductFormImage"
+                className="flex mb-6 flex-wrap justify-center items-center"
+              >
+                {/* {productDetail.images.map((image: any) => (
+                  <div key={Math.random()} className="wrapper_image mr-3 mb-3">
+                    <img src={image.url} alt="Product Preview" />
+                  </div>
+                ))} */}
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[0]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[0])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
 
-            <FieldArray
-              name="images"
-              render={(arrayHelpers) => (
-                <>
-                  {formik.values.images.map((image, index) => (
-                    <div
-                      className="flex justify-center flex-wrap items-center"
-                      key={image.public_id}
-                    >
-                      {/* <TextField
-                        id="image"
-                        label="Image"
-                        fullWidth
-                        value={formik.values.images[index].url}
-                        name={`images[${index}].url`}
-                        type="text"
-                        variant="outlined"
-                        onChange={formik.handleChange}
-                        error={Boolean(
-                          getIn(formik.touched, `images[${index}].url`) &&
-                            getIn(formik.errors, `images[${index}].url`)
-                        )}
-                        helperText={
-                          getIn(formik.touched, `images[${index}].url`) &&
-                          getIn(formik.errors, `images[${index}].url`)
-                            ? getIn(formik.errors, `images[${index}].url`)
-                            : ''
-                        }
-                      /> */}
-                      <div className="wrapper">
-                        <div className="image">
-                          <img src="" alt="" />
-                        </div>
-                        <div className="content">
-                          <div className="icon">
-                            <MdCloudUpload />
-                          </div>
-                          <input
-                            id="file"
-                            type="file"
-                            multiple
-                            value={formik.values.images[index].url}
-                            name={`images[${index}].url`}
-                            onChange={formik.handleChange}
-                          />
-                        </div>
-                        <div className="cancel-btn">
-                          <FaTimes />
-                        </div>
-                      </div>
-                      {/* <div className="btn-add flex justify-center items-center">
-                        <div>
-                          {index === 0 ? (
-                            <Button
-                              type="button"
-                              onClick={() =>
-                                arrayHelpers.push({
-                                  public_id: uuidv4(),
-                                  url: ''
-                                })
-                              }
-                            >
-                              +
-                            </Button>
-                          ) : (
-                            <Button
-                              type="button"
-                              onClick={() => arrayHelpers.remove(index)}
-                            >
-                              -
-                            </Button>
-                          )}
-                        </div>
-                      </div> */}
-                    </div>
-                  ))}
-                </>
-              )}
-            />
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[1]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[1])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile1" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[2]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[2])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile2" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[3]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[3])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile3" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[4]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[4])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile4" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[5]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[5])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile5" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[6]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[6])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile6" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
+                <div className="wrapper_image mr-3 mb-3">
+                  <img src={imagesPreview[7]?.url} alt="" />
+                  <div className="remove_image">
+                    <IconButton onClick={() => handleDestroy(imagesPreview[7])}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div id="createProductFormFile7" className="drop-file-input">
+                    <input
+                      type="file"
+                      name="images"
+                      accept="image/*"
+                      onChange={ProductImagesChange}
+                      multiple
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* <div id="createProductFormFile">
+                <input
+                  type="file"
+                  name="images"
+                  accept="image/*"
+                  onChange={ProductImagesChange}
+                  multiple
+                />
+              </div> */}
+            </div>
+
             <Grid container item spacing={2}>
               <Grid item lg={12} md={12}>
                 <TextField

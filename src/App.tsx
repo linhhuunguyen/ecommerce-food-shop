@@ -10,7 +10,7 @@ import { UsersLayout, AdminLayout } from 'layout';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import { addToken } from 'store/auth';
-import apiConfig from 'api/apiConfig';
+import ProductAddForm from 'modules/admin/product/form/addProduct';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -21,7 +21,6 @@ function App() {
     if (token) {
       const getToken = async () => {
         const res = await axios.post('/api/v1/user/refresh_token');
-        console.log('refresh_token', res.data.access_token);
         dispatch(addToken(res.data.access_token));
       };
       getToken();
@@ -32,6 +31,7 @@ function App() {
       <Router>
         <ToastContainer autoClose={1500} />
         <Switch>
+          <Route path="/add/product" component={ProductAddForm} />
           <Route exact path="/admin/login" component={AdminLogin} />
           <ProtectedRoute
             exact={false}
