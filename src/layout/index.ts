@@ -1,2 +1,2 @@
 export { default as UsersLayout } from './users';
-export { default as AdminLayout } from './admin';
+export { default as AdminLayout } from './Admin';

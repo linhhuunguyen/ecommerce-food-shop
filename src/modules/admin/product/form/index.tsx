@@ -34,7 +34,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const { token } = useAppSelector((state) => state.auth);
   const { id } = useParams<{ id: string }>();
   // const [imagesPreview, setImagesPreview] = useState<any>([]);
-  const [images, setImages] = useState<any>([]);
+  const [imagesT, setImages] = useState<any>([]);
   const [imagesPreview, setImagesPreview] = useState<any>([]);
 
   useEffect(() => {
@@ -50,6 +50,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
 
   const ProductImagesChange = (e: any) => {
     const files = Array.from(e.target.files);
+
     files.forEach((file: any) => {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -58,7 +59,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             ...old,
             { public_id: '', url: reader.result }
           ]);
-          setImages([...images, reader.result]);
+          setImages([...imagesT, reader.result]);
         }
       };
       reader.readAsDataURL(file);
@@ -94,15 +95,18 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     };
   }, [productDetail, mode]);
 
+  console.log('images', imagesT);
+
   function handleSubmit(values: Product) {
     if (mode === 'edit') {
-      const product: Product = { ...values };
+      const product: Product = { ...values, images: imagesPreview };
       const data = { product, token, id };
+      console.log(data);
       dispatch(updateProduct(data));
       history.push('/admin/products');
     }
     if (mode === 'create') {
-      const product: Product = { ...values, images };
+      const product: Product = { ...values, images: imagesT };
       const data = { product, token };
       dispatch(addProduct(data));
       history.push('/admin/products');
@@ -110,7 +114,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   }
 
   const handleDestroy = (item: string) => {
-    setImages(images.filter((image: any) => image !== item));
+    setImages(imagesT.filter((image: any) => image !== item));
     setImagesPreview(imagesPreview.filter((image: any) => image !== item));
   };
 

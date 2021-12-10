@@ -81,7 +81,7 @@ export default function ProductList() {
                   <Box>
                     {product.images ? (
                       <img
-                        src={product.images[0].url}
+                        src={product.images[0]?.url}
                         alt=""
                         style={{ height: '100%', width: '100%' }}
                       />

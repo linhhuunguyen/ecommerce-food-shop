@@ -42,7 +42,7 @@ const productAPI = {
     const res = axios.post(url, product, config);
     return res;
   },
-  updateProduct: (id: string, product: Product, token: any) => {
+  updateProduct: (id: any, product: Product, token: any) => {
     const url: string = `/api/v1/admin/product/${id}`;
     const config = {
       headers: {

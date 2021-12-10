@@ -3,7 +3,6 @@ import { makeStyles, createStyles } from '@mui/styles';
 import { Theme } from '@mui/material';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-
 import { sidebarItems } from './sidebar-constants';
 
 const useStyles = makeStyles((theme: Theme) =>

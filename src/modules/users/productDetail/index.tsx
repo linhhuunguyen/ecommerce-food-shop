@@ -64,7 +64,7 @@ function ProductDetail() {
         <Grid item sm={5}>
           {productDetail.images ? (
             <img
-              src={productDetail.images[selectedImage].url}
+              src={productDetail.images[selectedImage]?.url}
               alt=""
               width="100%"
             />
