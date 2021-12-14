@@ -34,6 +34,16 @@ export const getCategoriesDescendants = createAsyncThunk(
   }
 );
 
+// get Cate3
+
+export const getCate3 = createAsyncThunk(
+  'category/getCategoriesDescendants3',
+  async (id: string) => {
+    const { data } = await categoryAPI.getAdminCate3Api(id);
+    return data;
+  }
+);
+
 // getSingle Category
 export const getSingleCategory = createAsyncThunk(
   'category/getSingleCategory',
@@ -95,12 +105,16 @@ interface Cate2 {
   _id: '';
   name: '';
 }
+interface Cate3 {
+  _id: '';
+  name: '';
+}
 
 interface InitialStateType {
   cateloryList: Category[];
   categoriesSlug: Category[];
   cate2: Cate2[];
-  cate3: Cate2[];
+  cate3: Cate3[];
   singleCategory: Category;
   loading: boolean;
 }
@@ -200,18 +214,15 @@ const categorySlice = createSlice({
     },
 
     // get categories case 3
-    [getCategoriesDescendants.pending.toString()](state) {
+    [getCate3.pending.toString()](state) {
       state.loading = true;
     },
-    [getCategoriesDescendants.fulfilled.toString()](
-      state,
-      action: PayloadAction<Cate2[]>
-    ) {
+    [getCate3.fulfilled.toString()](state, action: PayloadAction<Cate3[]>) {
       if (!action.payload) return;
       state.cate3 = [...action.payload];
       state.loading = false;
     },
-    [getCategoriesDescendants.rejected.toString()]: (state) => {
+    [getCate3.rejected.toString()]: (state) => {
       state.loading = true;
     },
 

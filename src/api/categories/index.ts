@@ -32,6 +32,12 @@ const categoryAPI = {
     return res;
   },
 
+  getAdminCate3Api: (id: string) => {
+    const url: string = `/api/v1/categories-3?parent=${id}`;
+    const res = axios.get(url);
+    return res;
+  },
+
   createCategoryAPI: (category: Category) => {
     const url: string = '/admin/category/new';
     return axiosClient.post(url, category);

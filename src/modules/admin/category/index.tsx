@@ -6,7 +6,8 @@ import { useAppSelector, useAppDispatch } from 'store/hook';
 import {
   getCategoriesSlug,
   getAdminCategories,
-  getCategoriesDescendants
+  getCategoriesDescendants,
+  getCate3
 } from 'store/Categories/categories.slice';
 
 import './styles.css';
@@ -23,6 +24,7 @@ export default function CategoryList() {
   useEffect(() => {
     if (token) {
       dispatch(getAdminCategories(token));
+      dispatch(getCategoriesSlug('asus'));
     }
   }, [token, dispatch]);
 
@@ -32,7 +34,14 @@ export default function CategoryList() {
     }
   };
 
-  console.log(cate2);
+  const handleClickCase2 = (id: any) => {
+    if (id) {
+      dispatch(getCate3(id));
+    }
+  };
+
+  console.log('cate2', cate2);
+  console.log('cate3', cate3);
 
   return (
     <>
@@ -55,25 +64,21 @@ export default function CategoryList() {
             </div>
           ))}
         </div>
-        <div className="cate cate-2">
+        <div className="cate">
           {cate2.map((item) => (
             <div
               className="cate-1"
               key={Math.random()}
-              onClick={() => handleClickCase1(item._id)}
+              onClick={() => handleClickCase2(item._id)}
             >
               {item.name}
             </div>
           ))}
         </div>
         <div className="cate cate-3">
-          {cate3.map((item) => (
-            <div
-              className="cate-1"
-              key={Math.random()}
-              onClick={() => handleClickCase1(item._id)}
-            >
-              {item.name}
+          {cate3.map((cate) => (
+            <div className="cate-1" key={Math.random()}>
+              {cate.name}
             </div>
           ))}
         </div>
