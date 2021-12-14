@@ -37,14 +37,22 @@ const CategoryForm = ({ mode }: CategoryFormProps) => {
       return {
         _id: singleCategory._id,
         name: singleCategory.name,
+        slug: singleCategory.slug,
+        parent: singleCategory.parent,
+        ancestors: singleCategory.ancestors,
         description: singleCategory.description,
-        status: singleCategory.status
+        status: singleCategory.status,
+        user: singleCategory.user
       };
     }
     return {
       name: '',
+      slug: '',
+      parent: '',
+      ancestors: [],
       description: '',
-      status: true
+      status: true,
+      user: ''
     };
   }, [singleCategory, mode]);
 

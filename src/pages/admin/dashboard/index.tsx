@@ -17,7 +17,7 @@ export default function Dashboard() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
 
-  const categories = useAppSelector((state) => state.categories.cateloryList);
+  const { cateloryList } = useAppSelector((state) => state.categories);
   const orders = useAppSelector((state) => state.order.orderList);
   // const { user } = useAppSelector((state) => state.users);
   // const buyer = user.filter((member) => member.role.includes('buyer'));
@@ -45,7 +45,7 @@ export default function Dashboard() {
         <Grid item xs={12} sm={3}>
           <DashboardItem
             icon={<FaClipboardList />}
-            data={categories.categoryCount}
+            data={cateloryList.length}
             title="Category"
             colorWrap="#04297A"
             backgroundWrap="#D0F2FF"

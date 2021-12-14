@@ -19,6 +19,19 @@ const categoryAPI = {
     const res = axios.get(url, config);
     return res;
   },
+
+  getAdminCategoriesSlugApi: (slug: string) => {
+    const url: string = `/api/v1/categories-slug?slug=${slug}`;
+    const res = axios.get(url);
+    return res;
+  },
+
+  getAdminCategoriesDescendantsApi: (id: string) => {
+    const url: string = `/api/v1/categories-descendants?category_id=${id}`;
+    const res = axios.get(url);
+    return res;
+  },
+
   createCategoryAPI: (category: Category) => {
     const url: string = '/admin/category/new';
     return axiosClient.post(url, category);

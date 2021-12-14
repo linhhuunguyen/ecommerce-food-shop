@@ -14,6 +14,26 @@ export const getCategories = createAsyncThunk(
   }
 );
 
+// get Categories Slug
+
+export const getCategoriesSlug = createAsyncThunk(
+  'category/getCategoriesSlug',
+  async (slug: string) => {
+    const { data } = await categoryAPI.getAdminCategoriesSlugApi(slug);
+    return data;
+  }
+);
+
+// get Categories Descendants
+
+export const getCategoriesDescendants = createAsyncThunk(
+  'category/getCategoriesDescendants',
+  async (id: string) => {
+    const { data } = await categoryAPI.getAdminCategoriesDescendantsApi(id);
+    return data;
+  }
+);
+
 // getSingle Category
 export const getSingleCategory = createAsyncThunk(
   'category/getSingleCategory',
@@ -71,30 +91,56 @@ interface AddCategory {
   category: Category;
 }
 
+interface Cate2 {
+  _id: '';
+  name: '';
+}
+
 interface InitialStateType {
-  cateloryList: Categories;
+  cateloryList: Category[];
+  categoriesSlug: Category[];
+  cate2: Cate2[];
+  cate3: Cate2[];
   singleCategory: Category;
   loading: boolean;
 }
 
 const initialState: InitialStateType = {
-  cateloryList: {
-    success: true,
-    categories: [
-      {
-        _id: '',
-        name: '',
-        description: '',
-        status: true
-      }
-    ],
-    categoryCount: 0
-  },
+  cateloryList: [
+    {
+      _id: '',
+      name: '',
+      slug: '',
+      parent: '',
+      ancestors: [],
+      description: '',
+      status: true,
+      user: ''
+    }
+  ],
+  categoriesSlug: [
+    {
+      _id: '',
+      name: '',
+      slug: '',
+      parent: '',
+      ancestors: [],
+      description: '',
+      status: true,
+      user: ''
+    }
+  ],
+  cate2: [{ _id: '', name: '' }],
+  cate3: [{ _id: '', name: '' }],
   singleCategory: {
     _id: '',
     name: '',
+    slug: '',
+    parent: '',
+    ancestors: [],
     description: '',
-    status: true
+    status: true,
+    user: ''
   },
   loading: false
 };
@@ -110,14 +156,63 @@ const categorySlice = createSlice({
     },
     [getCategories.fulfilled.toString()](
       state,
-      action: PayloadAction<Categories>
+      action: PayloadAction<Category[]>
     ) {
       if (!action.payload) return;
-      state.cateloryList.categories = [...action.payload.categories];
+      state.cateloryList = [...action.payload];
       state.loading = false;
     },
     [getCategories.rejected.toString()]: (state) => {
       state.loading = false;
+    },
+
+    // get categories for slug
+    [getCategoriesSlug.pending.toString()](state) {
+      state.loading = true;
+    },
+    [getCategoriesSlug.fulfilled.toString()](
+      state,
+      action: PayloadAction<Category[]>
+    ) {
+      if (!action.payload) return;
+      state.categoriesSlug = [...action.payload];
+      state.loading = false;
+    },
+    [getCategoriesSlug.rejected.toString()]: (state) => {
+      state.loading = true;
+    },
+
+    // get categories case 2
+
+    [getCategoriesDescendants.pending.toString()](state) {
+      state.loading = true;
+    },
+    [getCategoriesDescendants.fulfilled.toString()](
+      state,
+      action: PayloadAction<Cate2[]>
+    ) {
+      if (!action.payload) return;
+      state.cate2 = [...action.payload];
+      state.loading = false;
+    },
+    [getCategoriesDescendants.rejected.toString()]: (state) => {
+      state.loading = true;
+    },
+
+    // get categories case 3
+    [getCategoriesDescendants.pending.toString()](state) {
+      state.loading = true;
+    },
+    [getCategoriesDescendants.fulfilled.toString()](
+      state,
+      action: PayloadAction<Cate2[]>
+    ) {
+      if (!action.payload) return;
+      state.cate3 = [...action.payload];
+      state.loading = false;
+    },
+    [getCategoriesDescendants.rejected.toString()]: (state) => {
+      state.loading = true;
     },
 
     // get Single Category
@@ -142,10 +237,10 @@ const categorySlice = createSlice({
     },
     [getAdminCategories.fulfilled.toString()](
       state,
-      action: PayloadAction<Categories>
+      action: PayloadAction<Category[]>
     ) {
       if (!action.payload) return;
-      state.cateloryList.categories = [...action.payload.categories];
+      state.cateloryList = [...action.payload];
       state.loading = false;
     },
     [getAdminCategories.rejected.toString()](state) {
@@ -161,7 +256,7 @@ const categorySlice = createSlice({
       action: PayloadAction<AddCategory>
     ) {
       if (!action.payload) return;
-      state.cateloryList.categories.push(action.payload.category);
+      state.cateloryList.push(action.payload.category);
       state.loading = false;
     },
     [addCategory.rejected.toString()]: (state) => {
@@ -193,7 +288,7 @@ const categorySlice = createSlice({
       action: PayloadAction<Category[]>
     ) {
       if (!action.payload) return;
-      state.cateloryList.categories = state.cateloryList.categories.filter(
+      state.cateloryList = state.cateloryList.filter(
         (item: any) => item.id !== action.payload
       );
       state.loading = false;

@@ -46,9 +46,7 @@ const useStyle = makeStyles((theme) => ({
   }
 }));
 
-export interface LoginProps {}
-
-export default function AdminLogin(props: LoginProps) {
+export default function AdminLogin() {
   const classes = useStyle();
   const dispatch = useAppDispatch();
   const history = useHistory();

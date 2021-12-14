@@ -5,8 +5,6 @@ import { useAppSelector, useAppDispatch } from 'store/hook';
 import { getCategories } from 'store/Categories/categories.slice';
 import NameSiderbar from './NameSiderbar';
 
-export interface CategoriesProps {}
-
 const drawerWidth = 220;
 
 const useStyle = makeStyles((theme) => ({
@@ -38,7 +36,7 @@ const useStyle = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar
 }));
 
-export default function Categories(props: CategoriesProps) {
+export default function Categories() {
   const classes = useStyle();
 
   const dispatch = useAppDispatch();
@@ -48,7 +46,7 @@ export default function Categories(props: CategoriesProps) {
   }, [dispatch]);
 
   const data = useAppSelector((state) => state.categories.cateloryList);
-  const categories = [...data.categories].reverse();
+  const categories = [...data].reverse();
 
   const [selectedColor, setSelectedColor] = useState();
   return (

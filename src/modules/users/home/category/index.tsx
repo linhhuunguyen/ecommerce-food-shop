@@ -102,7 +102,7 @@ export default function CategoryList() {
 
   const data = useAppSelector((state) => state.categories.cateloryList);
 
-  const categories = [...data.categories].reverse();
+  const categories = [...data].reverse();
 
   return (
     <Box className={classes.space}>

@@ -26,7 +26,7 @@ const CategoryListTable = () => {
   const { cateloryList, loading } = useAppSelector((state) => state.categories);
 
   const { token } = useAppSelector((state) => state.auth);
-  const categories = [...cateloryList.categories].reverse();
+  const categories = [...cateloryList].reverse();
 
   useEffect(() => {
     if (token) {

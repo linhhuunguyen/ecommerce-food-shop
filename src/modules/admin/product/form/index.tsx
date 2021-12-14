@@ -200,7 +200,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                   <MenuItem value="" disabled>
                     Category
                   </MenuItem>
-                  {cateloryList.categories.map((category: Category) => (
+                  {cateloryList.map((category: Category) => (
                     <MenuItem value={category.name} key={category._id}>
                       {category.name}
                     </MenuItem>
