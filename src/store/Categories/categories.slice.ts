@@ -26,7 +26,7 @@ export const getCategoriesSlug = createAsyncThunk(
 
 // get Categories Descendants
 
-export const getCategoriesDescendants = createAsyncThunk(
+export const getCate3 = createAsyncThunk(
   'category/getCategoriesDescendants',
   async (id: string) => {
     const { data } = await categoryAPI.getAdminCategoriesDescendantsApi(id);
@@ -36,7 +36,7 @@ export const getCategoriesDescendants = createAsyncThunk(
 
 // get Cate3
 
-export const getCate3 = createAsyncThunk(
+export const getCate2 = createAsyncThunk(
   'category/getCategoriesDescendants3',
   async (id: string) => {
     const { data } = await categoryAPI.getAdminCate3Api(id);
@@ -198,22 +198,6 @@ const categorySlice = createSlice({
 
     // get categories case 2
 
-    [getCategoriesDescendants.pending.toString()](state) {
-      state.loading = true;
-    },
-    [getCategoriesDescendants.fulfilled.toString()](
-      state,
-      action: PayloadAction<Cate2[]>
-    ) {
-      if (!action.payload) return;
-      state.cate2 = [...action.payload];
-      state.loading = false;
-    },
-    [getCategoriesDescendants.rejected.toString()]: (state) => {
-      state.loading = true;
-    },
-
-    // get categories case 3
     [getCate3.pending.toString()](state) {
       state.loading = true;
     },
@@ -223,6 +207,19 @@ const categorySlice = createSlice({
       state.loading = false;
     },
     [getCate3.rejected.toString()]: (state) => {
+      state.loading = true;
+    },
+
+    // get categories case 3
+    [getCate2.pending.toString()](state) {
+      state.loading = true;
+    },
+    [getCate2.fulfilled.toString()](state, action: PayloadAction<Cate2[]>) {
+      if (!action.payload) return;
+      state.cate2 = [...action.payload];
+      state.loading = false;
+    },
+    [getCate2.rejected.toString()]: (state) => {
       state.loading = true;
     },
 
