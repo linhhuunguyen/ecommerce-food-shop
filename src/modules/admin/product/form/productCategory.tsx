@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import Button from 'components/button';
 import { useAppSelector, useAppDispatch } from 'store/hook';
@@ -12,6 +13,7 @@ import './styles.css';
 
 function ProductCategory() {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const { cateloryList, cate2, cate3 } = useAppSelector(
     (state) => state.categories
   );
@@ -111,7 +113,9 @@ function ProductCategory() {
         </div>
       </div>
       <div className="mt-5">
-        <Button>Continue</Button>
+        <Button onClick={() => history.push('/admin/products/add')}>
+          Continue
+        </Button>
       </div>
     </div>
   );
