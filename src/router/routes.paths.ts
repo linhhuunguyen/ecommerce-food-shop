@@ -10,6 +10,7 @@ export const PATH_USER_PURCHASE = '/user/purchase';
 
 export const PATH_ADMIN = '/admin';
 export const PATH_ADMIN_PRODUCTS = '/admin/products';
+export const PATH_ADMIN_PRODUCTS_CATEGORY = '/admin/products/category';
 export const PATH_ADMIN_PRODUCTS_ADD = '/admin/products/add';
 export const PATH_ADMIN_PRODUCTS_UPDATE = '/admin/products/update/:id';
 export const PATH_ADMIN_CATEGORY = '/admin/category';

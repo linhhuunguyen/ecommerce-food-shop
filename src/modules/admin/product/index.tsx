@@ -10,7 +10,7 @@ const ProductList = () => {
       <TopBox
         title="Products"
         nameButton="Add Product"
-        handle={() => history.push('products/add')}
+        handle={() => history.push('products/category')}
       />
       <ProductListTable />
     </>

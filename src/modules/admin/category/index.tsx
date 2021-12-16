@@ -60,11 +60,6 @@ export default function CategoryList() {
     setCategoryName3(name);
   };
 
-  console.log(categoryName);
-  console.log(categoryName2);
-  console.log(categoryName3);
-  console.log(allCategory);
-
   return (
     <>
       <TopBox

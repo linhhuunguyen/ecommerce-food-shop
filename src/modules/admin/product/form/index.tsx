@@ -33,7 +33,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const { productDetail, loading } = useAppSelector((state) => state.products);
   const { token } = useAppSelector((state) => state.auth);
   const { id } = useParams<{ id: string }>();
-  // const [imagesPreview, setImagesPreview] = useState<any>([]);
   const [imagesT, setImages] = useState<any>([]);
   const [imagesPreview, setImagesPreview] = useState<any>([]);
 
@@ -95,13 +94,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     };
   }, [productDetail, mode]);
 
-  console.log('images', imagesT);
-
   function handleSubmit(values: Product) {
     if (mode === 'edit') {
       const product: Product = { ...values, images: imagesPreview };
       const data = { product, token, id };
-      console.log(data);
       dispatch(updateProduct(data));
       history.push('/admin/products');
     }

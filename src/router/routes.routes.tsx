@@ -13,17 +13,19 @@ import Purchase from 'pages/users/purchase';
 import ConfirmOrder from 'pages/users/cart/orderConfirm';
 
 import Dashboard from 'pages/admin/dashboard';
-import AdminCategory from 'pages/admin/category/list';
-import AdminProducts from 'pages/admin/product/list';
+
 import AdminOrders from 'pages/admin/orders';
 import Members from 'pages/admin/members';
 
+import AdminCategory from 'pages/admin/category/list';
 import CategoryCreate from 'pages/admin/category/create';
-
 import CategoryEdit from 'pages/admin/category/edit';
 
+import AdminProducts from 'pages/admin/product/list';
+import ProductCategory from 'pages/admin/product/category';
 import ProductCreate from 'pages/admin/product/create';
 import ProductEdit from 'pages/admin/product/edit';
+
 import OrderDetail from 'pages/admin/orders/OrderDetail';
 import AddMember from 'pages/admin/members/AddMembers';
 
@@ -38,6 +40,7 @@ import {
   PATH_USER_PURCHASE,
   PATH_ADMIN,
   PATH_ADMIN_PRODUCTS,
+  PATH_ADMIN_PRODUCTS_CATEGORY,
   PATH_ADMIN_PRODUCTS_ADD,
   PATH_ADMIN_PRODUCTS_UPDATE,
   PATH_ADMIN_CATEGORY,
@@ -143,6 +146,11 @@ export const adminRouter: RouteModel[] = [
     exact: true,
     path: PATH_ADMIN_CATEGORY_UPDATE,
     component: CategoryEdit
+  },
+  {
+    exact: true,
+    path: PATH_ADMIN_PRODUCTS_CATEGORY,
+    component: ProductCategory
   },
   {
     exact: true,

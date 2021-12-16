@@ -26,14 +26,14 @@ const categoryAPI = {
     return res;
   },
 
-  getAdminCategoriesDescendantsApi: (id: string) => {
-    const url: string = `/api/v1/categories-descendants?category_id=${id}`;
+  getAdminCate2Api: (id: string) => {
+    const url: string = `/api/v1/categories-2?parent=${id}`;
     const res = axios.get(url);
     return res;
   },
 
   getAdminCate3Api: (id: string) => {
-    const url: string = `/api/v1/categories-3?parent=${id}`;
+    const url: string = `/api/v1/categories-3?category_id=${id}`;
     const res = axios.get(url);
     return res;
   },

@@ -24,20 +24,20 @@ export const getCategoriesSlug = createAsyncThunk(
   }
 );
 
-// get Categories Descendants
+// get Categories level 2
 
-export const getCate3 = createAsyncThunk(
-  'category/getCategoriesDescendants',
+export const getCate2 = createAsyncThunk(
+  'category/getCategoriesDescendants3',
   async (id: string) => {
-    const { data } = await categoryAPI.getAdminCategoriesDescendantsApi(id);
+    const { data } = await categoryAPI.getAdminCate2Api(id);
     return data;
   }
 );
 
-// get Cate3
+// get Categories level 3
 
-export const getCate2 = createAsyncThunk(
-  'category/getCategoriesDescendants3',
+export const getCate3 = createAsyncThunk(
+  'category/getCategoriesDescendants',
   async (id: string) => {
     const { data } = await categoryAPI.getAdminCate3Api(id);
     return data;
