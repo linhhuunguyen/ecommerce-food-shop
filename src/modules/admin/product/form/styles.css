@@ -4,3 +4,30 @@
   border: 0;
   outline: none;
 }
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.cat-selected-item {
+  position: relative;
+  color: rgb(1, 147, 118);
+  font-weight: bold;
+}
+
+.cat-selected-item::before {
+  content: '>';
+  position: absolute;
+  /* right: 59px; */
+  font-size: 23px;
+  left: -21px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cat-selected-item:nth-child(2)::before {
+  display: none;
+}

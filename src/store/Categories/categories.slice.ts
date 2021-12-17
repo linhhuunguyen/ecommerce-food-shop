@@ -104,10 +104,12 @@ interface AddCategory {
 interface Cate2 {
   _id: '';
   name: '';
+  parent: '';
 }
 interface Cate3 {
   _id: '';
   name: '';
+  parent: '';
 }
 
 interface InitialStateType {
@@ -144,8 +146,8 @@ const initialState: InitialStateType = {
       user: ''
     }
   ],
-  cate2: [{ _id: '', name: '' }],
-  cate3: [{ _id: '', name: '' }],
+  cate2: [{ _id: '', name: '', parent: '' }],
+  cate3: [{ _id: '', name: '', parent: '' }],
   singleCategory: {
     _id: '',
     name: '',
