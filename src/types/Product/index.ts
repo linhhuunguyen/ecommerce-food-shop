@@ -5,7 +5,7 @@ export interface Product {
   price: number;
   ratings: number;
   images?: Images[];
-  category: string;
+  category: string[];
   stock: number;
   numOfReviews: number;
   reviews?: Reviews[];
@@ -22,4 +22,9 @@ interface Reviews {
   name: string;
   rating: number;
   comment: string;
+}
+
+interface Category {
+  parent: string;
+  name: string;
 }

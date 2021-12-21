@@ -106,7 +106,7 @@ const initialState: initialStateType = {
     price: 0,
     ratings: 0,
     images: [{ public_id: '', url: '' }],
-    category: '',
+    category: [''],
     stock: 0,
     numOfReviews: 0,
     createAt: ''
@@ -114,10 +114,25 @@ const initialState: initialStateType = {
   loading: false
 };
 
+interface NameSelectCategory {
+  productName: string;
+  dbCategory: string[];
+}
+
+interface Demo {
+  parent: string;
+  name: string;
+}
+
 const productSlide = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    addNameCategory(state, action: PayloadAction<NameSelectCategory>) {
+      state.productDetail.name = action.payload.productName;
+      state.productDetail.category = action.payload.dbCategory;
+    }
+  },
   extraReducers: {
     // productsList -- user
     [getProducts.pending.toString()](state) {
@@ -230,5 +245,7 @@ const productSlide = createSlice({
     }
   }
 });
+
+export const { addNameCategory } = productSlide.actions;
 
 export default productSlide.reducer;

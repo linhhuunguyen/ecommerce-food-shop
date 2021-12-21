@@ -4,11 +4,10 @@ import { useFormik, FormikProvider } from 'formik';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/system/Box';
 import TextField from '@mui/material/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { RiArrowRightSLine } from 'react-icons/ri';
 
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import Paper from 'components/paper';
@@ -17,10 +16,9 @@ import {
   updateProduct,
   getProduct
 } from 'store/Products/products.slide';
-import { getCategories } from 'store/Categories/categories.slice';
-import { Category } from 'types/Category';
 import { Product } from 'types/Product';
 import { productSChema } from './product-form.schema';
+import './styles.css';
 
 interface ProductFormProps {
   mode: 'create' | 'edit';
@@ -29,7 +27,6 @@ interface ProductFormProps {
 const ProductForm = ({ mode }: ProductFormProps) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { cateloryList } = useAppSelector((state) => state.categories);
   const { productDetail, loading } = useAppSelector((state) => state.products);
   const { token } = useAppSelector((state) => state.auth);
   const { id } = useParams<{ id: string }>();
@@ -44,7 +41,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
         setImagesPreview(productDetail.images);
       }
     }
-    dispatch(getCategories());
   }, [id, dispatch, token, productDetail]);
 
   const ProductImagesChange = (e: any) => {
@@ -83,11 +79,11 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     }
 
     return {
-      name: '',
+      name: productDetail.name,
       description: '',
       price: 0,
       ratings: 0,
-      category: '',
+      category: productDetail.category,
       stock: 0,
       numOfReviews: 0,
       createAt: ''
@@ -95,6 +91,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   }, [productDetail, mode]);
 
   function handleSubmit(values: Product) {
+    console.log('1');
     if (mode === 'edit') {
       const product: Product = { ...values, images: imagesPreview };
       const data = { product, token, id };
@@ -102,7 +99,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       history.push('/admin/products');
     }
     if (mode === 'create') {
+      console.log('111111111');
       const product: Product = { ...values, images: imagesT };
+      console.log('producttttttttt', product);
       const data = { product, token };
       dispatch(addProduct(data));
       history.push('/admin/products');
@@ -121,17 +120,216 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     onSubmit: handleSubmit
   });
 
+  interface SelectCategory {
+    parent: string;
+    name: string;
+  }
+
   return (
     <Paper loading={loading} heading="Product Information">
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid container item spacing={2}>
-              <Grid item lg={6} md={6}>
+              <Grid item lg={1} md={1}>
+                <p>Product pictures</p>
+              </Grid>
+              <Grid item lg={11} md={11}>
+                <div className="flex flex-col my-6">
+                  <div
+                    id="createProductFormImage"
+                    className="flex mb-6 flex-wrap items-center"
+                  >
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[0]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[0])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[1]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[1])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile1"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[2]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[2])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile2"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[3]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[3])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile3"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[4]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[4])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile4"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[5]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[5])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile5"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[6]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[6])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile6"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+                    <div className="wrapper_image mr-3 mb-3">
+                      <img src={imagesPreview[7]?.url} alt="" />
+                      <div className="remove_image">
+                        <IconButton
+                          onClick={() => handleDestroy(imagesPreview[7])}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
+                      <div
+                        id="createProductFormFile7"
+                        className="drop-file-input"
+                      >
+                        <input
+                          type="file"
+                          name="images"
+                          accept="image/*"
+                          onChange={ProductImagesChange}
+                          multiple
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+            </Grid>
+
+            <Grid container item spacing={2}>
+              <Grid item lg={1} md={1}>
+                <p>Product Name</p>
+              </Grid>
+              <Grid item lg={11} md={11}>
                 <TextField
                   id="name"
                   fullWidth
-                  label="Name"
                   name="name"
                   type="text"
                   variant="outlined"
@@ -145,6 +343,53 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                   }
                 />
               </Grid>
+            </Grid>
+            <Grid container item spacing={2}>
+              <Grid item lg={1} md={1}>
+                <p>Description</p>
+              </Grid>
+              <Grid item lg={11} md={11}>
+                <TextField
+                  id="description"
+                  name="description"
+                  type="text"
+                  multiline
+                  rows={10}
+                  fullWidth
+                  variant="outlined"
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  error={
+                    !!formik.touched.description && !!formik.errors.description
+                  }
+                  helperText={
+                    formik.touched.description &&
+                    formik.errors.description &&
+                    formik.errors.description
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Grid container item spacing={2}>
+              <Grid item lg={1} md={1}>
+                <p>Category</p>
+              </Grid>
+              <Grid item lg={11} md={11} className="flex items-center">
+                <div className="flex category-product">
+                  {formik.values.category?.map((category: any) => (
+                    <span
+                      key={Math.random()}
+                      className="flex items-center justify-center category-product-item"
+                    >
+                      <RiArrowRightSLine className="iconArrows mx-1" />
+
+                      {category}
+                    </span>
+                  ))}
+                </div>
+              </Grid>
+            </Grid>
+            <Grid container item spacing={2}>
               <Grid item lg={6} md={6}>
                 <TextField
                   fullWidth
@@ -184,210 +429,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                   }
                 />
               </Grid>
-              <Grid item lg={6} md={6}>
-                <Select
-                  id="category"
-                  name="category"
-                  variant="outlined"
-                  displayEmpty
-                  value={formik.values.category}
-                  onChange={formik.handleChange}
-                >
-                  <MenuItem value="" disabled>
-                    Category
-                  </MenuItem>
-                  {cateloryList.map((category: Category) => (
-                    <MenuItem value={category.name} key={category._id}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Grid>
             </Grid>
-            <div className="flex flex-col my-6">
-              <div
-                id="createProductFormImage"
-                className="flex mb-6 flex-wrap justify-center items-center"
-              >
-                {/* {productDetail.images.map((image: any) => (
-                  <div key={Math.random()} className="wrapper_image mr-3 mb-3">
-                    <img src={image.url} alt="Product Preview" />
-                  </div>
-                ))} */}
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[0]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[0])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
 
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[1]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[1])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile1" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[2]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[2])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile2" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[3]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[3])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile3" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[4]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[4])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile4" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[5]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[5])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile5" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[6]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[6])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile6" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
-                <div className="wrapper_image mr-3 mb-3">
-                  <img src={imagesPreview[7]?.url} alt="" />
-                  <div className="remove_image">
-                    <IconButton onClick={() => handleDestroy(imagesPreview[7])}>
-                      <CloseIcon />
-                    </IconButton>
-                  </div>
-                  <div id="createProductFormFile7" className="drop-file-input">
-                    <input
-                      type="file"
-                      name="images"
-                      accept="image/*"
-                      onChange={ProductImagesChange}
-                      multiple
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* <div id="createProductFormFile">
-                <input
-                  type="file"
-                  name="images"
-                  accept="image/*"
-                  onChange={ProductImagesChange}
-                  multiple
-                />
-              </div> */}
-            </div>
-
-            <Grid container item spacing={2}>
-              <Grid item lg={12} md={12}>
-                <TextField
-                  id="description"
-                  label="Description"
-                  name="description"
-                  type="text"
-                  multiline
-                  rows={10}
-                  fullWidth
-                  variant="outlined"
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
-                  error={
-                    !!formik.touched.description && !!formik.errors.description
-                  }
-                  helperText={
-                    formik.touched.description &&
-                    formik.errors.description &&
-                    formik.errors.description
-                  }
-                />
-              </Grid>
-            </Grid>
             <Grid container item spacing={2}>
               <Box>
                 <Button onClick={() => history.push('/admin/products')}>

@@ -47,7 +47,7 @@ const ProductListTable = () => {
       <TableCell>{product.name}</TableCell>
       <TableCell>{product.price}</TableCell>
       <TableCell>{product.stock}</TableCell>
-      <TableCell>{product.category}</TableCell>
+      {/* <TableCell>{product.category}</TableCell> */}
       <TableCell align="left">
         <Button onClick={() => history.push(`products/update/${product._id}`)}>
           <EditIcon />

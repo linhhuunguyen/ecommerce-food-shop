@@ -1,14 +1,16 @@
-/* eslint-disable array-callback-return */
 import { useEffect, useState, ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import Button from 'components/button';
 import { useAppSelector, useAppDispatch } from 'store/hook';
+import { RiArrowRightSLine } from 'react-icons/ri';
 import {
   getAdminCategories,
   getCate3,
   getCate2
 } from 'store/Categories/categories.slice';
+
+import { addNameCategory } from 'store/Products/products.slide';
 
 import './styles.css';
 
@@ -28,10 +30,21 @@ function ProductCategory() {
   const [active, setActive] = useState('');
   const [active2, setActive2] = useState('');
   const [active3, setActive3] = useState('');
+  const [selectCate1, setSelectCate1] = useState({ parent: '', name: '' });
+  const [selectCate2, setSelectCate2] = useState({ parent: '', name: '' });
+  const [selectCate3, setSelectCate3] = useState({ parent: '', name: '' });
   const [productName, setProductName] = useState('');
-  const [selectCategory, setSelectCategory] = useState<SelectCategory[]>([]);
 
-  // const allCategory = [categoryName, categoryName2, categoryName3];
+  const selectCategory: SelectCategory[] = [
+    selectCate1,
+    selectCate2,
+    selectCate3
+  ];
+
+  const dbCategory = selectCategory
+    .filter((item) => item.name !== '')
+    .map((item) => item.name);
+
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
@@ -45,7 +58,9 @@ function ProductCategory() {
       setLevel3(false);
       dispatch(getCate2(id));
       setActive(id);
-      setSelectCategory([{ parent, name }]);
+      setSelectCate1({ parent, name });
+      setSelectCate2({ parent: '', name: '' });
+      setSelectCate3({ parent: '', name: '' });
     }
   };
 
@@ -54,30 +69,14 @@ function ProductCategory() {
       setActive2(id);
       dispatch(getCate3(id));
       setLevel3(true);
-
-      selectCategory.map((item) => {
-        if (item.parent === parent) {
-          item.name = name;
-          setSelectCategory(selectCategory.slice(0, 2));
-        }
-        if (item.parent !== parent) {
-          setSelectCategory([...selectCategory, { parent, name }]);
-        }
-      });
+      setSelectCate2({ parent, name });
+      setSelectCate3({ parent: '', name: '' });
     }
   };
 
   const handleClickCase3 = (id: any, name: string, parent: string) => {
     setActive3(id);
-    selectCategory.map((item) => {
-      if (item.parent === parent) {
-        item.name = name;
-        setSelectCategory(selectCategory.slice(0, 3));
-      }
-      if (item.parent !== parent) {
-        setSelectCategory([...selectCategory, { parent, name }]);
-      }
-    });
+    setSelectCate3({ parent, name });
   };
 
   const handleProductNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -86,6 +85,7 @@ function ProductCategory() {
 
   const handleContinue = (e: any) => {
     e.preventDefault();
+    dispatch(addNameCategory({ productName, dbCategory }));
     history.push('/admin/products/add');
   };
 
@@ -95,7 +95,7 @@ function ProductCategory() {
     } else {
       setDisabled(true);
     }
-  }, [productName, setSelectCategory]);
+  }, [productName, selectCate1, selectCate2, selectCate3]);
 
   return (
     <div>
@@ -146,7 +146,6 @@ function ProductCategory() {
                   }
                 >
                   {item.name}
-                  <div>{item.parent}</div>
                 </div>
               ))}
           </div>
@@ -169,16 +168,21 @@ function ProductCategory() {
           </div>
         </div>
       </form>
-      <div className="flex items-center mt-5 cat-selected">
+      <div className="flex items-center mt-5">
         <span className="mr-5">Selected:</span>
-        {selectCategory?.map((category: SelectCategory) => (
-          <span
-            key={Math.random()}
-            className="cat-selected-item flex items-center mx-3"
-          >
-            {category.name}
-          </span>
-        ))}
+        <div className="flex items-center cat-selected">
+          {selectCategory?.map((category: SelectCategory) => (
+            <span
+              key={Math.random()}
+              className="flex items-center justify-center cat-selected-item"
+            >
+              {category.name !== '' && (
+                <RiArrowRightSLine className="iconArrows mx-1" />
+              )}
+              {category.name}
+            </span>
+          ))}
+        </div>
       </div>
       <div className="mt-5">
         <Button
