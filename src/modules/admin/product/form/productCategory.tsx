@@ -1,7 +1,7 @@
+/* eslint-disable array-callback-return */
 import { useEffect, useState, ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { IoIosArrowForward } from 'react-icons/io';
 import Button from 'components/button';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import {
@@ -54,34 +54,30 @@ function ProductCategory() {
       setActive2(id);
       dispatch(getCate3(id));
       setLevel3(true);
-      // selectCategory.filter((item) => {
-      //   if (item.parent === parent) {
-      //     setSelectCategory([
-      //       ...selectCategory,
-      //       (selectCategory[1] = { parent, name })
-      //     ]);
-      //   } else {
-      //     setSelectCategory([...selectCategory, { parent, name }]);
-      //   }
-      // });
-      for (let i = 0; i < selectCategory.length; i++) {
-        if (selectCategory[i].parent !== parent) {
-          setSelectCategory([...selectCategory, { parent, name }]);
-        } else {
-          selectCategory[1].name = name;
-          return selectCategory;
+
+      selectCategory.map((item) => {
+        if (item.parent === parent) {
+          item.name = name;
+          setSelectCategory(selectCategory.slice(0, 2));
         }
-      }
+        if (item.parent !== parent) {
+          setSelectCategory([...selectCategory, { parent, name }]);
+        }
+      });
     }
   };
 
   const handleClickCase3 = (id: any, name: string, parent: string) => {
     setActive3(id);
-    selectCategory.filter((item) =>
-      item.parent === parent
-        ? setSelectCategory([...selectCategory])
-        : setSelectCategory([...selectCategory, { parent, name }])
-    );
+    selectCategory.map((item) => {
+      if (item.parent === parent) {
+        item.name = name;
+        setSelectCategory(selectCategory.slice(0, 3));
+      }
+      if (item.parent !== parent) {
+        setSelectCategory([...selectCategory, { parent, name }]);
+      }
+    });
   };
 
   const handleProductNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -99,9 +95,7 @@ function ProductCategory() {
     } else {
       setDisabled(true);
     }
-  }, [productName, selectCategory]);
-
-  console.log(selectCategory);
+  }, [productName, setSelectCategory]);
 
   return (
     <div>
