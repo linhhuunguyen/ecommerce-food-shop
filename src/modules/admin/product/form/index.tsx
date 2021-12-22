@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { RiArrowRightSLine } from 'react-icons/ri';
+import { IoIosAddCircleOutline } from 'react-icons/io';
 
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import Paper from 'components/paper';
@@ -16,7 +17,7 @@ import {
   updateProduct,
   getProduct
 } from 'store/Products/products.slide';
-import { Product } from 'types/Product';
+import { Product, Productclassification, Attributes } from 'types/Product';
 import { productSChema } from './product-form.schema';
 import './styles.css';
 
@@ -33,6 +34,13 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const [imagesT, setImages] = useState<any>([]);
   const [imagesPreview, setImagesPreview] = useState<any>([]);
 
+  const [isAddClassification, setIsAddClassification] =
+    useState<Boolean>(false);
+
+  const [productClassification, setProductClassification] = useState<
+    Productclassification[]
+  >([{ groupName: '', attributes: [{ name: '' }] }]);
+
   useEffect(() => {
     if (mode === 'edit') {
       if (productDetail && productDetail._id !== id) {
@@ -40,6 +48,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       } else {
         setImagesPreview(productDetail.images);
       }
+    }
+
+    if (productDetail.name === '') {
+      history.replace('/admin/products/category');
     }
   }, [id, dispatch, token, productDetail]);
 
@@ -91,7 +103,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   }, [productDetail, mode]);
 
   function handleSubmit(values: Product) {
-    console.log('1');
     if (mode === 'edit') {
       const product: Product = { ...values, images: imagesPreview };
       const data = { product, token, id };
@@ -99,14 +110,23 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       history.push('/admin/products');
     }
     if (mode === 'create') {
-      console.log('111111111');
       const product: Product = { ...values, images: imagesT };
-      console.log('producttttttttt', product);
       const data = { product, token };
       dispatch(addProduct(data));
       history.push('/admin/products');
     }
   }
+
+  const handleClickAddTaxonomy = () => {
+    setIsAddClassification(true);
+  };
+
+  const handleAddProductClassification = () => {
+    setProductClassification([
+      ...productClassification,
+      { groupName: '', attributes: [{ name: '' }] }
+    ]);
+  };
 
   const handleDestroy = (item: string) => {
     setImages(imagesT.filter((image: any) => image !== item));
@@ -120,21 +140,24 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     onSubmit: handleSubmit
   });
 
-  interface SelectCategory {
-    parent: string;
-    name: string;
-  }
-
   return (
-    <Paper loading={loading} heading="Product Information">
-      <FormikProvider value={formik}>
-        <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={2}>
+    <FormikProvider value={formik}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid
+          container
+          spacing={2}
+          className="flex flex-row justify-center items-center"
+        >
+          <Paper
+            loading={loading}
+            heading="Product Basic Information"
+            className="w-4_5 mb-5"
+          >
             <Grid container item spacing={2}>
-              <Grid item lg={1} md={1}>
+              <Grid item lg={2} md={2}>
                 <p>Product pictures</p>
               </Grid>
-              <Grid item lg={11} md={11}>
+              <Grid item lg={10} md={10}>
                 <div className="flex flex-col my-6">
                   <div
                     id="createProductFormImage"
@@ -323,10 +346,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             </Grid>
 
             <Grid container item spacing={2}>
-              <Grid item lg={1} md={1}>
+              <Grid item lg={2} md={2}>
                 <p>Product Name</p>
               </Grid>
-              <Grid item lg={11} md={11}>
+              <Grid item lg={10} md={10}>
                 <TextField
                   id="name"
                   fullWidth
@@ -345,10 +368,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
               </Grid>
             </Grid>
             <Grid container item spacing={2}>
-              <Grid item lg={1} md={1}>
+              <Grid item lg={2} md={2}>
                 <p>Description</p>
               </Grid>
-              <Grid item lg={11} md={11}>
+              <Grid item lg={10} md={10}>
                 <TextField
                   id="description"
                   name="description"
@@ -371,10 +394,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
               </Grid>
             </Grid>
             <Grid container item spacing={2}>
-              <Grid item lg={1} md={1}>
+              <Grid item lg={2} md={2}>
                 <p>Category</p>
               </Grid>
-              <Grid item lg={11} md={11} className="flex items-center">
+              <Grid item lg={10} md={10} className="flex items-center">
                 <div className="flex category-product">
                   {formik.values.category?.map((category: any) => (
                     <span
@@ -389,60 +412,140 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                 </div>
               </Grid>
             </Grid>
-            <Grid container item spacing={2}>
-              <Grid item lg={6} md={6}>
-                <TextField
-                  fullWidth
-                  label="Price"
-                  name="price"
-                  id="price"
-                  type="number"
-                  variant="outlined"
-                  value={formik.values.price}
-                  onChange={formik.handleChange}
-                  error={!!formik.touched.price && !!formik.errors.price}
-                  helperText={
-                    formik.touched.price &&
-                    formik.errors.price &&
-                    formik.errors.price
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Grid container item spacing={2}>
-              <Grid item lg={6} md={6}>
-                <TextField
-                  id="stock"
-                  fullWidth
-                  label="Stock"
-                  name="stock"
-                  type="number"
-                  variant="outlined"
-                  required
-                  value={formik.values.stock}
-                  onChange={formik.handleChange}
-                  error={!!formik.touched.stock && !!formik.errors.stock}
-                  helperText={
-                    formik.touched.stock &&
-                    formik.errors.stock &&
-                    formik.errors.stock
-                  }
-                />
-              </Grid>
-            </Grid>
+          </Paper>
+
+          <Paper
+            loading={loading}
+            heading="Sales Information"
+            className="w-4_5 mb-5"
+          >
+            {!isAddClassification && (
+              <>
+                <Grid container item spacing={2}>
+                  <Grid item lg={2} md={2}>
+                    <p>Product classification</p>
+                  </Grid>
+                  <Grid item lg={10} md={10}>
+                    <div
+                      onClick={handleClickAddTaxonomy}
+                      className="flex justify-center items-center border border-green-500 border-dashed"
+                    >
+                      <IoIosAddCircleOutline className="text-xl mr-3" />
+                      <p>Add taxonomy group</p>
+                    </div>
+                  </Grid>
+                </Grid>
+                <Grid container item spacing={2}>
+                  <Grid item lg={2} md={2}>
+                    <p>Price</p>
+                  </Grid>
+                  <Grid item lg={10} md={10}>
+                    <TextField
+                      fullWidth
+                      defaultValue
+                      name="price"
+                      id="price"
+                      type="number"
+                      variant="outlined"
+                      value={formik.values.price}
+                      onChange={formik.handleChange}
+                      error={!!formik.touched.price && !!formik.errors.price}
+                      helperText={
+                        formik.touched.price &&
+                        formik.errors.price &&
+                        formik.errors.price
+                      }
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item spacing={2}>
+                  <Grid item lg={2} md={2}>
+                    <p>Stock</p>
+                  </Grid>
+                  <Grid item lg={10} md={10}>
+                    <TextField
+                      id="stock"
+                      fullWidth
+                      name="stock"
+                      type="number"
+                      variant="outlined"
+                      required
+                      value={formik.values.stock}
+                      onChange={formik.handleChange}
+                      error={!!formik.touched.stock && !!formik.errors.stock}
+                      helperText={
+                        formik.touched.stock &&
+                        formik.errors.stock &&
+                        formik.errors.stock
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              </>
+            )}
 
             <Grid container item spacing={2}>
-              <Box>
-                <Button onClick={() => history.push('/admin/products')}>
-                  Cancel
-                </Button>
-                <Button type="submit">Save</Button>
-              </Box>
+              {isAddClassification &&
+                productClassification.map(
+                  (classification: Productclassification, index: Number) => (
+                    <>
+                      <Grid item lg={2} md={2}>
+                        <p>{`Classification group ${index}`}</p>
+                      </Grid>
+                      <Grid item lg={10} md={10} className="flex flex-row">
+                        <div className="flex mb-5">
+                          <p className="w-1_5">Tên nhóm phân loại</p>
+                          <TextField
+                            type="text"
+                            variant="outlined"
+                            fullWidth
+                            value={classification.groupName}
+                          />
+                        </div>
+                        <div className="flex mb-5">
+                          <p className="w-1_5">Phân loại hàng</p>
+                          {classification.attributes.map(
+                            (attribute: Attributes) => (
+                              <TextField
+                                key={Math.random()}
+                                type="text"
+                                variant="outlined"
+                                fullWidth
+                                value={attribute.name}
+                              />
+                            )
+                          )}
+                        </div>
+                      </Grid>
+                      <Grid item lg={2} md={2}>
+                        <p>Classification group 2</p>
+                      </Grid>
+                      <Grid item lg={10} md={10}>
+                        <div
+                          onClick={handleAddProductClassification}
+                          className="flex justify-center items-center border border-green-500 border-dashed"
+                        >
+                          <IoIosAddCircleOutline className="text-xl mr-3" />
+                          <p>Add</p>
+                        </div>
+                      </Grid>
+                    </>
+                  )
+                )}
             </Grid>
+          </Paper>
+
+          <Grid container item spacing={2}>
+            <Box>
+              <Button onClick={() => history.push('/admin/products')}>
+                Cancel
+              </Button>
+              <Button type="submit">Save</Button>
+            </Box>
           </Grid>
-        </form>
-      </FormikProvider>
-    </Paper>
+        </Grid>
+      </form>
+    </FormikProvider>
   );
 };
 

@@ -107,7 +107,7 @@ function ProductCategory() {
           <label htmlFor="name" className="mr-3">
             Product Name:
           </label>
-          <div className="flex-1 h-10 px-3 bg-white rounded border border-gray-100 border-solid">
+          <div className="flex-1 h-10 px-3 bg-white rounded border border-gray-100 border-solid border-dashed">
             <input
               type="text"
               value={productName}
@@ -162,7 +162,6 @@ function ProductCategory() {
                   }
                 >
                   {cate.name}
-                  <div>{cate.parent}</div>
                 </div>
               ))}
           </div>

@@ -28,3 +28,12 @@ interface Category {
   parent: string;
   name: string;
 }
+
+export interface Productclassification {
+  groupName: string;
+  attributes: Attributes[];
+}
+
+export interface Attributes {
+  name: string;
+}
