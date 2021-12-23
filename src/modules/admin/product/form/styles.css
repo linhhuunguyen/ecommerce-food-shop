@@ -71,3 +71,7 @@
   height: 100%;
   cursor: pointer;
 }
+
+.classify {
+  background-color: #fafafa;
+}

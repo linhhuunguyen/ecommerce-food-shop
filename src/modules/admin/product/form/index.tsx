@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useFormik, FormikProvider } from 'formik';
 import { uuid } from 'short-uuid';
@@ -36,11 +36,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const [imagesT, setImages] = useState<any>([]);
   const [imagesPreview, setImagesPreview] = useState<any>([]);
 
-  const [isAddClassification, setIsAddClassification] =
-    useState<Boolean>(false);
-
-  const [addClassification2, setAddClassification2] = useState<Boolean>(true);
-
   const [productClassificationGroup, setProductClassificationGroup] = useState<
     Productclassification[]
   >([]);
@@ -57,31 +52,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     if (productDetail.name === '') {
       history.replace('/admin/products/category');
     }
-
-    if (productClassificationGroup.length > 1) {
-      setAddClassification2(false);
-    } else {
-      setAddClassification2(true);
-    }
-
-    if (productClassificationGroup.length > 0) {
-      setIsAddClassification(true);
-    } else {
-      setIsAddClassification(false);
-    }
-  }, [
-    id,
-    dispatch,
-    token,
-    productDetail,
-    isAddClassification,
-    productClassificationGroup,
-    addClassification2
-  ]);
+  }, [id, dispatch, token, productDetail, productClassificationGroup]);
 
   const ProductImagesChange = (e: any) => {
     const files = Array.from(e.target.files);
-
     files.forEach((file: any) => {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -141,13 +115,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     }
   }
 
-  const handleClickAddTaxonomy = () => {
-    setProductClassificationGroup([
-      ...productClassificationGroup,
-      { groupName: '', attributes: [{ name: '', id: uuid() }], _id: uuid() }
-    ]);
-  };
-
   const handleAddProductClassificationGroup = () => {
     setProductClassificationGroup([
       ...productClassificationGroup,
@@ -179,6 +146,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       )
     );
   };
+
+  const handleOnChangeGroupName = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {};
 
   const handleDestroy = (item: string) => {
     setImages(imagesT.filter((image: any) => image !== item));
@@ -471,7 +442,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             heading="Sales Information"
             className="w-4_5 mb-5"
           >
-            {!isAddClassification && (
+            {productClassificationGroup.length === 0 && (
               <>
                 <Grid container item spacing={2}>
                   <Grid item lg={2} md={2}>
@@ -479,7 +450,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                   </Grid>
                   <Grid item lg={10} md={10}>
                     <div
-                      onClick={handleClickAddTaxonomy}
+                      onClick={handleAddProductClassificationGroup}
                       className="flex justify-center items-center border border-green-500 border-dashed"
                     >
                       <IoIosAddCircleOutline className="text-xl mr-3" />
@@ -536,100 +507,110 @@ const ProductForm = ({ mode }: ProductFormProps) => {
               </>
             )}
 
-            <Grid container item spacing={2}>
-              {isAddClassification &&
-                productClassificationGroup.map(
-                  (classification: Productclassification, index: number) => (
-                    <>
-                      <Grid item lg={2} md={2}>
-                        <p>Classification group {index + 1}</p>
-                        <div
-                          className="pointer text-xl"
-                          onClick={(_id) =>
-                            handleDeleteProductClassificationGroup(
-                              classification._id
-                            )
-                          }
-                        >
-                          <AiOutlineDelete />
-                        </div>
-                      </Grid>
-                      <Grid item lg={10} md={10} className="flex flex-row">
-                        <div className="flex mb-5">
-                          <p className="w-1_5">Tên nhóm phân loại</p>
+            {productClassificationGroup.length > 0 &&
+              productClassificationGroup.map(
+                (classification: Productclassification, index: number) => (
+                  <Grid
+                    container
+                    item
+                    spacing={3}
+                    key={classification._id}
+                    className="mb-8"
+                  >
+                    <Grid item lg={2} md={2}>
+                      <p>Classification group {index + 1}</p>
+                      <div
+                        className="pointer text-xl"
+                        onClick={(_id) =>
+                          handleDeleteProductClassificationGroup(
+                            classification._id
+                          )
+                        }
+                      >
+                        <AiOutlineDelete />
+                      </div>
+                    </Grid>
+                    <Grid
+                      item
+                      lg={10}
+                      md={10}
+                      className="flex flex-row classify"
+                    >
+                      <div className="flex mb-5">
+                        <p className="w-1_5">Tên nhóm phân loại</p>
+                        <div className="w-full">
                           <TextField
                             type="text"
                             variant="outlined"
-                            fullWidth
+                            className="w-11_12"
                             value={classification.groupName}
+                            onChange={handleOnChangeGroupName}
                           />
                         </div>
-                        <div className="flex mb-5">
-                          <p className="w-1_5">Phân loại hàng</p>
-                          <div className="w-full">
-                            {classification.attributes.map(
-                              (attribute: Attributes, index2: number) => (
-                                <div
-                                  key={Math.random()}
-                                  className="flex items-center"
-                                >
-                                  <TextField
-                                    type="text"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={attribute.name}
-                                  />
-                                  {classification.attributes.length > 1 && (
-                                    <div
-                                      className="pointer text-xl"
-                                      onClick={() =>
-                                        handleDeleteProductClassification(
-                                          index,
-                                          index2
-                                        )
-                                      }
-                                    >
-                                      <AiOutlineDelete />
-                                    </div>
-                                  )}
-                                </div>
-                              )
-                            )}
-
-                            <div
-                              onClick={() =>
-                                handleAddProductClassification(index)
-                              }
-                              className="flex justify-center items-center border border-green-500 border-dashed"
-                            >
-                              <IoIosAddCircleOutline className="text-xl mr-3" />
-                              <p>Add</p>
-                            </div>
+                      </div>
+                      <div className="flex">
+                        <p className="w-1_5">Phân loại hàng</p>
+                        <div className="w-full">
+                          {classification.attributes.map(
+                            (attribute: Attributes, index2: number) => (
+                              <div
+                                key={Math.random()}
+                                className="flex items-center mb-5"
+                              >
+                                <TextField
+                                  type="text"
+                                  variant="outlined"
+                                  className="w-11_12"
+                                  value={attribute.name}
+                                />
+                                {classification.attributes.length > 1 && (
+                                  <div
+                                    className="pointer text-xl ml-5"
+                                    onClick={() =>
+                                      handleDeleteProductClassification(
+                                        index,
+                                        index2
+                                      )
+                                    }
+                                  >
+                                    <AiOutlineDelete />
+                                  </div>
+                                )}
+                              </div>
+                            )
+                          )}
+                          <div
+                            onClick={() =>
+                              handleAddProductClassification(index)
+                            }
+                            className="flex justify-center items-center w-11_12 bg-primary text-white opacity-80"
+                          >
+                            <IoIosAddCircleOutline className="text-xl mr-3" />
+                            <p>Add</p>
                           </div>
                         </div>
-                      </Grid>
-                      {addClassification2 && (
-                        <>
-                          <Grid item lg={2} md={2}>
-                            <p>Classification group 2</p>
-                          </Grid>
-                          <Grid item lg={10} md={10}>
-                            <div
-                              onClick={handleAddProductClassificationGroup}
-                              className="flex justify-center items-center border border-green-500 border-dashed"
-                            >
-                              <IoIosAddCircleOutline className="text-xl mr-3" />
-                              <p>Add</p>
-                            </div>
-                          </Grid>
-                        </>
-                      )}
-                    </>
-                  )
-                )}
-            </Grid>
+                      </div>
+                    </Grid>
+                    {productClassificationGroup.length === 1 && (
+                      <>
+                        <Grid item lg={2} md={2}>
+                          <p>Classification group 2</p>
+                        </Grid>
+                        <Grid item lg={10} md={10}>
+                          <div
+                            onClick={handleAddProductClassificationGroup}
+                            className="flex justify-center items-center border border-green-500 border-dashed"
+                          >
+                            <IoIosAddCircleOutline className="text-xl mr-3" />
+                            <p>Add group 2</p>
+                          </div>
+                        </Grid>
+                      </>
+                    )}
+                  </Grid>
+                )
+              )}
           </Paper>
-
           <Grid container item spacing={2}>
             <Box>
               <Button onClick={() => history.push('/admin/products')}>
