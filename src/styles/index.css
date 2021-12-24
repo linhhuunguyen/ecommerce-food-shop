@@ -2479,8 +2479,20 @@ margin-left: -0.875rem;	-14px */
   width: 40%;
 }
 
+.w-9_20 {
+  width: 45%;
+}
+
 .w-2_4 {
   width: 50%;
+}
+
+.w-11_20 {
+  width: 55%;
+}
+
+.w_3-5 {
+  width: 60%;
 }
 
 .w-2_3 {
@@ -2737,6 +2749,11 @@ height: 100vh; */
   border-color: rgba(243, 244, 246, var(--tw-border-opacity));
 }
 
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+}
+
 .border-green-500 {
   --tw-border-opacity: 1;
   border-color: rgba(16, 185, 129, var(--tw-border-opacity));
@@ -2761,6 +2778,10 @@ height: 100vh; */
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-center {
+  text-align: center;
 }
 
 /* curson */

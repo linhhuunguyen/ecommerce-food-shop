@@ -36,6 +36,6 @@ export interface Productclassification {
 }
 
 export interface Attributes {
-  name: string;
+  nameA: string;
   id: string;
 }

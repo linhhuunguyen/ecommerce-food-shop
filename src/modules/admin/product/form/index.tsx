@@ -118,14 +118,14 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const handleAddProductClassificationGroup = () => {
     setProductClassificationGroup([
       ...productClassificationGroup,
-      { groupName: '', attributes: [{ name: '', id: uuid() }], _id: uuid() }
+      { groupName: '', attributes: [{ nameA: '', id: uuid() }], _id: uuid() }
     ]);
   };
 
   const handleAddProductClassification = (index: number) => {
     const newProductClassificationGroup = [...productClassificationGroup];
     newProductClassificationGroup[index].attributes.push({
-      name: '',
+      nameA: '',
       id: uuid()
     });
     setProductClassificationGroup(newProductClassificationGroup);
@@ -148,13 +148,32 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   };
 
   const handleOnChangeGroupName = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {};
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newProductClassificationGroup = [...productClassificationGroup];
+    newProductClassificationGroup[index].groupName = e.target.value;
+    setProductClassificationGroup(newProductClassificationGroup);
+  };
+
+  const handleOnChangeAttributes = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    index2: number
+  ) => {
+    const newYProductClassificationGroup = [...productClassificationGroup];
+    newYProductClassificationGroup[index].attributes[index2].nameA =
+      e.target.value;
+
+    setProductClassificationGroup(newYProductClassificationGroup);
+  };
 
   const handleDestroy = (item: string) => {
     setImages(imagesT.filter((image: any) => image !== item));
     setImagesPreview(imagesPreview.filter((image: any) => image !== item));
   };
+
+  console.log('lan hương 14', productClassificationGroup);
 
   const formik = useFormik({
     initialValues,
@@ -544,7 +563,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                             variant="outlined"
                             className="w-11_12"
                             value={classification.groupName}
-                            onChange={handleOnChangeGroupName}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => handleOnChangeGroupName(e, index)}
                           />
                         </div>
                       </div>
@@ -554,14 +575,19 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                           {classification.attributes.map(
                             (attribute: Attributes, index2: number) => (
                               <div
-                                key={Math.random()}
+                                key={attribute.id}
                                 className="flex items-center mb-5"
                               >
                                 <TextField
                                   type="text"
                                   variant="outlined"
                                   className="w-11_12"
-                                  value={attribute.name}
+                                  value={attribute.nameA}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) =>
+                                    handleOnChangeAttributes(e, index, index2)
+                                  }
                                 />
                                 {classification.attributes.length > 1 && (
                                   <div
@@ -610,6 +636,64 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                   </Grid>
                 )
               )}
+            <Grid container item spacing={3}>
+              <Grid item lg={2} md={2}>
+                <p>Danh sách phân loại hàng</p>
+              </Grid>
+              <Grid item lg={10} md={10}>
+                <div className="flex classification-table">
+                  <div className="w-2_5">
+                    <div className="flex name">
+                      {productClassificationGroup.map((item) => (
+                        <div
+                          key={item._id}
+                          className="w-2_4 py-3 text-center border border-gray-200 border-solid"
+                        >
+                          {item.groupName}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex attt">
+                      {productClassificationGroup.map((item) => (
+                        <>
+                          <div className="w-2_4 py-3 text-center border border-gray-200 border-solid">
+                            {item.attributes.map((lii) => (
+                              <div key={lii.id}>{lii.nameA}</div>
+                            ))}
+                          </div>
+                        </>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="w_3-5">
+                    <div>
+                      <div className="flex">
+                        <div className="py-3 w-2_4 text-center border border-gray-200 border-solid">
+                          Price
+                        </div>
+                        <div className="py-3 w-2_4 text-center border border-gray-200 border-solid">
+                          Stock
+                        </div>
+                        <div className="py-3 w-2_4 text-center border border-gray-200 border-solid">
+                          SKU
+                        </div>
+                      </div>
+                      <div>
+                        <div>Alfreds Futterkiste</div>
+                        <div>Maria Anders</div>
+                        <div>Germany</div>
+                      </div>
+                      <div>
+                        <div>Alfreds Futterkiste</div>
+                        <div>Maria Anders</div>
+                        <div>Germany</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+            </Grid>
           </Paper>
           <Grid container item spacing={2}>
             <Box>
