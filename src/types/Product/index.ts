@@ -39,3 +39,7 @@ export interface Attributes {
   nameA: string;
   id: string;
 }
+
+export interface ModelList {
+  name: string;
+}

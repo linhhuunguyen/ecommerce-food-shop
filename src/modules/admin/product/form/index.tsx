@@ -1,6 +1,7 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useFormik, FormikProvider } from 'formik';
+import clsx from 'clsx';
 import { uuid } from 'short-uuid';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/system/Box';
@@ -11,6 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { AiOutlineDelete } from 'react-icons/ai';
+import debounce from 'debounce';
 
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import Paper from 'components/paper';
@@ -19,7 +21,12 @@ import {
   updateProduct,
   getProduct
 } from 'store/Products/products.slide';
-import { Product, Productclassification, Attributes } from 'types/Product';
+import {
+  Product,
+  Productclassification,
+  Attributes,
+  ModelList
+} from 'types/Product';
 import { productSChema } from './product-form.schema';
 import './styles.css';
 
@@ -40,6 +47,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     Productclassification[]
   >([]);
 
+  const [modelList, setModelList] = useState<ModelList[]>([]);
+
+  const [variation, setVariation] = useState({ price: '', stock: '', sku: '' });
+
   useEffect(() => {
     if (mode === 'edit') {
       if (productDetail && productDetail._id !== id) {
@@ -52,7 +63,14 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     if (productDetail.name === '') {
       history.replace('/admin/products/category');
     }
-  }, [id, dispatch, token, productDetail, productClassificationGroup]);
+  }, [
+    id,
+    dispatch,
+    token,
+    productDetail,
+    productClassificationGroup,
+    modelList
+  ]);
 
   const ProductImagesChange = (e: any) => {
     const files = Array.from(e.target.files);
@@ -156,6 +174,15 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setProductClassificationGroup(newProductClassificationGroup);
   };
 
+  const debouncedSave = useCallback(
+    debounce(
+      (newYProductClassificationGroup: Productclassification[]) =>
+        setProductClassificationGroup(newYProductClassificationGroup),
+      1000
+    ),
+    [] // will be created only once initially
+  );
+
   const handleOnChangeAttributes = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
@@ -166,6 +193,24 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       e.target.value;
 
     setProductClassificationGroup(newYProductClassificationGroup);
+    debouncedSave(newYProductClassificationGroup);
+
+    for (
+      let i = 0;
+      i < newYProductClassificationGroup[0]?.attributes.length;
+      i++
+    ) {
+      for (
+        let j = 0;
+        j < newYProductClassificationGroup[1]?.attributes.length;
+        j++
+      ) {
+        const z = `${newYProductClassificationGroup[0].attributes[i].nameA},${newYProductClassificationGroup[1].attributes[j].nameA}`;
+        const newModelList = [...modelList];
+        newModelList.push({ name: z });
+        setModelList(newModelList);
+      }
+    }
   };
 
   const handleDestroy = (item: string) => {
@@ -173,14 +218,15 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setImagesPreview(imagesPreview.filter((image: any) => image !== item));
   };
 
-  console.log('lan hương 14', productClassificationGroup);
-
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,
     validationSchema: productSChema,
     onSubmit: handleSubmit
   });
+
+  console.log('hellloooo', productClassificationGroup);
+  console.log('Model List', modelList);
 
   return (
     <FormikProvider value={formik}>
@@ -636,64 +682,119 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                   </Grid>
                 )
               )}
-            <Grid container item spacing={3}>
-              <Grid item lg={2} md={2}>
-                <p>Danh sách phân loại hàng</p>
-              </Grid>
-              <Grid item lg={10} md={10}>
-                <div className="flex classification-table">
-                  <div className="w-2_5">
-                    <div className="flex name">
-                      {productClassificationGroup.map((item) => (
-                        <div
-                          key={item._id}
-                          className="w-2_4 py-3 text-center border border-gray-200 border-solid"
-                        >
-                          {item.groupName}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex attt">
-                      {productClassificationGroup.map((item) => (
-                        <>
-                          <div className="w-2_4 py-3 text-center border border-gray-200 border-solid">
-                            {item.attributes.map((lii) => (
-                              <div key={lii.id}>{lii.nameA}</div>
-                            ))}
-                          </div>
-                        </>
-                      ))}
-                    </div>
-                  </div>
 
-                  <div className="w_3-5">
-                    <div>
-                      <div className="flex">
-                        <div className="py-3 w-2_4 text-center border border-gray-200 border-solid">
-                          Price
-                        </div>
-                        <div className="py-3 w-2_4 text-center border border-gray-200 border-solid">
-                          Stock
-                        </div>
-                        <div className="py-3 w-2_4 text-center border border-gray-200 border-solid">
-                          SKU
-                        </div>
+            {productClassificationGroup.length > 0 && (
+              <Grid container item spacing={3}>
+                <Grid item lg={2} md={2}>
+                  <p>Danh sách phân loại hàng</p>
+                </Grid>
+                <Grid item lg={10} md={10}>
+                  <div className="flex classification-table">
+                    <div className="flex-1">
+                      <div className="flex name">
+                        {productClassificationGroup.map((item) => (
+                          <>
+                            {item.groupName ? (
+                              <div className="w-full py-3 text-center border border-gray-200 border-solid">
+                                {item.groupName}
+                              </div>
+                            ) : (
+                              <div className="w-full py-3 text-center border border-gray-200 border-solid">
+                                Name
+                              </div>
+                            )}
+                          </>
+                        ))}
                       </div>
-                      <div>
-                        <div>Alfreds Futterkiste</div>
-                        <div>Maria Anders</div>
-                        <div>Germany</div>
+                      <div className="flex flex-direction flex-col">
+                        {productClassificationGroup[0]?.attributes.map(
+                          (item) => (
+                            <div className="table-data flex" key={item.id}>
+                              {item.nameA ? (
+                                <div className="w-full py-3 text-center border border-gray-200 border-solid">
+                                  {item.nameA}
+                                </div>
+                              ) : (
+                                <div className="w-full py-3 text-center border border-gray-200 border-solid">
+                                  Loại
+                                </div>
+                              )}
+
+                              <div
+                                className={clsx(
+                                  productClassificationGroup[1] ? 'w-full' : ''
+                                )}
+                              >
+                                {productClassificationGroup[1]?.attributes.map(
+                                  (lii) => (
+                                    <>
+                                      {lii.nameA ? (
+                                        <div className="w-full h-5 py-3 text-center border border-gray-200 border-solid">
+                                          {lii.nameA}
+                                        </div>
+                                      ) : (
+                                        <div className="w-full h-5 py-3 text-center border border-gray-200 border-solid">
+                                          Loại
+                                        </div>
+                                      )}
+                                    </>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          )
+                        )}
                       </div>
+                    </div>
+
+                    <div className="flex-3">
                       <div>
-                        <div>Alfreds Futterkiste</div>
-                        <div>Maria Anders</div>
-                        <div>Germany</div>
+                        <div className="flex">
+                          <div className="py-3 w-full text-center border border-gray-200 border-solid">
+                            Price
+                          </div>
+                          <div className="py-3 w-full text-center border border-gray-200 border-solid">
+                            Stock
+                          </div>
+                          <div className="py-3 w-full text-center border border-gray-200 border-solid">
+                            SKU
+                          </div>
+                        </div>
+                        <div>
+                          {productClassificationGroup[0]?.attributes.map(
+                            (att1) => (
+                              <>
+                                {productClassificationGroup[1]?.attributes.map(
+                                  (item) => (
+                                    <div key={item.id} className="flex w-full">
+                                      <input
+                                        type="number"
+                                        className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
+                                        value={variation.price}
+                                      />
+                                      <input
+                                        type="number"
+                                        className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
+                                        value={variation.stock}
+                                      />
+                                      <input
+                                        type="text"
+                                        className="w-1_3 h-5 py-3 text-center border border-gray-200 border-solid"
+                                        value={variation.sku}
+                                      />
+                                    </div>
+                                  )
+                                )}
+                              </>
+                            )
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </Grid>
               </Grid>
-            </Grid>
+            )}
           </Paper>
           <Grid container item spacing={2}>
             <Box>

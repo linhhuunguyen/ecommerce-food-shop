@@ -15,7 +15,7 @@
 }
 
 .flex-col {
-  flex-direction: column;
+  flex-direction: column !important;
 }
 
 .flex-col-reverse {
@@ -35,6 +35,10 @@
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.flex-3 {
+  flex: 3 1 0%;
 }
 
 .flex-auto {
@@ -2473,7 +2477,7 @@ margin-left: -0.875rem;	-14px */
   width: 25%;
 }
 .w-1_3 {
-  width: 33.333333%;
+  width: 33.333333% !important;
 }
 .w-2_5 {
   width: 40%;
@@ -2727,11 +2731,19 @@ height: 100vh; */
 
 /* Border */
 
+.rounded-none {
+  border-radius: 0px !important;
+}
+
 .rounded {
-  border-radius: 0.25rem;
+  border-radius: 0.25rem !important;
 }
 
 /* border-width */
+
+.border-none {
+  border: none;
+}
 
 .border {
   border-width: 1px;
