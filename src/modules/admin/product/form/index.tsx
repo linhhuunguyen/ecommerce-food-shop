@@ -44,8 +44,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
 
   const [modelList, setModelList] = useState<ModelList[]>([]);
 
-  const [variation, setVariation] = useState({ price: '', stock: '', sku: '' });
-
   useEffect(() => {
     if (mode === 'edit') {
       if (productDetail && productDetail._id !== id) {
@@ -238,6 +236,33 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     const newYProductClassificationGroup = [...productClassificationGroup];
     newYProductClassificationGroup[index].attributes[index2] = e.target.value;
     setProductClassificationGroup(newYProductClassificationGroup);
+  };
+
+  const handleInputChangeP = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newModelList = [...modelList];
+    newModelList[index].price = e.target.value;
+    setModelList(newModelList);
+  };
+
+  const handleInputChangeS = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newModelList = [...modelList];
+    newModelList[index].stock = e.target.value;
+    setModelList(newModelList);
+  };
+
+  const handleInputChangeK = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newModelList = [...modelList];
+    newModelList[index].sku = e.target.value;
+    setModelList(newModelList);
   };
 
   const handleDestroy = (item: string) => {
@@ -839,33 +864,37 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                           </div>
                         </div>
                         <div>
-                          {productClassificationGroup[0]?.attributes.map(
-                            (att1) => (
-                              <>
-                                {productClassificationGroup[1]?.attributes.map(
-                                  (item) => (
-                                    <div key={uuid()} className="flex w-full">
-                                      <input
-                                        type="number"
-                                        className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
-                                        value={variation.price}
-                                      />
-                                      <input
-                                        type="number"
-                                        className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
-                                        value={variation.stock}
-                                      />
-                                      <input
-                                        type="text"
-                                        className="w-1_3 h-5 py-3 text-center border border-gray-200 border-solid"
-                                        value={variation.sku}
-                                      />
-                                    </div>
-                                  )
-                                )}
-                              </>
-                            )
-                          )}
+                          {modelList.map((item, index: number) => (
+                            <div key={uuid()} className="flex w-full">
+                              <input
+                                type="number"
+                                name="price"
+                                className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
+                                value={item.price}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => handleInputChangeP(e, index)}
+                              />
+                              <input
+                                type="number"
+                                name="stock"
+                                className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
+                                value={item.stock}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => handleInputChangeS(e, index)}
+                              />
+                              <input
+                                type="text"
+                                name="sku"
+                                className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
+                                value={item.sku}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => handleInputChangeK(e, index)}
+                              />
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
