@@ -21,12 +21,7 @@ import {
   updateProduct,
   getProduct
 } from 'store/Products/products.slide';
-import {
-  Product,
-  Productclassification,
-  Attributes,
-  ModelList
-} from 'types/Product';
+import { Product, Productclassification, ModelList } from 'types/Product';
 import { productSChema } from './product-form.schema';
 import './styles.css';
 
@@ -176,7 +171,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       ) {
         const j = productClassificationGroup[0]?.attributes[i];
 
-        newModel.push({ name: j });
+        newModel.push({ name: j, price: '', stock: '', sku: '' });
         setModelList(newModel);
       }
     }
@@ -203,7 +198,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       ) {
         const j = productClassificationGroup[1]?.attributes[i];
 
-        newModel.push({ name: j });
+        newModel.push({ name: j, price: '', stock: '', sku: '' });
         setModelList(newModel);
       }
     }
@@ -216,7 +211,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       ) {
         const j = productClassificationGroup[0]?.attributes[i];
 
-        newModel.push({ name: j });
+        newModel.push({ name: j, price: '', stock: '', sku: '' });
         setModelList(newModel);
       }
     }
@@ -267,7 +262,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       ) {
         const j = productClassificationGroup[0]?.attributes[i];
 
-        newModel.push({ name: j });
+        newModel.push({ name: j, price: '', stock: '', sku: '' });
         setModelList(newModel);
       }
     }
@@ -286,7 +281,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
           j++
         ) {
           const z = `${productClassificationGroup[0].attributes[i]},${productClassificationGroup[1].attributes[j]} `;
-          newModel.push({ name: z });
+          newModel.push({ name: z, price: '', stock: '', sku: '' });
           setModelList(newModel);
         }
       }

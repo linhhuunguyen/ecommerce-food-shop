@@ -35,11 +35,9 @@ export interface Productclassification {
   _id: string;
 }
 
-export interface Attributes {
-  nameA: string;
-  id: string;
-}
-
 export interface ModelList {
   name: string;
+  price: string;
+  stock: string;
+  sku: string;
 }
