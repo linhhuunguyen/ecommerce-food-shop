@@ -31,7 +31,7 @@ interface Category {
 
 export interface Productclassification {
   groupName: string;
-  attributes: Attributes[];
+  attributes: string[];
   _id: string;
 }
 

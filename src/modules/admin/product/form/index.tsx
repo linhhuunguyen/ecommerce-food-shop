@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useFormik, FormikProvider } from 'formik';
@@ -12,7 +13,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { AiOutlineDelete } from 'react-icons/ai';
-import debounce from 'debounce';
 
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import Paper from 'components/paper';
@@ -136,33 +136,94 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const handleAddProductClassificationGroup = () => {
     setProductClassificationGroup([
       ...productClassificationGroup,
-      { groupName: '', attributes: [{ nameA: '', id: uuid() }], _id: uuid() }
+      { groupName: '', attributes: [''], _id: uuid() }
     ]);
   };
 
   const handleAddProductClassification = (index: number) => {
     const newProductClassificationGroup = [...productClassificationGroup];
-    newProductClassificationGroup[index].attributes.push({
-      nameA: '',
-      id: uuid()
-    });
+    newProductClassificationGroup[index].attributes.push('');
     setProductClassificationGroup(newProductClassificationGroup);
   };
 
-  const handleDeleteProductClassification = (index: number, index2: number) => {
+  const handleDeleteProductClassification = (
+    index: number,
+    index2: number,
+    name: string
+  ) => {
     const newProductClassificationGroup = [...productClassificationGroup];
-
     newProductClassificationGroup[index].attributes.splice(index2, 1);
-
     setProductClassificationGroup(newProductClassificationGroup);
+
+    if (index === 0) {
+      setModelList(
+        modelList.filter((item: ModelList) => !item.name.includes(`${name},`))
+      );
+    }
+
+    if (index === 1) {
+      setModelList(
+        modelList.filter((item: ModelList) => !item.name.includes(`,${name}`))
+      );
+    }
+
+    if (productClassificationGroup.length === 1) {
+      const newModel = [];
+      for (
+        let i = 0;
+        i < productClassificationGroup[0]?.attributes.length;
+        i++
+      ) {
+        const j = productClassificationGroup[0]?.attributes[i];
+
+        newModel.push({ name: j });
+        setModelList(newModel);
+      }
+    }
   };
 
-  const handleDeleteProductClassificationGroup = (_id: string) => {
+  const handleDeleteProductClassificationGroup = (
+    _id: string,
+    index: number
+  ) => {
     setProductClassificationGroup(
       productClassificationGroup.filter(
         (item: Productclassification) => item._id !== _id
       )
     );
+
+    setModelList([]);
+    const newModel = [];
+
+    if (index === 0) {
+      for (
+        let i = 0;
+        i < productClassificationGroup[1]?.attributes.length;
+        i++
+      ) {
+        const j = productClassificationGroup[1]?.attributes[i];
+
+        newModel.push({ name: j });
+        setModelList(newModel);
+      }
+    }
+
+    if (index === 1) {
+      for (
+        let i = 0;
+        i < productClassificationGroup[0]?.attributes.length;
+        i++
+      ) {
+        const j = productClassificationGroup[0]?.attributes[i];
+
+        newModel.push({ name: j });
+        setModelList(newModel);
+      }
+    }
+
+    if (productClassificationGroup.length < 1) {
+      setModelList([]);
+    }
   };
 
   const handleOnChangeGroupName = (
@@ -174,48 +235,62 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setProductClassificationGroup(newProductClassificationGroup);
   };
 
-  const debouncedSave = useCallback(
-    debounce(
-      (newYProductClassificationGroup: Productclassification[]) =>
-        setProductClassificationGroup(newYProductClassificationGroup),
-      1000
-    ),
-    [] // will be created only once initially
-  );
-
   const handleOnChangeAttributes = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
     index2: number
   ) => {
     const newYProductClassificationGroup = [...productClassificationGroup];
-    newYProductClassificationGroup[index].attributes[index2].nameA =
-      e.target.value;
-
+    newYProductClassificationGroup[index].attributes[index2] = e.target.value;
     setProductClassificationGroup(newYProductClassificationGroup);
-    debouncedSave(newYProductClassificationGroup);
-
-    for (
-      let i = 0;
-      i < newYProductClassificationGroup[0]?.attributes.length;
-      i++
-    ) {
-      for (
-        let j = 0;
-        j < newYProductClassificationGroup[1]?.attributes.length;
-        j++
-      ) {
-        const z = `${newYProductClassificationGroup[0].attributes[i].nameA},${newYProductClassificationGroup[1].attributes[j].nameA}`;
-        const newModelList = [...modelList];
-        newModelList.push({ name: z });
-        setModelList(newModelList);
-      }
-    }
   };
 
   const handleDestroy = (item: string) => {
     setImages(imagesT.filter((image: any) => image !== item));
     setImagesPreview(imagesPreview.filter((image: any) => image !== item));
+  };
+
+  const awaitAtt = (
+    cb: any,
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    index2: number
+  ) => {
+    cb(e, index, index2);
+
+    if (productClassificationGroup.length === 1) {
+      const newModel = [];
+      for (
+        let i = 0;
+        i < productClassificationGroup[0]?.attributes.length;
+        i++
+      ) {
+        const j = productClassificationGroup[0]?.attributes[i];
+
+        newModel.push({ name: j });
+        setModelList(newModel);
+      }
+    }
+
+    if (productClassificationGroup.length > 1) {
+      const newModel: ModelList[] = [];
+
+      for (
+        let i = 0;
+        i < productClassificationGroup[0].attributes.length;
+        i++
+      ) {
+        for (
+          let j = 0;
+          j < productClassificationGroup[1].attributes.length;
+          j++
+        ) {
+          const z = `${productClassificationGroup[0].attributes[i]},${productClassificationGroup[1].attributes[j]} `;
+          newModel.push({ name: z });
+          setModelList(newModel);
+        }
+      }
+    }
   };
 
   const formik = useFormik({
@@ -588,7 +663,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                         className="pointer text-xl"
                         onClick={(_id) =>
                           handleDeleteProductClassificationGroup(
-                            classification._id
+                            classification._id,
+                            index
                           )
                         }
                       >
@@ -619,20 +695,26 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                         <p className="w-1_5">Phân loại hàng</p>
                         <div className="w-full">
                           {classification.attributes.map(
-                            (attribute: Attributes, index2: number) => (
+                            (attribute: string, index2: number) => (
                               <div
-                                key={attribute.id}
+                                // eslint-disable-next-line react/no-array-index-key
+                                key={index2}
                                 className="flex items-center mb-5"
                               >
                                 <TextField
                                   type="text"
                                   variant="outlined"
                                   className="w-11_12"
-                                  value={attribute.nameA}
+                                  value={attribute}
                                   onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                   ) =>
-                                    handleOnChangeAttributes(e, index, index2)
+                                    awaitAtt(
+                                      handleOnChangeAttributes,
+                                      e,
+                                      index,
+                                      index2
+                                    )
                                   }
                                 />
                                 {classification.attributes.length > 1 && (
@@ -641,7 +723,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                     onClick={() =>
                                       handleDeleteProductClassification(
                                         index,
-                                        index2
+                                        index2,
+                                        attribute
                                       )
                                     }
                                   >
@@ -709,10 +792,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                       <div className="flex flex-direction flex-col">
                         {productClassificationGroup[0]?.attributes.map(
                           (item) => (
-                            <div className="table-data flex" key={item.id}>
-                              {item.nameA ? (
+                            <div className="table-data flex" key={uuid()}>
+                              {item ? (
                                 <div className="w-full py-3 text-center border border-gray-200 border-solid">
-                                  {item.nameA}
+                                  {item}
                                 </div>
                               ) : (
                                 <div className="w-full py-3 text-center border border-gray-200 border-solid">
@@ -728,9 +811,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                 {productClassificationGroup[1]?.attributes.map(
                                   (lii) => (
                                     <>
-                                      {lii.nameA ? (
+                                      {lii ? (
                                         <div className="w-full h-5 py-3 text-center border border-gray-200 border-solid">
-                                          {lii.nameA}
+                                          {lii}
                                         </div>
                                       ) : (
                                         <div className="w-full h-5 py-3 text-center border border-gray-200 border-solid">
@@ -766,7 +849,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                               <>
                                 {productClassificationGroup[1]?.attributes.map(
                                   (item) => (
-                                    <div key={item.id} className="flex w-full">
+                                    <div key={uuid()} className="flex w-full">
                                       <input
                                         type="number"
                                         className="w-1_3 h-5 py-3 border border-gray-200 border-solid"
