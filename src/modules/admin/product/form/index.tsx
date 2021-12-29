@@ -6,7 +6,6 @@ import { useFormik, FormikProvider } from 'formik';
 import clsx from 'clsx';
 import { uuid } from 'short-uuid';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/system/Box';
 import TextField from '@mui/material/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -24,6 +23,7 @@ import {
 import Button from 'components/button';
 import { Product, Productclassification, ModelList } from 'types/Product';
 import { productSChema } from './product-form.schema';
+import validateInfo from './validate';
 import './styles.css';
 
 interface ProductFormProps {
@@ -41,8 +41,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const [productClassificationGroup, setProductClassificationGroup] = useState<
     Productclassification[]
   >([]);
-
   const [modelList, setModelList] = useState<ModelList[]>([]);
+
+  const [errors, setErrors] = useState<Productclassification[]>();
 
   useEffect(() => {
     if (mode === 'edit') {
@@ -62,7 +63,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     token,
     productDetail,
     productClassificationGroup,
-    modelList
+    modelList,
+    errors
   ]);
 
   const ProductImagesChange = (e: any) => {
@@ -311,8 +313,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     if (mode === 'create') {
       const product: Product = { ...values, images: imagesT };
       const data = { product, token };
-      dispatch(addProduct(data));
-      history.push('/admin/products');
+      setErrors(validateInfo(productClassificationGroup));
+      // dispatch(addProduct(data));
+      // history.push('/admin/products');
     }
   }
 
@@ -325,6 +328,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
 
   console.log('hellloooo', productClassificationGroup);
   console.log('Model List', modelList);
+  console.log('Errors', errors);
 
   return (
     <FormikProvider value={formik}>
@@ -711,6 +715,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => handleOnChangeGroupName(e, index)}
+                            // error={!classification.groupName}
+                            // helperText={errors?.groupName[index]}
                           />
                         </div>
                       </div>
@@ -734,6 +740,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                   ) =>
                                     handleOnChangeAttributes(e, index, index2)
                                   }
+                                  error={!attribute}
+                                  // helperText={
+                                  //   !attribute ? errors?.attributes[0] : null
+                                  // }
                                 />
                                 {classification.attributes.length > 1 && (
                                   <div
