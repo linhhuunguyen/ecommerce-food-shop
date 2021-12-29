@@ -186,7 +186,7 @@ function ProductCategory() {
       <div className="mt-5">
         <Button
           disabled={disabled}
-          params={disabled ? 'disabled' : ''}
+          className={disabled ? 'disabled' : ''}
           onClick={handleContinue}
         >
           Continue

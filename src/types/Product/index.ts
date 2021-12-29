@@ -36,7 +36,8 @@ export interface Productclassification {
 }
 
 export interface ModelList {
-  name: string;
+  id_model: string;
+  modelListName: string;
   price: string;
   stock: string;
   sku: string;

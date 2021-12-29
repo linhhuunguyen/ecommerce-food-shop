@@ -75,3 +75,9 @@
 .classify {
   background-color: #fafafa;
 }
+
+.btn-cancel {
+  background-color: #ffffff !important;
+  color: red !important;
+  box-shadow: rgb(64 60 67 / 16%) 0px 2px 5px 1px;
+}

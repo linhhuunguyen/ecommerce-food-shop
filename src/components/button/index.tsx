@@ -7,9 +7,13 @@ interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   params?: string;
 }
 
-function Button({ children, params, ...props }: ButtonProps) {
+function Button({ children, className, ...props }: ButtonProps) {
   return (
-    <button type="button" className={`${styles.button} ${params}`} {...props}>
+    <button
+      type="button"
+      className={`${styles.button} ${className}`}
+      {...props}
+    >
       {children}
     </button>
   );
