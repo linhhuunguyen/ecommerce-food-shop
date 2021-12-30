@@ -24,15 +24,14 @@ interface Reviews {
   comment: string;
 }
 
-interface Category {
-  parent: string;
-  name: string;
-}
-
 export interface Productclassification {
   groupName: string;
   attributes: string[];
   _id: string;
+}
+export interface ValidateProductclassification {
+  groupName: string[];
+  attributes: string;
 }
 
 export interface ModelList {

@@ -1,28 +1,45 @@
 /* eslint-disable array-callback-return */
-import { Productclassification } from 'types/Product';
+import { useState, useEffect } from 'react';
+
+import {
+  Productclassification,
+  ValidateProductclassification
+} from 'types/Product';
 
 export default function validateInfo(values: Productclassification[]) {
   const errors: Productclassification[] = [
     {
+      _id: '',
       groupName: '',
-      attributes: [],
-      _id: ''
+      attributes: ['']
+    },
+    {
+      _id: '',
+      groupName: '',
+      attributes: ['']
     }
   ];
 
-  //   values.map((item) => {
-  //     if (!item.groupName) {
-  //       errors.groupName = 'Group Name cannot be emppty';
-  //     } else if (item.groupName.length < 3) {
-  //       errors.groupName = 'Group Name needs to be 3 characters or more';
-  //     }
+  console.log('values', values);
+  console.log('errors', errors);
 
-  //     item.attributes.map((lii) => {
-  //       if (!lii) {
-  //         errors.attributes.push('Attribute Name cannot be emppty');
-  //       }
-  //     });
-  //   });
+  for (let i = 0; i < values.length; i++) {
+    for (let j = 0; j < errors.length; j++) {
+      if (i === j && values[i].groupName === '') {
+        errors[j].groupName = 'Group Name cannot be emppty';
+      } else if (i === j && values[i].groupName.length < 3) {
+        errors[j].groupName = 'Group Name needs to be 3 characters or more';
+      }
+    }
+  }
+
+  // values.map((item, index) => {
+  //   if (!item.groupName) {
+  //     errors.groupName[0] = 'Group Name cannot be emppty';
+  //   } else if (item.groupName.length < 3) {
+  //     errors.groupName[1] = 'Group Name needs to be 3 characters or more';
+  //   }
+  // });
 
   return errors;
 }

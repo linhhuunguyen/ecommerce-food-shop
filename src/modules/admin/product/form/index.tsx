@@ -21,7 +21,12 @@ import {
   getProduct
 } from 'store/Products/products.slide';
 import Button from 'components/button';
-import { Product, Productclassification, ModelList } from 'types/Product';
+import {
+  Product,
+  Productclassification,
+  ModelList,
+  ValidateProductclassification
+} from 'types/Product';
 import { productSChema } from './product-form.schema';
 import validateInfo from './validate';
 import './styles.css';
@@ -43,7 +48,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   >([]);
   const [modelList, setModelList] = useState<ModelList[]>([]);
 
-  const [errors, setErrors] = useState<Productclassification[]>();
+  const [errors, setErrors] = useState<Productclassification[]>([]);
 
   useEffect(() => {
     if (mode === 'edit') {
@@ -94,6 +99,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       ...productClassificationGroup,
       { groupName: '', attributes: [''], _id: uuid() }
     ]);
+
+    // setErrors([...errors, { groupName: '', attributes: '' }]);
   };
 
   const handleAddProductClassification = (index: number) => {
@@ -158,6 +165,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       )
     );
 
+    // setErrors(errors.filter((item, _index) => _index !== index && item));
+
     setModelList([]);
     const newModel: ModelList[] = [];
 
@@ -205,6 +214,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     const newProductClassificationGroup = [...productClassificationGroup];
     newProductClassificationGroup[index].groupName = e.target.value;
     setProductClassificationGroup(newProductClassificationGroup);
+
+    setErrors(validateInfo(productClassificationGroup));
   };
 
   const handleOnChangeAttributes = (
@@ -225,7 +236,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
         i++
       ) {
         const nameAttribute = productClassificationGroup[0].attributes[i];
-
         newModel.push({
           id_model: uuid(),
           modelListName: nameAttribute,
@@ -260,6 +270,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
         }
       }
     }
+    // setErrors(validateInfo(productClassificationGroup, errors));
   };
 
   const handleChangeModelList = (
@@ -313,7 +324,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     if (mode === 'create') {
       const product: Product = { ...values, images: imagesT };
       const data = { product, token };
+
       setErrors(validateInfo(productClassificationGroup));
+
       // dispatch(addProduct(data));
       // history.push('/admin/products');
     }
@@ -715,8 +728,18 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => handleOnChangeGroupName(e, index)}
-                            // error={!classification.groupName}
-                            // helperText={errors?.groupName[index]}
+                            error={
+                              classification.groupName === '' ||
+                              classification.groupName.length < 3
+                                ? !!errors[index]?.groupName
+                                : false
+                            }
+                            helperText={
+                              classification.groupName === '' ||
+                              classification.groupName.length < 3
+                                ? errors[index]?.groupName
+                                : null
+                            }
                           />
                         </div>
                       </div>
@@ -740,10 +763,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                   ) =>
                                     handleOnChangeAttributes(e, index, index2)
                                   }
-                                  error={!attribute}
-                                  // helperText={
-                                  //   !attribute ? errors?.attributes[0] : null
-                                  // }
                                 />
                                 {classification.attributes.length > 1 && (
                                   <div
