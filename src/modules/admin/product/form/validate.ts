@@ -30,6 +30,13 @@ export default function validateInfo(values: Productclassification[]) {
       } else if (i === j && values[i].groupName.length < 3) {
         errors[j].groupName = 'Group Name needs to be 3 characters or more';
       }
+
+      if (i === j && values[i].attributes.filter((item) => !item)) {
+        console.log('heelo');
+        errors[j].attributes.map(
+          (item) => !item && item === 'Attribute Name not empty'
+        );
+      }
     }
   }
 

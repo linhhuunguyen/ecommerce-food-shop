@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -42,10 +43,13 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   const { id } = useParams<{ id: string }>();
   const [imagesT, setImages] = useState<any>([]);
   const [imagesPreview, setImagesPreview] = useState<any>([]);
+  const [isFocus, setIsFocus] = useState<Boolean>(false);
+  const [isBlur, setIsBlur] = useState<Boolean>(false);
 
   const [productClassificationGroup, setProductClassificationGroup] = useState<
     Productclassification[]
   >([]);
+
   const [modelList, setModelList] = useState<ModelList[]>([]);
 
   const [errors, setErrors] = useState<Productclassification[]>([]);
@@ -69,7 +73,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     productDetail,
     productClassificationGroup,
     modelList,
-    errors
+    errors,
+    isFocus,
+    isBlur
   ]);
 
   const ProductImagesChange = (e: any) => {
@@ -94,13 +100,23 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setImagesPreview(imagesPreview.filter((image: any) => image !== item));
   };
 
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocus(true);
+    setIsBlur(false);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocus(false);
+    setIsBlur(true);
+  };
+
   const handleAddProductClassificationGroup = () => {
     setProductClassificationGroup([
       ...productClassificationGroup,
       { groupName: '', attributes: [''], _id: uuid() }
     ]);
 
-    // setErrors([...errors, { groupName: '', attributes: '' }]);
+    setErrors([...errors, { _id: '', groupName: '', attributes: [''] }]);
   };
 
   const handleAddProductClassification = (index: number) => {
@@ -165,7 +181,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       )
     );
 
-    // setErrors(errors.filter((item, _index) => _index !== index && item));
+    setErrors(errors.filter((item, _index) => _index !== index && item));
 
     setModelList([]);
     const newModel: ModelList[] = [];
@@ -325,11 +341,11 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       const product: Product = { ...values, images: imagesT };
       const data = { product, token };
 
-      setErrors(validateInfo(productClassificationGroup));
-
       // dispatch(addProduct(data));
       // history.push('/admin/products');
     }
+    setIsFocus(true);
+    setErrors(validateInfo(productClassificationGroup));
   }
 
   const formik = useFormik({
@@ -342,6 +358,9 @@ const ProductForm = ({ mode }: ProductFormProps) => {
   console.log('hellloooo', productClassificationGroup);
   console.log('Model List', modelList);
   console.log('Errors', errors);
+
+  console.log('Focus', isFocus);
+  console.log('Blur', isBlur);
 
   return (
     <FormikProvider value={formik}>
@@ -725,19 +744,16 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                             variant="outlined"
                             className="w-11_12"
                             value={classification.groupName}
+                            inputProps={{ maxLength: 15 }}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => handleOnChangeGroupName(e, index)}
-                            error={
-                              classification.groupName === '' ||
-                              classification.groupName.length < 3
-                                ? !!errors[index]?.groupName
-                                : false
-                            }
+                            error={!classification.groupName && !!isFocus}
                             helperText={
-                              classification.groupName === '' ||
-                              classification.groupName.length < 3
-                                ? errors[index]?.groupName
+                              classification.groupName === '' && isFocus
+                                ? 'Group Name cannot be emppty'
                                 : null
                             }
                           />
@@ -758,12 +774,28 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                   variant="outlined"
                                   className="w-11_12"
                                   value={attribute}
+                                  inputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        Hello
+                                      </InputAdornment>
+                                    )
+                                  }}
+                                  onFocus={handleFocus}
+                                  onBlur={handleBlur}
                                   onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                   ) =>
                                     handleOnChangeAttributes(e, index, index2)
                                   }
+                                  error={!attribute && !!isFocus}
+                                  helperText={
+                                    attribute === '' && isFocus
+                                      ? 'Attribute Name cannot be emppty'
+                                      : null
+                                  }
                                 />
+
                                 {classification.attributes.length > 1 && (
                                   <div
                                     className="pointer text-xl ml-5"
