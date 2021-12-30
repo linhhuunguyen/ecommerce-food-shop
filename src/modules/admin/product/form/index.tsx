@@ -342,8 +342,8 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       const product: Product = { ...values, images: imagesT };
       const data = { product, token };
 
-      // dispatch(addProduct(data));
-      // history.push('/admin/products');
+      dispatch(addProduct(data));
+      history.push('/admin/products');
     }
     setIsFocus(true);
     setErrors(validateInfo(productClassificationGroup));
