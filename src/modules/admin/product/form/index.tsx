@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-debugger */
 import React, { useMemo, useEffect, useState } from 'react';
@@ -578,6 +579,16 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                   name="name"
                   type="text"
                   variant="outlined"
+                  inputProps={{
+                    maxLength: 120
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {formik.values.name.length}/120
+                      </InputAdornment>
+                    )
+                  }}
                   value={formik.values.name}
                   onChange={formik.handleChange}
                   error={!!formik.touched.name && !!formik.errors.name}
@@ -744,7 +755,16 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                             variant="outlined"
                             className="w-11_12"
                             value={classification.groupName}
-                            inputProps={{ maxLength: 15 }}
+                            inputProps={{
+                              maxLength: 15
+                            }}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  {classification.groupName.length}/15
+                                </InputAdornment>
+                              )
+                            }}
                             onFocus={handleFocus}
                             onBlur={handleBlur}
                             onChange={(
@@ -765,7 +785,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                           {classification.attributes.map(
                             (attribute: string, index2: number) => (
                               <div
-                                // eslint-disable-next-line react/no-array-index-key
                                 key={index2}
                                 className="flex items-center mb-5"
                               >
@@ -775,9 +794,12 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                   className="w-11_12"
                                   value={attribute}
                                   inputProps={{
+                                    maxLength: 20
+                                  }}
+                                  InputProps={{
                                     endAdornment: (
                                       <InputAdornment position="end">
-                                        Hello
+                                        {attribute.length}/20
                                       </InputAdornment>
                                     )
                                   }}
