@@ -64,7 +64,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       }
     }
 
-    if (productDetail.name === '') {
+    if (mode === 'create' && productDetail.name === '') {
       history.replace('/admin/products/category');
     }
   }, [
