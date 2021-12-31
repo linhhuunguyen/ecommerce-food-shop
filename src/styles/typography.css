@@ -1,0 +1,21 @@
+/* ========= Typography ======= */
+
+/* color */
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-center {
+  text-align: center;
+}

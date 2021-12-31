@@ -81,3 +81,16 @@
   color: red !important;
   box-shadow: rgb(64 60 67 / 16%) 0px 2px 5px 1px;
 }
+
+.error::after {
+  border-color: #019376 transparent transparent;
+  border-width: 6px 8px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  top: 100%;
+  left: 16px;
+  bottom: 1px;
+}

@@ -1,0 +1,110 @@
+.static {
+  position: static;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
+}
+
+/* Top, Right, Left, Bottom */
+
+.-top-1 {
+  top: -0.25rem;
+}
+
+.-top-2 {
+  top: -0.5rem;
+}
+
+.-top-3 {
+  top: -0.75rem;
+}
+
+.-top-4 {
+  top: -1rem;
+}
+
+.-top-5 {
+  top: -1.25rem;
+}
+
+.-top-6 {
+  top: -1.5rem;
+}
+
+.-top-7 {
+  top: -1.75rem;
+}
+
+.-top-8 {
+  top: -2rem;
+}
+
+.-top-9 {
+  top: -2.25rem;
+}
+
+.-top-10 {
+  top: -2.5rem;
+}
+
+/* .-top-11
+top: -2.75rem;	-44px
+.-top-12
+top: -3rem;	-48px
+.-top-14
+top: -3.5rem;	-56px
+.-top-16
+top: -4rem;	-64px
+.-top-20
+top: -5rem;	-80px
+.-top-24
+top: -6rem;	-96px
+.-top-28
+top: -7rem;	-112px
+.-top-32
+top: -8rem;	-128px
+.-top-36
+top: -9rem;	-144px
+.-top-40
+top: -10rem;	-160px
+.-top-44
+top: -11rem;	-176px
+.-top-48
+top: -12rem;	-192px
+.-top-52
+top: -13rem;	-208px
+.-top-56
+top: -14rem;	-224px
+.-top-60
+top: -15rem;	-240px
+.-top-64
+top: -16rem;	-256px
+.-top-72
+top: -18rem;	-288px
+.-top-80
+top: -20rem;	-320px
+.-top-96
+top: -24rem;	-384px
+.-top-px
+top: -1px;	
+.-top-0.5
+top: -0.125rem;	-2px
+.-top-1.5
+top: -0.375rem;	-6px
+.-top-2.5
+top: -0.625rem;	-10px
+.-top-3.5
+top: -0.875rem;	-14px */

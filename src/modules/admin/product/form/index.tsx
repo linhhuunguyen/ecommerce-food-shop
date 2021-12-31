@@ -117,13 +117,70 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       { groupName: '', attributes: [''], _id: uuid() }
     ]);
 
+    setModelList([
+      ...modelList,
+      {
+        id_model: uuid(),
+        modelListName: '',
+        price: '',
+        stock: '',
+        sku: ''
+      }
+    ]);
+
     setErrors([...errors, { _id: '', groupName: '', attributes: [''] }]);
+  };
+
+  const handleAddProductClassificationGroup2 = () => {
+    setProductClassificationGroup([
+      ...productClassificationGroup,
+      { groupName: '', attributes: [''], _id: uuid() }
+    ]);
   };
 
   const handleAddProductClassification = (index: number) => {
     const newProductClassificationGroup = [...productClassificationGroup];
     newProductClassificationGroup[index].attributes.push('');
+
     setProductClassificationGroup(newProductClassificationGroup);
+
+    if (productClassificationGroup.length === 1) {
+      setModelList([
+        ...modelList,
+        {
+          id_model: uuid(),
+          modelListName: '',
+          price: '',
+          stock: '',
+          sku: ''
+        }
+      ]);
+    }
+
+    if (productClassificationGroup.length > 1) {
+      const newModel: ModelList[] = [];
+      for (
+        let i = 0;
+        i < productClassificationGroup[0].attributes.length;
+        i++
+      ) {
+        for (
+          let j = 0;
+          j < productClassificationGroup[1].attributes.length;
+          j++
+        ) {
+          const nameAttribute = `${productClassificationGroup[0].attributes[i]},${productClassificationGroup[1].attributes[j]}`;
+          newModel.push({
+            id_model: uuid(),
+            modelListName: nameAttribute,
+            price: '',
+            stock: '',
+            sku: ''
+          });
+          setModelList(newModel);
+        }
+      }
+    }
   };
 
   const handleDeleteProductClassification = (
@@ -136,14 +193,21 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setProductClassificationGroup(newProductClassificationGroup);
 
     if (index === 0) {
-      setModelList(
-        modelList.filter(
-          (item: ModelList) => !item.modelListName.includes(`${name},`)
-        )
+      const newModel = [...modelList];
+      const a = newModel.filter(
+        (item: ModelList) => !item.modelListName.includes(`${name}`)
       );
+
+      setModelList(a);
+
+      console.log('aaa', a);
     }
 
     if (index === 1) {
+      const a = modelList.filter(
+        (item: ModelList) => !item.modelListName.includes(`,${name}`)
+      );
+
       setModelList(
         modelList.filter(
           (item: ModelList) => !item.modelListName.includes(`,${name}`)
@@ -151,25 +215,25 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       );
     }
 
-    if (productClassificationGroup.length === 1) {
-      const newModel: ModelList[] = [];
-      for (
-        let i = 0;
-        i < productClassificationGroup[0].attributes.length;
-        i++
-      ) {
-        const nameAttribute = productClassificationGroup[0].attributes[i];
+    // if (productClassificationGroup.length === 1) {
+    //   const newModel: ModelList[] = [];
+    //   for (
+    //     let i = 0;
+    //     i < productClassificationGroup[0].attributes.length;
+    //     i++
+    //   ) {
+    //     const nameAttribute = productClassificationGroup[0].attributes[i];
 
-        newModel.push({
-          id_model: uuid(),
-          modelListName: nameAttribute,
-          price: '',
-          stock: '',
-          sku: ''
-        });
-        setModelList(newModel);
-      }
-    }
+    //     newModel.push({
+    //       id_model: uuid(),
+    //       modelListName: nameAttribute,
+    //       price: '',
+    //       stock: '',
+    //       sku: ''
+    //     });
+    //     setModelList(newModel);
+    //   }
+    // }
   };
 
   const handleDeleteProductClassificationGroup = (
@@ -185,6 +249,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setErrors(errors.filter((item, _index) => _index !== index && item));
 
     setModelList([]);
+
     const newModel: ModelList[] = [];
 
     if (index === 0) {
@@ -229,10 +294,12 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     index: number
   ) => {
     const newProductClassificationGroup = [...productClassificationGroup];
+
     newProductClassificationGroup[index].groupName = e.target.value;
+
     setProductClassificationGroup(newProductClassificationGroup);
 
-    setErrors(validateInfo(productClassificationGroup));
+    // setErrors(validateInfo(productClassificationGroup));
   };
 
   const handleOnChangeAttributes = (
@@ -241,18 +308,19 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     index2: number
   ) => {
     const newYProductClassificationGroup = [...productClassificationGroup];
+
     newYProductClassificationGroup[index].attributes[index2] = e.target.value;
+
     setProductClassificationGroup(newYProductClassificationGroup);
 
-    const newModel: ModelList[] = [];
-
     if (productClassificationGroup.length === 1) {
+      const newModel: ModelList[] = [];
       for (
         let i = 0;
         i < productClassificationGroup[0].attributes.length;
         i++
       ) {
-        const nameAttribute = productClassificationGroup[0].attributes[i];
+        const nameAttribute = `${productClassificationGroup[0].attributes[i]}}`;
         newModel.push({
           id_model: uuid(),
           modelListName: nameAttribute,
@@ -265,6 +333,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     }
 
     if (productClassificationGroup.length > 1) {
+      const newModel: ModelList[] = [];
       for (
         let i = 0;
         i < productClassificationGroup[0].attributes.length;
@@ -358,10 +427,10 @@ const ProductForm = ({ mode }: ProductFormProps) => {
 
   console.log('hellloooo', productClassificationGroup);
   console.log('Model List', modelList);
-  console.log('Errors', errors);
+  // console.log('Errors', errors);
 
-  console.log('Focus', isFocus);
-  console.log('Blur', isBlur);
+  // console.log('Focus', isFocus);
+  // console.log('Blur', isBlur);
 
   return (
     <FormikProvider value={formik}>
@@ -765,8 +834,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                 </InputAdornment>
                               )
                             }}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => handleOnChangeGroupName(e, index)}
@@ -803,8 +870,6 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                                       </InputAdornment>
                                     )
                                   }}
-                                  onFocus={handleFocus}
-                                  onBlur={handleBlur}
                                   onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                   ) =>
@@ -854,7 +919,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                         </Grid>
                         <Grid item lg={10} md={10}>
                           <div
-                            onClick={handleAddProductClassificationGroup}
+                            onClick={handleAddProductClassificationGroup2}
                             className="flex justify-center items-center border border-green-500 border-dashed"
                           >
                             <IoIosAddCircleOutline className="text-xl mr-3" />
@@ -874,7 +939,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                 </Grid>
                 <Grid item lg={10} md={10}>
                   <div className="flex classification-table">
-                    <div className="flex-1">
+                    <div className="flex-2">
                       <div className="flex name">
                         {productClassificationGroup.map((item) => (
                           <>
@@ -947,33 +1012,51 @@ const ProductForm = ({ mode }: ProductFormProps) => {
                         <div>
                           {modelList.map((item) => (
                             <div key={item.id_model} className="flex w-full">
-                              <input
-                                type="text"
-                                name="price"
-                                className="w-1_3 h-5 text-center py-3 border border-gray-200 border-solid"
-                                value={item.price}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeModelList(e, item.id_model)}
-                              />
-                              <input
-                                type="text"
-                                name="stock"
-                                className="w-1_3 h-5 text-center py-3 border border-gray-200 border-solid"
-                                value={item.stock}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeModelList(e, item.id_model)}
-                              />
-                              <input
-                                type="text"
-                                name="sku"
-                                className="w-1_3 h-5 text-center py-3 border border-gray-200 border-solid"
-                                value={item.sku}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleChangeModelList(e, item.id_model)}
-                              />
+                              <div className="flex flex-row flex-1 relative">
+                                <input
+                                  type="text"
+                                  name="price"
+                                  className="h-5 text-center py-3 border border-gray-200 border-solid"
+                                  value={item.price}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => handleChangeModelList(e, item.id_model)}
+                                />
+                                {!item.price && isFocus && (
+                                  <span className="error absolute w-11_12 bg-primary text-white text-center text-xs py-1 ml-1 -top-9 rounded-sm">
+                                    Price can't empty
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="flex flex-row flex-1 relative">
+                                <input
+                                  type="text"
+                                  name="stock"
+                                  className="h-5 text-center py-3 border border-gray-200 border-solid"
+                                  value={item.stock}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => handleChangeModelList(e, item.id_model)}
+                                />
+                                {!item.stock && isFocus && (
+                                  <span className="error absolute w-11_12 bg-primary text-white text-center text-xs py-1 ml-1 -top-9 rounded-sm">
+                                    Stock can't empty
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="flex flex-row flex-1 relative">
+                                <input
+                                  type="text"
+                                  name="sku"
+                                  className="h-5 text-center py-3 border border-gray-200 border-solid"
+                                  value={item.sku}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => handleChangeModelList(e, item.id_model)}
+                                />
+                              </div>
                             </div>
                           ))}
                         </div>
