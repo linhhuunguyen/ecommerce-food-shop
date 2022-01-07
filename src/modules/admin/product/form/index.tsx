@@ -158,7 +158,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     }
 
     if (productClassificationGroup.length > 1) {
-      const newModel: ModelList[] = [];
+      const newModel: ModelList[] = [...modelList];
       for (
         let i = 0;
         i < productClassificationGroup[0].attributes.length;
@@ -177,7 +177,19 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             stock: '',
             sku: ''
           });
-          setModelList(newModel);
+
+          console.log('newModule', newModel);
+          const filtered = newModel.filter(
+            (v, newIndex, a) =>
+              a.findIndex(
+                (t) =>
+                  t.modelListName === v.modelListName &&
+                  v.price !== '' &&
+                  v.stock !== '' &&
+                  v.sku !== ''
+              ) === newIndex
+          );
+          setModelList(filtered);
         }
       }
     }
@@ -352,6 +364,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             stock: '',
             sku: ''
           });
+
           setModelList(newModel);
         }
       }
