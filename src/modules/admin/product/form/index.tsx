@@ -1,3 +1,6 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-self-assign */
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-debugger */
@@ -36,6 +39,7 @@ import './styles.css';
 interface ProductFormProps {
   mode: 'create' | 'edit';
 }
+
 const ProductForm = ({ mode }: ProductFormProps) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -136,6 +140,18 @@ const ProductForm = ({ mode }: ProductFormProps) => {
       ...productClassificationGroup,
       { groupName: '', attributes: [''], _id: uuid() }
     ]);
+    const newModel = [...modelList];
+
+    for (let i = 0; i < newModel.length; i++) {
+      newModel[i].price = '';
+      newModel[i].sku = '';
+      newModel[i].stock = '';
+    }
+    // const a = newModel.map(
+    //   (item: ModelList) => item.price = '' && item.stock = '' && item.sku = '')
+    // );
+
+    setModelList(newModel);
   };
 
   const handleAddProductClassification = (index: number) => {
@@ -158,7 +174,7 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     }
 
     if (productClassificationGroup.length > 1) {
-      const newModel: ModelList[] = [];
+      const newModel: ModelList[] = [...modelList];
       for (
         let i = 0;
         i < productClassificationGroup[0].attributes.length;
@@ -177,7 +193,30 @@ const ProductForm = ({ mode }: ProductFormProps) => {
             stock: '',
             sku: ''
           });
-          setModelList(newModel);
+          console.log('newModule', newModel);
+
+          // newModel.sort(function (arr1, arr2) {
+          //   // eslint-disable-next-line prefer-const
+          //   let a = arr1.modelListName;
+          //   // eslint-disable-next-line prefer-const
+          //   let b = arr2.modelListName;
+          //   return a === b ? 0 : a > b ? 1 : -1;
+          // });
+          const filtered = newModel.filter(
+            (v, newIndex, a) =>
+              a.findIndex(
+                (t) =>
+                  t.modelListName === v.modelListName &&
+                  v.price !== '' &&
+                  v.stock !== '' &&
+                  v.sku !== ''
+              ) === newIndex
+          );
+          // const filtered = newModel.filter(
+          //   (item: ModelList) => item.modelListName !== undefined
+          // );
+          console.log('filtered', filtered);
+          setModelList(filtered);
         }
       }
     }
@@ -314,26 +353,29 @@ const ProductForm = ({ mode }: ProductFormProps) => {
     setProductClassificationGroup(newYProductClassificationGroup);
 
     if (productClassificationGroup.length === 1) {
-      const newModel: ModelList[] = [];
+      const newModel: ModelList[] = [...modelList];
+      const nameAttribute = [];
       for (
         let i = 0;
         i < productClassificationGroup[0].attributes.length;
         i++
       ) {
-        const nameAttribute = `${productClassificationGroup[0].attributes[i]}}`;
-        newModel.push({
-          id_model: uuid(),
-          modelListName: nameAttribute,
-          price: '',
-          stock: '',
-          sku: ''
-        });
-        setModelList(newModel);
+        nameAttribute.push(`${productClassificationGroup[0].attributes[i]}`);
       }
+
+      for (let j = 0; j < newModel.length; j++) {
+        newModel[j].modelListName = nameAttribute[j];
+        newModel[j].price = newModel[j].price;
+        newModel[j].stock = newModel[j].stock;
+        newModel[j].sku = newModel[j].sku;
+      }
+
+      setModelList(newModel);
     }
 
     if (productClassificationGroup.length > 1) {
-      const newModel: ModelList[] = [];
+      const newModel: ModelList[] = [...modelList];
+      const nameAttribute = [];
       for (
         let i = 0;
         i < productClassificationGroup[0].attributes.length;
@@ -344,17 +386,20 @@ const ProductForm = ({ mode }: ProductFormProps) => {
           j < productClassificationGroup[1].attributes.length;
           j++
         ) {
-          const nameAttribute = `${productClassificationGroup[0].attributes[i]},${productClassificationGroup[1].attributes[j]}`;
-          newModel.push({
-            id_model: uuid(),
-            modelListName: nameAttribute,
-            price: '',
-            stock: '',
-            sku: ''
-          });
-          setModelList(newModel);
+          nameAttribute.push(
+            `${productClassificationGroup[0].attributes[i]},${productClassificationGroup[1].attributes[j]}`
+          );
         }
       }
+
+      for (let j = 0; j < newModel.length; j++) {
+        newModel[j].modelListName = nameAttribute[j];
+        newModel[j].price = newModel[j].price;
+        newModel[j].stock = newModel[j].stock;
+        newModel[j].sku = newModel[j].sku;
+      }
+
+      setModelList(newModel);
     }
     // setErrors(validateInfo(productClassificationGroup, errors));
   };
